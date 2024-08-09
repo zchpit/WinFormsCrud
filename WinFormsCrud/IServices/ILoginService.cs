@@ -4,7 +4,7 @@ namespace WinFormsCrud.Interface
 {
     public interface ILoginService
     {
-        UserDto Login(string username, string password);
+        int Login(string username, string password);
 
         void Logout(int userId);
 

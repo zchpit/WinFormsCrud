@@ -48,19 +48,20 @@
             gbEditRow = new GroupBox();
             btnEdit = new Button();
             btnAdd = new Button();
-            numericUpDown1 = new NumericUpDown();
+            nudPriority = new NumericUpDown();
             tbDescription = new TextBox();
             tbHeader = new TextBox();
             label3 = new Label();
             label2 = new Label();
             label1 = new Label();
             button1 = new Button();
+            btnDelete = new Button();
             gbLogin.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvCases).BeginInit();
             ((System.ComponentModel.ISupportInitialize)caseDtoBindingSource1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)caseDtoBindingSource).BeginInit();
             gbEditRow.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)numericUpDown1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)nudPriority).BeginInit();
             SuspendLayout();
             // 
             // lbUser
@@ -155,6 +156,7 @@
             dgvCases.Size = new Size(619, 284);
             dgvCases.TabIndex = 7;
             dgvCases.Visible = false;
+            dgvCases.CellContentClick += dgvCases_CellContentClick;
             dgvCases.RowEnter += dgvCases_RowEnter;
             // 
             // idDataGridViewTextBoxColumn
@@ -177,6 +179,7 @@
             descriptionDataGridViewTextBoxColumn.HeaderText = "Description";
             descriptionDataGridViewTextBoxColumn.Name = "descriptionDataGridViewTextBoxColumn";
             descriptionDataGridViewTextBoxColumn.ReadOnly = true;
+            descriptionDataGridViewTextBoxColumn.Width = 300;
             // 
             // priorityDataGridViewTextBoxColumn
             // 
@@ -195,9 +198,10 @@
             // 
             // gbEditRow
             // 
+            gbEditRow.Controls.Add(btnDelete);
             gbEditRow.Controls.Add(btnEdit);
             gbEditRow.Controls.Add(btnAdd);
-            gbEditRow.Controls.Add(numericUpDown1);
+            gbEditRow.Controls.Add(nudPriority);
             gbEditRow.Controls.Add(tbDescription);
             gbEditRow.Controls.Add(tbHeader);
             gbEditRow.Controls.Add(label3);
@@ -212,33 +216,35 @@
             // 
             // btnEdit
             // 
-            btnEdit.Location = new Point(157, 255);
+            btnEdit.Location = new Point(73, 255);
             btnEdit.Name = "btnEdit";
             btnEdit.Size = new Size(75, 23);
             btnEdit.TabIndex = 8;
             btnEdit.Text = "Edit";
             btnEdit.UseVisualStyleBackColor = true;
+            btnEdit.Click += btnEdit_Click;
             // 
             // btnAdd
             // 
-            btnAdd.Location = new Point(72, 255);
+            btnAdd.Location = new Point(6, 255);
             btnAdd.Name = "btnAdd";
-            btnAdd.Size = new Size(75, 23);
+            btnAdd.Size = new Size(61, 23);
             btnAdd.TabIndex = 7;
             btnAdd.Text = "Add";
             btnAdd.UseVisualStyleBackColor = true;
+            btnAdd.Click += btnAdd_Click;
             // 
-            // numericUpDown1
+            // nudPriority
             // 
-            numericUpDown1.Location = new Point(72, 219);
-            numericUpDown1.Maximum = new decimal(new int[] { 5, 0, 0, 0 });
-            numericUpDown1.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-            numericUpDown1.Name = "numericUpDown1";
-            numericUpDown1.ReadOnly = true;
-            numericUpDown1.Size = new Size(160, 23);
-            numericUpDown1.TabIndex = 6;
-            numericUpDown1.TextAlign = HorizontalAlignment.Right;
-            numericUpDown1.Value = new decimal(new int[] { 1, 0, 0, 0 });
+            nudPriority.Location = new Point(72, 219);
+            nudPriority.Maximum = new decimal(new int[] { 5, 0, 0, 0 });
+            nudPriority.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+            nudPriority.Name = "nudPriority";
+            nudPriority.ReadOnly = true;
+            nudPriority.Size = new Size(160, 23);
+            nudPriority.TabIndex = 6;
+            nudPriority.TextAlign = HorizontalAlignment.Right;
+            nudPriority.Value = new decimal(new int[] { 1, 0, 0, 0 });
             // 
             // tbDescription
             // 
@@ -292,6 +298,16 @@
             button1.UseVisualStyleBackColor = true;
             button1.Click += btnClose_Click;
             // 
+            // btnDelete
+            // 
+            btnDelete.Location = new Point(164, 255);
+            btnDelete.Name = "btnDelete";
+            btnDelete.Size = new Size(68, 23);
+            btnDelete.TabIndex = 9;
+            btnDelete.Text = "Delete";
+            btnDelete.UseVisualStyleBackColor = true;
+            btnDelete.Click += btnDelete_Click;
+            // 
             // SimpleTestForm
             // 
             AutoScaleMode = AutoScaleMode.None;
@@ -314,7 +330,7 @@
             ((System.ComponentModel.ISupportInitialize)caseDtoBindingSource).EndInit();
             gbEditRow.ResumeLayout(false);
             gbEditRow.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)numericUpDown1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)nudPriority).EndInit();
             ResumeLayout(false);
         }
 
@@ -331,12 +347,8 @@
         private DataGridView dgvCases;
         private BindingSource caseDtoBindingSource1;
         private BindingSource caseDtoBindingSource;
-        private DataGridViewTextBoxColumn idDataGridViewTextBoxColumn;
-        private DataGridViewTextBoxColumn headerDataGridViewTextBoxColumn;
-        private DataGridViewTextBoxColumn descriptionDataGridViewTextBoxColumn;
-        private DataGridViewTextBoxColumn priorityDataGridViewTextBoxColumn;
         private GroupBox gbEditRow;
-        private NumericUpDown numericUpDown1;
+        private NumericUpDown nudPriority;
         private TextBox tbDescription;
         private TextBox tbHeader;
         private Label label3;
@@ -345,5 +357,10 @@
         private Button btnEdit;
         private Button btnAdd;
         private Button button1;
+        private DataGridViewTextBoxColumn idDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn headerDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn descriptionDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn priorityDataGridViewTextBoxColumn;
+        private Button btnDelete;
     }
 }
