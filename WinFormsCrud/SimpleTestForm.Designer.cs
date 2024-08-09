@@ -46,6 +46,7 @@
             caseDtoBindingSource1 = new BindingSource(components);
             caseDtoBindingSource = new BindingSource(components);
             gbEditRow = new GroupBox();
+            btnDelete = new Button();
             btnEdit = new Button();
             btnAdd = new Button();
             nudPriority = new NumericUpDown();
@@ -54,8 +55,7 @@
             label3 = new Label();
             label2 = new Label();
             label1 = new Label();
-            button1 = new Button();
-            btnDelete = new Button();
+            btnCloseApp = new Button();
             gbLogin.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvCases).BeginInit();
             ((System.ComponentModel.ISupportInitialize)caseDtoBindingSource1).BeginInit();
@@ -156,7 +156,6 @@
             dgvCases.Size = new Size(619, 284);
             dgvCases.TabIndex = 7;
             dgvCases.Visible = false;
-            dgvCases.CellContentClick += dgvCases_CellContentClick;
             dgvCases.RowEnter += dgvCases_RowEnter;
             // 
             // idDataGridViewTextBoxColumn
@@ -213,6 +212,16 @@
             gbEditRow.TabIndex = 8;
             gbEditRow.TabStop = false;
             gbEditRow.Visible = false;
+            // 
+            // btnDelete
+            // 
+            btnDelete.Location = new Point(164, 255);
+            btnDelete.Name = "btnDelete";
+            btnDelete.Size = new Size(68, 23);
+            btnDelete.TabIndex = 9;
+            btnDelete.Text = "Delete";
+            btnDelete.UseVisualStyleBackColor = true;
+            btnDelete.Click += btnDelete_Click;
             // 
             // btnEdit
             // 
@@ -288,31 +297,23 @@
             label1.TabIndex = 0;
             label1.Text = "Header";
             // 
-            // button1
+            // btnCloseApp
             // 
-            button1.Location = new Point(787, 27);
-            button1.Name = "button1";
-            button1.Size = new Size(92, 33);
-            button1.TabIndex = 9;
-            button1.Text = "Close App";
-            button1.UseVisualStyleBackColor = true;
-            button1.Click += btnClose_Click;
-            // 
-            // btnDelete
-            // 
-            btnDelete.Location = new Point(164, 255);
-            btnDelete.Name = "btnDelete";
-            btnDelete.Size = new Size(68, 23);
-            btnDelete.TabIndex = 9;
-            btnDelete.Text = "Delete";
-            btnDelete.UseVisualStyleBackColor = true;
-            btnDelete.Click += btnDelete_Click;
+            btnCloseApp.Location = new Point(787, 27);
+            btnCloseApp.Name = "btnCloseApp";
+            btnCloseApp.Size = new Size(92, 33);
+            btnCloseApp.TabIndex = 9;
+            btnCloseApp.Text = "Close App";
+            btnCloseApp.UseVisualStyleBackColor = true;
+            btnCloseApp.Click += btnClose_Click;
             // 
             // SimpleTestForm
             // 
+            AcceptButton = btnLogin;
             AutoScaleMode = AutoScaleMode.None;
+            CancelButton = btnLogout;
             ClientSize = new Size(892, 443);
-            Controls.Add(button1);
+            Controls.Add(btnCloseApp);
             Controls.Add(gbEditRow);
             Controls.Add(dgvCases);
             Controls.Add(gbLogin);
@@ -356,7 +357,7 @@
         private Label label1;
         private Button btnEdit;
         private Button btnAdd;
-        private Button button1;
+        private Button btnCloseApp;
         private DataGridViewTextBoxColumn idDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn headerDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn descriptionDataGridViewTextBoxColumn;

@@ -80,11 +80,6 @@ namespace WinFormsCrud
             this.Close();
         }
 
-        private void dgvCases_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            var abc = "test";
-        }
-
         private void btnAdd_Click(object sender, EventArgs e)
         {
             string message = "Can't add new value. Validation error.";
@@ -107,18 +102,25 @@ namespace WinFormsCrud
 
         private void btnEdit_Click(object sender, EventArgs e)
         {
-            string message = "Can't edit existing value. Validation error.";
-            SetCaseValuesFromUI(selectedCase);
+            string message = "Are you sure you want to edit record: " + selectedCase.Header;
+            string confirmeDelete = "Confirm Edit!!";
 
-            bool isCaseValid = caseService.IsValidCase(selectedCase);
-            if (!isCaseValid)
+            var confirmResult = MessageBox.Show(message, confirmeDelete, MessageBoxButtons.YesNo);
+            if (confirmResult == DialogResult.Yes)
             {
-                MessageBox.Show(message);
-            }
-            else
-            {
-                caseService.UpdateCase(selectedCase, loggedUserId);
-                ReloadGridData(loggedUserId);
+                string validationMessage = "Can't edit existing value. Validation error.";
+                SetCaseValuesFromUI(selectedCase);
+
+                bool isCaseValid = caseService.IsValidCase(selectedCase);
+                if (!isCaseValid)
+                {
+                    MessageBox.Show(validationMessage);
+                }
+                else
+                {
+                    caseService.UpdateCase(selectedCase, loggedUserId);
+                    ReloadGridData(loggedUserId);
+                }
             }
         }
 
