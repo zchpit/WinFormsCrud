@@ -16,7 +16,7 @@ namespace WinFormsCrud
             ApplicationConfiguration.Initialize();
             ILoginService loginService = new LoginService();
 
-            Application.Run(new Form1(loginService));
+            Application.Run(new SimpleTestForm(loginService));
         }
     }
 }

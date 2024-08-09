@@ -8,7 +8,7 @@
         public string Name { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
-        public RoleDto UserRole { get; set; }
-        public List<CaseDto> UserCases { get; set; }
+        public RoleDto UserRole { get; set; } = RoleDto.User;
+        public List<CaseDto> UserCases { get; set; } = new List<CaseDto>();
     }
 }

@@ -3,12 +3,12 @@ using WinFormsCrud.Interface;
 
 namespace WinFormsCrud
 {
-    public partial class Form1 : Form
+    public partial class SimpleTestForm : Form
     {
         ILoginService loginService;
         UserDto loggedUser = null;
 
-        public Form1(ILoginService loginService)
+        public SimpleTestForm(ILoginService loginService)
         {
             InitializeComponent();
 
@@ -32,6 +32,10 @@ namespace WinFormsCrud
             {
                 gbLogin.Visible = false;
                 btnLogout.Visible = true;
+                dgvCases.Visible = true;
+                gbEditRow.Visible = true;
+
+                dgvCases.DataSource = loggedUser.UserCases;
 
                 tbUser.Text = string.Empty;
                 tbPassword.Text = string.Empty;
@@ -48,9 +52,27 @@ namespace WinFormsCrud
 
             gbLogin.Visible = true;
             btnLogout.Visible = false;
+            dgvCases.Visible = false;
+            gbEditRow.Visible = false;
 
             tbUser.Text = string.Empty;
             tbPassword.Text = string.Empty;
+        }
+
+        private void dgvCases_RowEnter(object sender, EventArgs e)
+        {
+            var dataGridEventArg = e as DataGridViewCellEventArgs;
+
+            if (e != null)
+            {
+
+            }
+
+        }
+
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }
