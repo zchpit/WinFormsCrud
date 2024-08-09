@@ -120,7 +120,7 @@
             btnLogin.Name = "btnLogin";
             btnLogin.Size = new Size(120, 33);
             btnLogin.TabIndex = 4;
-            btnLogin.Text = "Login";
+            btnLogin.Text = "Log in";
             btnLogin.UseVisualStyleBackColor = true;
             btnLogin.Click += btnLogin_Click;
             // 
@@ -137,7 +137,7 @@
             btnLogout.Name = "btnLogout";
             btnLogout.Size = new Size(121, 33);
             btnLogout.TabIndex = 6;
-            btnLogout.Text = "Logout";
+            btnLogout.Text = "Log out";
             btnLogout.UseVisualStyleBackColor = true;
             btnLogout.Visible = false;
             btnLogout.Click += btnLogout_Click;

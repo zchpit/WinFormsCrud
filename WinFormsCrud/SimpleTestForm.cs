@@ -1,4 +1,5 @@
 using Microsoft.VisualBasic.ApplicationServices;
+using System.ComponentModel.Design;
 using WinFormsCrud.Dto;
 using WinFormsCrud.Interface;
 
@@ -8,6 +9,7 @@ namespace WinFormsCrud
     {
         ILoginService loginService;
         ICaseService caseService;
+
         int loggedUserId;
         CaseDto selectedCase = null;
 
