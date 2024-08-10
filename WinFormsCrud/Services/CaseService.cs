@@ -45,9 +45,9 @@ namespace WinFormsCrud.Services
             }
         }
 
-        public List<CaseDto> GetUserCases(int userId)
+        public List<CaseDto> GetUserCases(SimpleUserDto simpleUserDto)
         {
-            var tmpResult = caseRepository.GetUserCases(userId);
+            var tmpResult = caseRepository.GetUserCases(simpleUserDto);
             var result = tmpResult.Select(a => MapCaseToCaseDto(a)).ToList();
 
             return result;

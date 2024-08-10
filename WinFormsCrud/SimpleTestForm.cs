@@ -38,7 +38,7 @@ namespace WinFormsCrud
                 dgvCases.Visible = true;
                 gbEditRow.Visible = loggedUser.UserRole == RoleDto.User ? true : false;
 
-                ReloadGridData(loggedUser.Id);
+                ReloadGridData(loggedUser);
 
                 tbUser.Text = string.Empty;
                 tbPassword.Text = string.Empty;
@@ -96,7 +96,7 @@ namespace WinFormsCrud
             else
             {
                 caseService.UpdateCase(caseDto, loggedUser.Id);
-                ReloadGridData(loggedUser.Id);
+                ReloadGridData(loggedUser);
             }
         }
 
@@ -119,7 +119,7 @@ namespace WinFormsCrud
                 else
                 {
                     caseService.UpdateCase(selectedCase, loggedUser.Id);
-                    ReloadGridData(loggedUser.Id);
+                    ReloadGridData(loggedUser);
                 }
             }
         }
@@ -137,13 +137,13 @@ namespace WinFormsCrud
                 selectedCase.DeletedBy = loggedUser.Id;
 
                 caseService.UpdateCase(selectedCase, loggedUser.Id);
-                ReloadGridData(loggedUser.Id);
+                ReloadGridData(loggedUser);
             }
         }
 
-        private void ReloadGridData(int userId)
+        private void ReloadGridData(SimpleUserDto simpleUserDto)
         {
-            dgvCases.DataSource = caseService.GetUserCases(userId);
+            dgvCases.DataSource = caseService.GetUserCases(simpleUserDto);
         }
 
         private void SetCaseValuesFromUI(CaseDto caseDto)

@@ -8,6 +8,6 @@ namespace WinFormsCrud.Interface
 
         void UpdateCase(CaseDto caseDto, int userId);
 
-        List<CaseDto> GetUserCases(int userId);
+        List<CaseDto> GetUserCases(SimpleUserDto simpleUserDto);
     }
 }

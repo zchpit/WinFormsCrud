@@ -13,12 +13,6 @@ namespace WinFormsCrud.Repository
             this.userContext = context;
         }
 
-        /*
-        List<UserDto> users = new List<UserDto>()
-        {
-            new UserDto(){ Id = 1, Email = "user@test.pl", Name = "test", Password = "6wDOrMcwJgr4EcGN49lJvA==", UserRole = RoleDto.User, IsActive = true},
-            new UserDto(){ Id = 2, Email = "manager@test.pl", Name = "manager", Password = "0y2hZJngk432qjdyUi11mg==", UserRole = RoleDto.Manager, IsActive = true}
-        };*/
 
         public SimpleUserDto GetSimpleUserDto(string username, string password)
         {

@@ -27,14 +27,14 @@ namespace WinFormsCrudTests.ServiceTests
         [Fact]
         public void GetUserCases_GetCase_MakeSureThatRepoWasCalled()
         {
-            int userId = 1;
+            SimpleUserDto simpleUserDto = new SimpleUserDto();
             List<Case> caseList = new List<Case>();
-            mockCaseRepository.Setup(a => a.GetUserCases(userId)).Returns(caseList);
+            mockCaseRepository.Setup(a => a.GetUserCases(simpleUserDto)).Returns(caseList);
 
-            var result = caseService.GetUserCases(userId);
+            var result = caseService.GetUserCases(simpleUserDto);
 
             result.Should().NotBeNull();
-            mockCaseRepository.Verify(a => a.GetUserCases(userId), Times.Once);
+            mockCaseRepository.Verify(a => a.GetUserCases(simpleUserDto), Times.Once);
         }
 
         [Fact]
