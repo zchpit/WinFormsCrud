@@ -4,7 +4,7 @@ namespace WinFormsCrud.Interface
 {
     public interface IUserService
     {
-        SimpleUserDto Login(string username, string password);
+        ValueTask<SimpleUserDto> Login(string username, string password);
 
         void Logout(int userId);
 

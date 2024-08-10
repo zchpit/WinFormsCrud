@@ -24,13 +24,13 @@ namespace WinFormsCrud
 
         }
 
-        private void btnLogin_Click(object sender, EventArgs e)
+        private async void btnLogin_Click(object sender, EventArgs e)
         {
             lbError.Visible = false;
             string user = tbUser.Text;
             string password = tbPassword.Text;
 
-            loggedUser = userService.Login(user, password);
+            loggedUser = await userService.Login(user, password);
             if (loggedUser != null)
             {
                 gbLogin.Visible = false;

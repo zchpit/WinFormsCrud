@@ -84,12 +84,12 @@ namespace WinFormsCrudTests.ServiceTests
             SimpleUserDto simpleUserDto = new SimpleUserDto() { Id = 1, UserRole = RoleDto.User };
 
             mockEncryptStrategy.Setup(a => a.Encrypt(password)).Returns(encryptedPassword);
-            mockUserRepository.Setup(a => a.GetSimpleUserDto(username, encryptedPassword)).Returns(simpleUserDto);
+            mockUserRepository.Setup(a => a.GetSimpleUserDto(username, encryptedPassword)).Returns(ValueTask.FromResult(simpleUserDto));
 
             var result = userService.Login(username, password);
 
             result.Should().NotBeNull();
-            result.Id.Should().Be(1);
+            result.Result.Id.Should().Be(1);
             mockEncryptStrategy.Verify(a =>  a.Encrypt(password), Times.Once);
             mockUserRepository.Verify(a => a.GetSimpleUserDto(username, encryptedPassword), Times.Once);
         }
@@ -103,11 +103,11 @@ namespace WinFormsCrudTests.ServiceTests
             SimpleUserDto simpleUserDto = null;
 
             mockEncryptStrategy.Setup(a => a.Encrypt(password)).Returns(encryptedPassword);
-            mockUserRepository.Setup(a => a.GetSimpleUserDto(username, encryptedPassword)).Returns(simpleUserDto);
+            mockUserRepository.Setup(a => a.GetSimpleUserDto(username, encryptedPassword)).Returns(ValueTask.FromResult(simpleUserDto));
 
             var result = userService.Login(username, password);
 
-            result.Should().BeNull();
+            result.Result.Should().BeNull();
             mockEncryptStrategy.Verify(a => a.Encrypt(password), Times.Once);
             mockUserRepository.Verify(a => a.GetSimpleUserDto(username, encryptedPassword), Times.Once);
         }

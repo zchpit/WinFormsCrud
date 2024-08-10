@@ -1,4 +1,5 @@
-﻿using WinFormsCrud.Dto;
+﻿using System.Data.Entity;
+using WinFormsCrud.Dto;
 using WinFormsCrud.IRepository;
 using WinFormsCrud.Model;
 
@@ -14,9 +15,11 @@ namespace WinFormsCrud.Repository
         }
 
 
-        public SimpleUserDto GetSimpleUserDto(string username, string password)
+        public async ValueTask<SimpleUserDto> GetSimpleUserDto(string username, string password)
         {
-            var user = userContext.Users.FirstOrDefault(a => a.IsActive && a.Name == username && a.Password == password);
+            //var user2 = userContext.Users.FirstOrDefault(a => a.IsActive && a.Name == username && a.Password == password);
+
+            var user = await userContext.Users.FirstOrDefaultAsync(a => a.IsActive && a.Name == username && a.Password == password);
             if (user == null)
             {
                 return null;

@@ -16,12 +16,12 @@ namespace WinFormsCrud.Services
             this.userRepository= userRepository;
         }
 
-        public SimpleUserDto Login(string username, string password)
+        public async ValueTask<SimpleUserDto> Login(string username, string password)
         {
             if (IsUserValid(username) && IsUserValid(password)) 
             {
                 var encryptedPassword = encryptStrategy.Encrypt(password);
-                var user = userRepository.GetSimpleUserDto(username, encryptedPassword);
+                var user = await userRepository.GetSimpleUserDto(username, encryptedPassword);
                 return user;
             }
 
