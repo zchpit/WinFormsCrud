@@ -23,5 +23,7 @@ namespace WinFormsCrud.Model
         public DateTime LastModifiedDate { get; set; }
         public int? DeletedBy { get; set; }
         public DateTime? DeletedDate { get; set; } = DateTime.Now;
+
+        ICollection<UserCase> UserCases { get; set; }
     }
 }

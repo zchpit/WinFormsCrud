@@ -21,15 +21,19 @@ namespace WinFormsCrud.Repository
 
         public async ValueTask<List<Case>> GetUserCases(SimpleUserDto simpleUserDto)
         {
+            List<int> userToCheck = new List<int>();
+            userToCheck.Add(simpleUserDto.Id);
+
             if (simpleUserDto.UserRole == RoleDto.Manager)
             {
-                return await GetAllCases();
+                var managerUses = await caseContext.Users.Where(a => a.ManagerId == simpleUserDto.Id).Select(a => a.Id).ToListAsync();
+                userToCheck.AddRange(managerUses);
             }
-            else
-            {
-                var toUpdate = await caseContext.Cases.Where(a => a.CreatedBy == simpleUserDto.Id).ToListAsync();
-                return toUpdate;
-            }
+
+            var userCases = caseContext.UserCases.Include(a => a.Case).Where(a => userToCheck.Contains(a.UserId)).Select(a => a.CaseId);
+            var result = await caseContext.Cases.Where(a => userCases.Contains(a.Id)).ToListAsync();
+
+            return result;
         }
 
         public async Task AddCase(Case caseDto, int userId)

@@ -19,6 +19,8 @@ namespace WinFormsCrud.Model
         [Required]
         public bool IsActive { get; set; }
 
-        public ICollection<UserCase> UserCases { get; set; } = new List<UserCase>();
+        public int? ManagerId { get; set; }
+
+        public ICollection<UserCase> UserCases { get; set; }
     }
 }
