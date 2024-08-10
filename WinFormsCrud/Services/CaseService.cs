@@ -1,16 +1,20 @@
 ﻿using WinFormsCrud.Dto;
 using WinFormsCrud.Interface;
 using WinFormsCrud.IRepository;
+using AutoMapper;
+using WinFormsCrud.Model;
 
 namespace WinFormsCrud.Services
 {
     public class CaseService : ICaseService
     {
         ICaseRepository caseRepository;
+        IMapper mapper;
 
-        public CaseService(ICaseRepository caseRepository)
+        public CaseService(ICaseRepository caseRepository, IMapper mapper)
         {
             this.caseRepository = caseRepository;
+            this.mapper = mapper;
         }
 
         public bool IsValidCase(CaseDto caseDto)
@@ -28,20 +32,37 @@ namespace WinFormsCrud.Services
         {
             if (userId > 0)
             {
+                Case caseToUpdate = MapCaseDtoToCase(caseDto);
                 if (caseDto.Id > 0)
                 {
-                    caseRepository.UpdateCase(caseDto, userId);
+
+                    caseRepository.UpdateCase(caseToUpdate, userId);
                 }
                 else
                 {
-                    caseRepository.AddCase(caseDto, userId);
+                    caseRepository.AddCase(caseToUpdate, userId);
                 }
             }
         }
 
         public List<CaseDto> GetUserCases(int userId)
         {
-            return caseRepository.GetUserCases(userId);
+            var tmpResult = caseRepository.GetUserCases(userId);
+            var result = tmpResult.Select(a => MapCaseToCaseDto(a)).ToList();
+
+            return result;
+        }
+
+        public CaseDto MapCaseToCaseDto(Case caseDto)
+        {
+            var result = mapper.Map<CaseDto>(caseDto);
+            return result;
+        }
+
+        public Case MapCaseDtoToCase(CaseDto caseDto)
+        {
+            var result = mapper.Map<Case>(caseDto);
+            return result;
         }
     }
 }

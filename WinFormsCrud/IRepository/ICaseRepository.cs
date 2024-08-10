@@ -1,12 +1,13 @@
 ﻿using WinFormsCrud.Dto;
+using WinFormsCrud.Model;
 
 namespace WinFormsCrud.IRepository
 {
-    public interface ICaseRepository
+    public interface ICaseRepository : IDisposable
     {
-        List<CaseDto> GetCases();
-        List<CaseDto> GetUserCases(int userId);
-        void AddCase(CaseDto caseDto, int userId);
-        void UpdateCase(CaseDto caseDto, int userId);
+        List<Case> GetCases();
+        List<Case> GetUserCases(int userId);
+        void AddCase(Case caseDto, int userId);
+        void UpdateCase(Case caseDto, int userId);
     }
 }

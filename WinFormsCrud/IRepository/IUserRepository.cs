@@ -2,7 +2,7 @@
 
 namespace WinFormsCrud.IRepository
 {
-    public interface IUserRepository
+    public interface IUserRepository : IDisposable
     {
         public SimpleUserDto GetSimpleUserDto(string username, string password);
     }

@@ -1,8 +1,11 @@
-﻿using FluentAssertions;
+﻿using AutoMapper;
+using FluentAssertions;
 using Moq;
 using WinFormsCrud.Dto;
+using WinFormsCrud.Helpers;
 using WinFormsCrud.Interface;
 using WinFormsCrud.IRepository;
+using WinFormsCrud.Model;
 using WinFormsCrud.Services;
 
 namespace WinFormsCrudTests.ServiceTests
@@ -16,14 +19,16 @@ namespace WinFormsCrudTests.ServiceTests
         {
             mockCaseRepository = new Mock<ICaseRepository>();
             var mockUserRepositoryObject = mockCaseRepository.Object;
-            caseService = new CaseService(mockUserRepositoryObject);
+            Mapper mapper = MapperConfig.InitializeAutomapper();
+
+            caseService = new CaseService(mockUserRepositoryObject, mapper);
         }
 
         [Fact]
         public void GetUserCases_GetCase_MakeSureThatRepoWasCalled()
         {
             int userId = 1;
-            List<CaseDto> caseList = new List<CaseDto>();
+            List<Case> caseList = new List<Case>();
             mockCaseRepository.Setup(a => a.GetUserCases(userId)).Returns(caseList);
 
             var result = caseService.GetUserCases(userId);
@@ -80,8 +85,8 @@ namespace WinFormsCrudTests.ServiceTests
 
             caseService.UpdateCase(caseDto, userId);
 
-            mockCaseRepository.Verify(a => a.UpdateCase(caseDto, userId), Times.Never);
-            mockCaseRepository.Verify(a => a.AddCase(caseDto, userId), Times.Once);
+            mockCaseRepository.Verify(a => a.UpdateCase(It.IsAny<Case>(), It.IsAny<int>()), Times.Never);
+            mockCaseRepository.Verify(a => a.AddCase(It.IsAny<Case>(), It.IsAny<int>()), Times.Once);
         }
 
         [Fact]
@@ -90,10 +95,12 @@ namespace WinFormsCrudTests.ServiceTests
             CaseDto caseDto = new CaseDto() { Header = "Header", Description = "Description", Id = 1 };
             int userId = 1;
 
+            //mockMapper.Setup(a => a.)
+
             caseService.UpdateCase(caseDto, userId);
 
-            mockCaseRepository.Verify(a => a.UpdateCase(caseDto, userId), Times.Once);
-            mockCaseRepository.Verify(a => a.AddCase(caseDto, userId), Times.Never);
+            mockCaseRepository.Verify(a => a.UpdateCase(It.IsAny<Case>(), It.IsAny<int>()), Times.Once);
+            mockCaseRepository.Verify(a => a.AddCase(It.IsAny<Case>(),  It.IsAny<int>()), Times.Never);
         }
 
         [Fact]
@@ -104,8 +111,8 @@ namespace WinFormsCrudTests.ServiceTests
 
             caseService.UpdateCase(caseDto, userId);
 
-            mockCaseRepository.Verify(a => a.UpdateCase(caseDto, userId), Times.Never);
-            mockCaseRepository.Verify(a => a.AddCase(caseDto, userId), Times.Never);
+            mockCaseRepository.Verify(a => a.UpdateCase(It.IsAny<Case>(), It.IsAny<int>()), Times.Never);
+            mockCaseRepository.Verify(a => a.AddCase(It.IsAny<Case>(), It.IsAny<int>()), Times.Never);
         }
     }
 }
