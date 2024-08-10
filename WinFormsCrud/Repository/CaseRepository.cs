@@ -21,6 +21,11 @@ namespace WinFormsCrud.Repository
 
         public async ValueTask<List<Case>> GetUserCases(SimpleUserDto simpleUserDto)
         {
+            var user = caseContext.Users.ToList();
+            var UserCases = caseContext.UserCases.ToList();
+            var Ucaas = caseContext.UserCases.ToList();
+
+
             List<int> userToCheck = new List<int>();
             userToCheck.Add(simpleUserDto.Id);
 
@@ -39,6 +44,9 @@ namespace WinFormsCrud.Repository
         public async Task AddCase(Case caseDto, int userId)
         {
             caseContext.Cases.Add(caseDto);
+            UserCase newUserCase = new UserCase() { CaseId = caseDto.Id, UserId = userId };
+            caseContext.UserCases.Add(newUserCase);
+
             await caseContext.SaveChangesAsync();
         }
 

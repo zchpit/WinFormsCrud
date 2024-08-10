@@ -13,7 +13,7 @@ namespace WinFormsCrud.Model
             modelBuilder.Entity<UserCase>().HasKey(e => new { e.UserId, e.CaseId }).HasRequired(a => a.User);
 
             modelBuilder.Entity<User>().HasKey(e => e.Id).HasMany(a => a.UserCases);
-            modelBuilder.Entity<Case>().HasKey(e => e.Id);
+            modelBuilder.Entity<Case>().HasKey(e => e.Id).HasMany(a => a.UserCases);
         }
     }
 }
