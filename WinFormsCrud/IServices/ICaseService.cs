@@ -6,7 +6,7 @@ namespace WinFormsCrud.Interface
     {
         bool IsValidCase(CaseDto caseDto);
 
-        void UpdateCase(CaseDto caseDto, int userId);
+        Task UpdateCase(CaseDto caseDto, int userId);
 
         List<CaseDto> GetUserCases(SimpleUserDto simpleUserDto);
     }

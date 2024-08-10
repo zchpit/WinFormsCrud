@@ -28,7 +28,7 @@ namespace WinFormsCrud.Services
             return true;
         }
 
-        public void UpdateCase(CaseDto caseDto, int userId)
+        public async Task UpdateCase(CaseDto caseDto, int userId)
         {
             if (userId > 0)
             {
@@ -36,11 +36,11 @@ namespace WinFormsCrud.Services
                 if (caseDto.Id > 0)
                 {
 
-                    caseRepository.UpdateCase(caseToUpdate, userId);
+                    await caseRepository.UpdateCase(caseToUpdate, userId);
                 }
                 else
                 {
-                    caseRepository.AddCase(caseToUpdate, userId);
+                    await caseRepository.AddCase(caseToUpdate, userId);
                 }
             }
         }

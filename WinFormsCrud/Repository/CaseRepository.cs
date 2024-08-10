@@ -1,4 +1,5 @@
-﻿using WinFormsCrud.Dto;
+﻿using System.Data.Entity;
+using WinFormsCrud.Dto;
 using WinFormsCrud.IRepository;
 using WinFormsCrud.Model;
 
@@ -32,15 +33,15 @@ namespace WinFormsCrud.Repository
             }
         }
 
-        public void AddCase(Case caseDto, int userId)
+        public async Task AddCase(Case caseDto, int userId)
         {
             caseContext.Cases.Add(caseDto);
-            caseContext.SaveChanges();
+            await caseContext.SaveChangesAsync();
         }
 
-        public void UpdateCase(Case caseDto, int userId)
+        public async Task UpdateCase(Case caseDto, int userId)
         {
-            var toUpdate = caseContext.Cases.FirstOrDefault(x => x.Id == caseDto.Id);
+            var toUpdate = await caseContext.Cases.FirstOrDefaultAsync(x => x.Id == caseDto.Id);
             if (toUpdate != null)
             {
                 toUpdate.Description = caseDto.Description;
@@ -54,9 +55,9 @@ namespace WinFormsCrud.Repository
                     toUpdate.DeletedDate = caseDto.DeletedDate;
                     toUpdate.DeletedBy = caseDto.DeletedBy;
                 }
-            }
 
-            caseContext.SaveChanges();
+                await caseContext.SaveChangesAsync();
+            }
         }
 
         private bool disposed = false;

@@ -80,7 +80,7 @@ namespace WinFormsCrud
             this.Close();
         }
 
-        private void btnAdd_Click(object sender, EventArgs e)
+        private async void btnAdd_Click(object sender, EventArgs e)
         {
             string message = "Can't add new value. Validation error.";
             CaseDto caseDto = new CaseDto();
@@ -95,12 +95,12 @@ namespace WinFormsCrud
             }
             else
             {
-                caseService.UpdateCase(caseDto, loggedUser.Id);
+                await caseService.UpdateCase(caseDto, loggedUser.Id);
                 ReloadGridData(loggedUser);
             }
         }
 
-        private void btnEdit_Click(object sender, EventArgs e)
+        private async void btnEdit_Click(object sender, EventArgs e)
         {
             string message = "Are you sure you want to edit record: " + selectedCase.Header;
             string confirmeDelete = "Confirm Edit!!";
@@ -118,13 +118,13 @@ namespace WinFormsCrud
                 }
                 else
                 {
-                    caseService.UpdateCase(selectedCase, loggedUser.Id);
+                    await caseService.UpdateCase(selectedCase, loggedUser.Id);
                     ReloadGridData(loggedUser);
                 }
             }
         }
 
-        private void btnDelete_Click(object sender, EventArgs e)
+        private async void btnDelete_Click(object sender, EventArgs e)
         {
             string message = "Are you sure you want to delete record: " + selectedCase.Header;
             string confirmeDelete = "Confirm Delete!!";
@@ -136,7 +136,7 @@ namespace WinFormsCrud
                 selectedCase.DeletedDate = DateTime.Now;
                 selectedCase.DeletedBy = loggedUser.Id;
 
-                caseService.UpdateCase(selectedCase, loggedUser.Id);
+                await caseService.UpdateCase(selectedCase, loggedUser.Id);
                 ReloadGridData(loggedUser);
             }
         }

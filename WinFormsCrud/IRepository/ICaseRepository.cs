@@ -7,7 +7,7 @@ namespace WinFormsCrud.IRepository
     {
         List<Case> GetAllCases();
         List<Case> GetUserCases(SimpleUserDto simpleUserDto);
-        void AddCase(Case caseDto, int userId);
-        void UpdateCase(Case caseDto, int userId);
+        Task AddCase(Case caseDto, int userId);
+        Task UpdateCase(Case caseDto, int userId);
     }
 }

@@ -78,38 +78,38 @@ namespace WinFormsCrudTests.ServiceTests
         }
 
         [Fact]
-        public void UpdateCase_NewCase_CreateRecord()
+        public async void UpdateCase_NewCase_CreateRecord()
         {
             CaseDto caseDto = new CaseDto() { Header = "Header", Description = "Description", Id = 0 };
             int userId = 1;
 
-            caseService.UpdateCase(caseDto, userId);
+            await caseService.UpdateCase(caseDto, userId);
 
             mockCaseRepository.Verify(a => a.UpdateCase(It.IsAny<Case>(), It.IsAny<int>()), Times.Never);
             mockCaseRepository.Verify(a => a.AddCase(It.IsAny<Case>(), It.IsAny<int>()), Times.Once);
         }
 
         [Fact]
-        public void UpdateCase_ExistingCase_UpdateRecord()
+        public async void UpdateCase_ExistingCase_UpdateRecord()
         {
             CaseDto caseDto = new CaseDto() { Header = "Header", Description = "Description", Id = 1 };
             int userId = 1;
 
             //mockMapper.Setup(a => a.)
 
-            caseService.UpdateCase(caseDto, userId);
+            await caseService.UpdateCase(caseDto, userId);
 
             mockCaseRepository.Verify(a => a.UpdateCase(It.IsAny<Case>(), It.IsAny<int>()), Times.Once);
             mockCaseRepository.Verify(a => a.AddCase(It.IsAny<Case>(),  It.IsAny<int>()), Times.Never);
         }
 
         [Fact]
-        public void UpdateCase_UserUnknown_DontUpdate()
+        public async void UpdateCase_UserUnknown_DontUpdate()
         {
             CaseDto caseDto = new CaseDto() { Header = "Header", Description = "Description", Id = 1 };
             int userId = 0;
 
-            caseService.UpdateCase(caseDto, userId);
+            await caseService.UpdateCase(caseDto, userId);
 
             mockCaseRepository.Verify(a => a.UpdateCase(It.IsAny<Case>(), It.IsAny<int>()), Times.Never);
             mockCaseRepository.Verify(a => a.AddCase(It.IsAny<Case>(), It.IsAny<int>()), Times.Never);
