@@ -2,9 +2,9 @@
 
 namespace WinFormsCrud.Interface
 {
-    public interface ILoginService
+    public interface IUserService
     {
-        int Login(string username, string password);
+        SimpleUserDto Login(string username, string password);
 
         void Logout(int userId);
 

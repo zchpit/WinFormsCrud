@@ -1,29 +1,31 @@
 ﻿using WinFormsCrud.Dto;
 using WinFormsCrud.Interface;
+using WinFormsCrud.IRepository;
+using WinFormsCrud.Strategy;
 
 namespace WinFormsCrud.Services
 {
-    public class LoginService : ILoginService
+    public class UserService : IUserService
     {
-        public int Login(string username, string password)
+        private IEncryptStrategy encryptStrategy;
+        private IUserRepository userRepository;
+
+        public UserService(IEncryptStrategy encryptStrategy, IUserRepository userRepository) 
+        { 
+            this.encryptStrategy = encryptStrategy;
+            this.userRepository= userRepository;
+        }
+
+        public SimpleUserDto Login(string username, string password)
         {
             if (IsUserValid(username) && IsUserValid(password)) 
             {
-                if(username == "test" && password == "test")
-                {
-                    var testUser = new UserDto() { Id = 1, Name = "test" };
-                    return 1;
-                }
-
-                if (username == "manager" && password == "manager")
-                {
-                    var manager = new UserDto() { Id = 2, Name = "manager" };
-
-                    return 2;
-                }
+                var encryptedPassword = encryptStrategy.Encrypt(password);
+                var user = userRepository.GetSimpleUserDto(username, encryptedPassword);
+                return user;
             }
 
-            return 0; 
+            return null; 
         }
 
         public void Logout(int userId)

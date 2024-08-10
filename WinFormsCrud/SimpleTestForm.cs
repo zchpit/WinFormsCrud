@@ -1,5 +1,3 @@
-using Microsoft.VisualBasic.ApplicationServices;
-using System.ComponentModel.Design;
 using WinFormsCrud.Dto;
 using WinFormsCrud.Interface;
 
@@ -7,17 +5,17 @@ namespace WinFormsCrud
 {
     public partial class SimpleTestForm : Form
     {
-        ILoginService loginService;
+        IUserService userService;
         ICaseService caseService;
 
-        int loggedUserId;
+        SimpleUserDto? loggedUser;
         CaseDto selectedCase = null;
 
-        public SimpleTestForm(ILoginService loginService, ICaseService caseService)
+        public SimpleTestForm(IUserService userService, ICaseService caseService)
         {
             InitializeComponent();
 
-            this.loginService = loginService;
+            this.userService = userService;
             this.caseService = caseService;
         }
 
@@ -32,15 +30,15 @@ namespace WinFormsCrud
             string user = tbUser.Text;
             string password = tbPassword.Text;
 
-            loggedUserId = loginService.Login(user, password);
-            if (loggedUserId > 0)
+            loggedUser = userService.Login(user, password);
+            if (loggedUser != null)
             {
                 gbLogin.Visible = false;
                 btnLogout.Visible = true;
                 dgvCases.Visible = true;
-                gbEditRow.Visible = true;
+                gbEditRow.Visible = loggedUser.UserRole == RoleDto.User ? true : false;
 
-                dgvCases.DataSource = caseService.GetUserCases(loggedUserId);
+                ReloadGridData(loggedUser.Id);
 
                 tbUser.Text = string.Empty;
                 tbPassword.Text = string.Empty;
@@ -53,7 +51,7 @@ namespace WinFormsCrud
 
         private void btnLogout_Click(object sender, EventArgs e)
         {
-            loggedUserId = 0;
+            loggedUser = null;
 
             gbLogin.Visible = true;
             btnLogout.Visible = false;
@@ -67,7 +65,7 @@ namespace WinFormsCrud
         private void dgvCases_RowEnter(object sender, EventArgs e)
         {
             var dataGridEventArg = e as DataGridViewCellEventArgs;
-            if (dataGridEventArg != null && loggedUserId > 0)
+            if (dataGridEventArg != null && loggedUser != null)
             {
                 List<CaseDto> cases = dgvCases.DataSource as List<CaseDto>;
                 selectedCase = cases[dataGridEventArg.RowIndex];
@@ -86,7 +84,7 @@ namespace WinFormsCrud
         {
             string message = "Can't add new value. Validation error.";
             CaseDto caseDto = new CaseDto();
-            caseDto.CreatedBy = loggedUserId;
+            caseDto.CreatedBy = loggedUser.Id;
 
             SetCaseValuesFromUI(caseDto);
 
@@ -97,8 +95,8 @@ namespace WinFormsCrud
             }
             else
             {
-                caseService.UpdateCase(caseDto, loggedUserId);
-                ReloadGridData(loggedUserId);
+                caseService.UpdateCase(caseDto, loggedUser.Id);
+                ReloadGridData(loggedUser.Id);
             }
         }
 
@@ -120,8 +118,8 @@ namespace WinFormsCrud
                 }
                 else
                 {
-                    caseService.UpdateCase(selectedCase, loggedUserId);
-                    ReloadGridData(loggedUserId);
+                    caseService.UpdateCase(selectedCase, loggedUser.Id);
+                    ReloadGridData(loggedUser.Id);
                 }
             }
         }
@@ -136,10 +134,10 @@ namespace WinFormsCrud
             {
                 selectedCase.IsDeleted = true;
                 selectedCase.DeletedDate = DateTime.Now;
-                selectedCase.DeletedBy = loggedUserId;
+                selectedCase.DeletedBy = loggedUser.Id;
 
-                caseService.UpdateCase(selectedCase, loggedUserId);
-                ReloadGridData(loggedUserId);
+                caseService.UpdateCase(selectedCase, loggedUser.Id);
+                ReloadGridData(loggedUser.Id);
             }
         }
 
@@ -155,7 +153,7 @@ namespace WinFormsCrud
             caseDto.Priority = Int32.Parse(nudPriority.Value.ToString());
 
             caseDto.LastModifiedDate = DateTime.Now;
-            caseDto.LastModifiedBy = loggedUserId;
+            caseDto.LastModifiedBy = loggedUser.Id;
         }
     }
 }
