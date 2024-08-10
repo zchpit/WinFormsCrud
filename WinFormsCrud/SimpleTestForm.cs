@@ -36,8 +36,8 @@ namespace WinFormsCrud
                 gbLogin.Visible = false;
                 btnLogout.Visible = true;
                 dgvCases.Visible = true;
-                gbEditRow.Visible = loggedUser.UserRole == RoleDto.User ? true : false;
-
+                gbEditRow.Visible = true;
+                
                 ReloadGridData(loggedUser);
 
                 tbUser.Text = string.Empty;
@@ -72,6 +72,17 @@ namespace WinFormsCrud
                 tbHeader.Text = selectedCase.Header;
                 tbDescription.Text = selectedCase.Description;
                 nudPriority.Value = selectedCase.Priority;
+
+                if (selectedCase.CreatedBy != loggedUser.Id)
+                {
+                    btnEdit.Enabled = false;
+                    btnDelete.Enabled = false;
+                }
+                else
+                {
+                    btnEdit.Enabled = true;
+                    btnDelete.Enabled = true;
+                }
             }
         }
 

@@ -14,13 +14,8 @@ namespace WinFormsCrud.Repository
             this.userContext = context;
         }
 
-
         public async ValueTask<SimpleUserDto> GetSimpleUserDto(string username, string password)
         {
-            //var users = userContext.Users.ToList();
-            //var userCases = userContext.UserCases.ToList();
-            //var casesDb = userContext.Cases.ToList();
-
             var user = await userContext.Users.FirstOrDefaultAsync(a => a.IsActive && a.Name == username && a.Password == password);
             if (user == null)
             {
