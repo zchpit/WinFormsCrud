@@ -141,9 +141,9 @@ namespace WinFormsCrud
             }
         }
 
-        private void ReloadGridData(SimpleUserDto simpleUserDto)
+        private async void ReloadGridData(SimpleUserDto simpleUserDto)
         {
-            dgvCases.DataSource = caseService.GetUserCases(simpleUserDto);
+            dgvCases.DataSource = await caseService.GetUserCases(simpleUserDto);
         }
 
         private void SetCaseValuesFromUI(CaseDto caseDto)

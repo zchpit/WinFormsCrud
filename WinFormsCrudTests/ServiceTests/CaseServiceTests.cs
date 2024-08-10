@@ -28,7 +28,7 @@ namespace WinFormsCrudTests.ServiceTests
         public void GetUserCases_GetCase_MakeSureThatRepoWasCalled()
         {
             SimpleUserDto simpleUserDto = new SimpleUserDto();
-            List<Case> caseList = new List<Case>();
+            var caseList = ValueTask.FromResult(new List<Case>());
             mockCaseRepository.Setup(a => a.GetUserCases(simpleUserDto)).Returns(caseList);
 
             var result = caseService.GetUserCases(simpleUserDto);

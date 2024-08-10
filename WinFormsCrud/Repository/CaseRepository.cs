@@ -14,21 +14,20 @@ namespace WinFormsCrud.Repository
             this.caseContext = context;
         }
 
-        public List<Case> GetAllCases()
+        public async ValueTask<List<Case>> GetAllCases()
         {
-            return caseContext.Cases.Where(a => !a.IsDeleted).ToList();
+            return await caseContext.Cases.Where(a => !a.IsDeleted).ToListAsync();
         }
 
-        public List<Case> GetUserCases(SimpleUserDto simpleUserDto)
+        public async ValueTask<List<Case>> GetUserCases(SimpleUserDto simpleUserDto)
         {
-
             if (simpleUserDto.UserRole == RoleDto.Manager)
             {
-                return GetAllCases();
+                return await GetAllCases();
             }
             else
             {
-                var toUpdate = caseContext.Cases.Where(a => a.CreatedBy == simpleUserDto.Id).ToList();
+                var toUpdate = await caseContext.Cases.Where(a => a.CreatedBy == simpleUserDto.Id).ToListAsync();
                 return toUpdate;
             }
         }

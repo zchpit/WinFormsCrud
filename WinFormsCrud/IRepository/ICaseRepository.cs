@@ -5,8 +5,8 @@ namespace WinFormsCrud.IRepository
 {
     public interface ICaseRepository : IDisposable
     {
-        List<Case> GetAllCases();
-        List<Case> GetUserCases(SimpleUserDto simpleUserDto);
+        ValueTask<List<Case>> GetAllCases();
+        ValueTask<List<Case>> GetUserCases(SimpleUserDto simpleUserDto);
         Task AddCase(Case caseDto, int userId);
         Task UpdateCase(Case caseDto, int userId);
     }

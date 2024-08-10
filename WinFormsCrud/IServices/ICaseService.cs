@@ -8,6 +8,6 @@ namespace WinFormsCrud.Interface
 
         Task UpdateCase(CaseDto caseDto, int userId);
 
-        List<CaseDto> GetUserCases(SimpleUserDto simpleUserDto);
+        ValueTask<List<CaseDto>> GetUserCases(SimpleUserDto simpleUserDto);
     }
 }
