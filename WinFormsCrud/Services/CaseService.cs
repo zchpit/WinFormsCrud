@@ -41,7 +41,7 @@ namespace WinFormsCrud.Services
 
         public List<CaseDto> GetUserCases(int userId)
         {
-            return caseRepository.GetCases(userId);
+            return caseRepository.GetUserCases(userId);
         }
     }
 }

@@ -1,17 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Security;
-using System.Text;
-using System.Threading.Tasks;
-using WinFormsCrud.Interface;
-using WinFormsCrud.Services;
+﻿using FluentAssertions;
 using Moq;
-using WinFormsCrud.Strategy;
-using WinFormsCrud.IRepository;
-using FluentAssertions;
-using WinFormsCrud.Repository;
 using WinFormsCrud.Dto;
+using WinFormsCrud.Interface;
+using WinFormsCrud.IRepository;
+using WinFormsCrud.Services;
+using WinFormsCrud.Strategy;
 
 namespace WinFormsCrudTests.ServiceTests
 {
@@ -41,6 +34,7 @@ namespace WinFormsCrudTests.ServiceTests
 
             result.Should().BeFalse();
         }
+
         [Fact]
         public void IsUserValid_HaveValue_ReturnTrue()
         {
@@ -104,8 +98,8 @@ namespace WinFormsCrudTests.ServiceTests
         public void Login_UserPasswordInCorrect_ReturnNull()
         {
             string username = "goodUserName";
-            string password = "goodPassword";
-            string encryptedPassword = "encryptedPassword";
+            string password = "wrongPassword";
+            string encryptedPassword = "wrongPassword";
             SimpleUserDto simpleUserDto = null;
 
             mockEncryptStrategy.Setup(a => a.Encrypt(password)).Returns(encryptedPassword);

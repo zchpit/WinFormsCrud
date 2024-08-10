@@ -17,7 +17,7 @@ namespace WinFormsCrud.Repository
             return caseDtos.Where(a => !a.IsDeleted).ToList();
         }
 
-        public List<CaseDto> GetCases(int userId)
+        public List<CaseDto> GetUserCases(int userId)
         {
             //TODO: check with case beleongs to user/manager
             return GetCases();
