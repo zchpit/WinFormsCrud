@@ -28,9 +28,9 @@ namespace SimpleWebApi.Controllers
         }
 
         [HttpPost]
-        public async Task PostTodoItem(int userId, CaseDto todoItem)
+        public async Task UpdateCase(int userId, CaseDto caseDto)
         {
-            await _caseService.UpdateCase(todoItem, userId);
+            await _caseService.UpdateCase(caseDto, userId);
         }
     }
 }

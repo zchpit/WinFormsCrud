@@ -1,15 +1,14 @@
 ﻿using CommonLibrary.Dto;
 using CommonLibrary.Strategy;
+using Flurl;
+using Flurl.Http;
 using WinFormsCrud.Helper;
 using WinFormsCrud.Interface;
-
 
 namespace WinFormsCrud.Services
 {
     public class UserService : IUserService
     {
-        //TODO: remove HttpClient as this object have prolem with socket release. Put IHttpClientFactory:  https://cezarywalenciuk.pl/blog/programing/ihttpclientfactory-na-problem-z-httpclient
-        static HttpClient client = new HttpClient();
         ITransferStrategy _transferStrategy;
 
         public UserService(ITransferStrategy transferStrategy) 
@@ -22,15 +21,13 @@ namespace WinFormsCrud.Services
             string encryptedUsername = _transferStrategy.Encrypt(username);
             string encryptedPassword = _transferStrategy.Encrypt(password);
 
-            string path = string.Concat(ApiHelper.urlBase, ApiHelper.userControllerName, "/", encryptedUsername, "/", encryptedPassword);
-
-            SimpleUserDto simpleUserDto = null;
-            HttpResponseMessage response = await client.GetAsync(path);
-
-            if (response.IsSuccessStatusCode)
-            {
-                simpleUserDto = await response.Content.ReadAsAsync<SimpleUserDto>();
-            }
+            var simpleUserDto = await ApiHelper
+                                .urlBase
+                                .AppendPathSegment(ApiHelper.userControllerName)
+                                .AppendPathSegment(encryptedUsername)
+                                .AppendPathSegment(encryptedPassword)
+                                .GetAsync()
+                                .ReceiveJson<SimpleUserDto>();
 
             return simpleUserDto;
         }

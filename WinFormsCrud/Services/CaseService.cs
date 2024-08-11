@@ -1,6 +1,6 @@
 ﻿using CommonLibrary.Dto;
-using Newtonsoft.Json;
-using System.Net.Http.Headers;
+using Flurl;
+using Flurl.Http;
 using WinFormsCrud.Helper;
 using WinFormsCrud.Interface;
 
@@ -8,10 +8,6 @@ namespace WinFormsCrud.Services
 {
     public class CaseService : ICaseService
     {
-        //TODO: remove HttpClient as this object have prolem with socket release. Put IHttpClientFactory:  https://cezarywalenciuk.pl/blog/programing/ihttpclientfactory-na-problem-z-httpclient
-        static HttpClient client = new HttpClient();
-
-
         public CaseService()
         {
         }
@@ -31,28 +27,26 @@ namespace WinFormsCrud.Services
         {
             if (userId > 0)
             {
-                string path = string.Concat(ApiHelper.urlBase, ApiHelper.caseControllerName, "?userId=", userId);
-
-                var myContent = JsonConvert.SerializeObject(caseDto);
-                var buffer = System.Text.Encoding.UTF8.GetBytes(myContent);
-                var byteContent = new ByteArrayContent(buffer);
-                byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-
-                HttpResponseMessage response = await client.PostAsync(path, byteContent);
+                var tmpResult = await ApiHelper
+                .urlBase
+                .AppendPathSegment(ApiHelper.caseControllerName)
+                .SetQueryParams(new
+                {
+                    userId = userId,
+                })
+                .PostJsonAsync(caseDto);
             }
         }
 
         public async ValueTask<List<CaseDto>> GetUserCases(SimpleUserDto simpleUserDto)
         {
-            string path = string.Concat(ApiHelper.urlBase, ApiHelper.caseControllerName, "/", simpleUserDto.Id, "/", (int)simpleUserDto.UserRole);
-
-            List<CaseDto> tmpResult = null;
-            HttpResponseMessage response = await client.GetAsync(path);
-
-            if (response.IsSuccessStatusCode)
-            {
-                tmpResult = await response.Content.ReadAsAsync<List<CaseDto>>();
-            }
+            var tmpResult = await ApiHelper
+                    .urlBase
+                    .AppendPathSegment(ApiHelper.caseControllerName)
+                    .AppendPathSegment(simpleUserDto.Id)
+                    .AppendPathSegment((int)simpleUserDto.UserRole)
+                    .GetAsync()
+                    .ReceiveJson<List<CaseDto>>();
 
             return tmpResult;
         }
