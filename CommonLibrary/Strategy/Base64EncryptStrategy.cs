@@ -1,6 +1,6 @@
-﻿namespace SimpleWebApi.Strategy
+﻿namespace CommonLibrary.Strategy
 {
-    public class Base64EncryptStrategy
+    public class Base64EncryptStrategy : ITransferStrategy
     {
         public string Encrypt(string clearText)
         {

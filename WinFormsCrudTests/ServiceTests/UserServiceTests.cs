@@ -4,7 +4,7 @@ using CommonLibrary.Dto;
 using SimpleWebApi.Interface;
 using SimpleWebApi.IRepository;
 using SimpleWebApi.Services;
-using SimpleWebApi.Strategy;
+using CommonLibrary.Strategy;
 
 namespace WinFormsCrudTests.ServiceTests
 {
@@ -12,17 +12,20 @@ namespace WinFormsCrudTests.ServiceTests
     {
         IUserService userService;
         private readonly Mock<IEncryptStrategy> mockEncryptStrategy;
+        private readonly Mock<ITransferStrategy> mockTransferStrategy;
         private readonly Mock<IUserRepository> mockUserRepository;
 
         public UserServiceTests()
         {
             mockEncryptStrategy = new Mock<IEncryptStrategy>();
+            mockTransferStrategy = new Mock<ITransferStrategy>();
             mockUserRepository = new Mock<IUserRepository>();
 
             var mockEncryptStrategyObject = mockEncryptStrategy.Object;
             var mockUserRepositoryObject = mockUserRepository.Object;
+            var mockTransferStrategyObject = mockTransferStrategy.Object;
 
-            userService = new UserService(mockEncryptStrategyObject, mockUserRepositoryObject);
+            userService = new UserService(mockEncryptStrategyObject, mockTransferStrategyObject, mockUserRepositoryObject);
         }
 
         [Fact]
@@ -84,6 +87,9 @@ namespace WinFormsCrudTests.ServiceTests
             SimpleUserDto simpleUserDto = new SimpleUserDto() { Id = 1, UserRole = RoleDto.User };
 
             mockEncryptStrategy.Setup(a => a.Encrypt(password)).Returns(encryptedPassword);
+            mockTransferStrategy.Setup(a => a.Decrypt(username)).Returns(username);
+            mockTransferStrategy.Setup(a => a.Decrypt(password)).Returns(password);
+
             mockUserRepository.Setup(a => a.GetSimpleUserDto(username, encryptedPassword)).Returns(ValueTask.FromResult(simpleUserDto));
 
             var result = userService.Login(username, password);
@@ -103,6 +109,8 @@ namespace WinFormsCrudTests.ServiceTests
             SimpleUserDto simpleUserDto = null;
 
             mockEncryptStrategy.Setup(a => a.Encrypt(password)).Returns(encryptedPassword);
+            mockTransferStrategy.Setup(a => a.Decrypt(username)).Returns(username);
+            mockTransferStrategy.Setup(a => a.Decrypt(password)).Returns(password);
             mockUserRepository.Setup(a => a.GetSimpleUserDto(username, encryptedPassword)).Returns(ValueTask.FromResult(simpleUserDto));
 
             var result = userService.Login(username, password);

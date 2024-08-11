@@ -1,7 +1,7 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
 
-namespace SimpleWebApi.Strategy
+namespace CommonLibrary.Strategy
 {
     public class Rfc2898EncryptStrategy : IEncryptStrategy
     {

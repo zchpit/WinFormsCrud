@@ -1,3 +1,4 @@
+using CommonLibrary.Strategy;
 using WinFormsCrud.Interface;
 using WinFormsCrud.Services;
 
@@ -15,9 +16,9 @@ namespace WinFormsCrud
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
 
-            //IEncryptStrategy encryptStrategy = new Rfc2898EncryptStrategy();
+            ITransferStrategy transferStrategy = new Base64EncryptStrategy();
 
-            IUserService userService = new UserService();
+            IUserService userService = new UserService(transferStrategy);
             ICaseService caseService = new CaseService();
 
             Application.Run(new SimpleTestForm(userService, caseService));

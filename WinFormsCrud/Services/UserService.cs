@@ -1,29 +1,28 @@
-﻿using System.IO;
-using System.Net.Http.Headers;
-using CommonLibrary.Dto;
-using WinFormsCrud.Interface;
-
-using System;
-using System.Net;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Threading.Tasks;
+﻿using CommonLibrary.Dto;
+using CommonLibrary.Strategy;
 using WinFormsCrud.Helper;
+using WinFormsCrud.Interface;
 
 
 namespace WinFormsCrud.Services
 {
     public class UserService : IUserService
     {
-        static HttpClient client = new HttpClient(); 
+        //TODO: remove HttpClient as this object have prolem with socket release. Put IHttpClientFactory:  https://cezarywalenciuk.pl/blog/programing/ihttpclientfactory-na-problem-z-httpclient
+        static HttpClient client = new HttpClient();
+        ITransferStrategy _transferStrategy;
 
-        public UserService() 
-        { 
+        public UserService(ITransferStrategy transferStrategy) 
+        {
+            _transferStrategy = transferStrategy;
         }
 
         public async ValueTask<SimpleUserDto> Login(string username, string password)
         {
-            string path = string.Concat(ApiHelper.urlBase, ApiHelper.userControllerName, "/", username,"/", password);
+            string encryptedUsername = _transferStrategy.Encrypt(username);
+            string encryptedPassword = _transferStrategy.Encrypt(password);
+
+            string path = string.Concat(ApiHelper.urlBase, ApiHelper.userControllerName, "/", encryptedUsername, "/", encryptedPassword);
 
             SimpleUserDto simpleUserDto = null;
             HttpResponseMessage response = await client.GetAsync(path);

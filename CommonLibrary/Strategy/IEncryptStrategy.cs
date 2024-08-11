@@ -1,4 +1,4 @@
-﻿namespace SimpleWebApi.Strategy
+﻿namespace CommonLibrary.Strategy
 {
     public interface IEncryptStrategy
     {

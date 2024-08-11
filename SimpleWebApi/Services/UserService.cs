@@ -1,27 +1,32 @@
 ﻿using CommonLibrary.Dto;
 using SimpleWebApi.Interface;
 using SimpleWebApi.IRepository;
-using SimpleWebApi.Strategy;
+using CommonLibrary.Strategy;
 
 namespace SimpleWebApi.Services
 {
     public class UserService : IUserService
     {
         private IEncryptStrategy encryptStrategy;
-        private IUserRepository userRepository;
+        private IUserRepository userRepository; 
+        private ITransferStrategy transferStrategy;
 
-        public UserService(IEncryptStrategy encryptStrategy, IUserRepository userRepository) 
+        public UserService(IEncryptStrategy encryptStrategy, ITransferStrategy transferStrategy, IUserRepository userRepository) 
         { 
             this.encryptStrategy = encryptStrategy;
             this.userRepository= userRepository;
+            this.transferStrategy = transferStrategy;
         }
 
-        public async ValueTask<SimpleUserDto> Login(string username, string password)
+        public async ValueTask<SimpleUserDto> Login(string encryptedUsername, string encryptedPassword)
         {
-            if (IsUserValid(username) && IsUserValid(password)) 
+            if (IsUserValid(encryptedUsername) && IsUserValid(encryptedPassword)) 
             {
-                var encryptedPassword = encryptStrategy.Encrypt(password);
-                var user = await userRepository.GetSimpleUserDto(username, encryptedPassword);
+                var username = transferStrategy.Decrypt(encryptedUsername);
+                var password = transferStrategy.Decrypt(encryptedPassword);
+
+                var encryptedPasswordDb = encryptStrategy.Encrypt(password);
+                var user = await userRepository.GetSimpleUserDto(username, encryptedPasswordDb);
                 return user;
             }
 

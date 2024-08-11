@@ -6,6 +6,7 @@ namespace WinFormsCrud.Services
 {
     public class CaseService : ICaseService
     {
+        //TODO: remove HttpClient as this object have prolem with socket release. Put IHttpClientFactory:  https://cezarywalenciuk.pl/blog/programing/ihttpclientfactory-na-problem-z-httpclient
         static HttpClient client = new HttpClient();
 
 
