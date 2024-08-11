@@ -1,5 +1,6 @@
 using CommonLibrary.Dto;
 using WinFormsCrud.Interface;
+using WinFormsCrud.IServices;
 
 namespace WinFormsCrud
 {
@@ -7,16 +8,18 @@ namespace WinFormsCrud
     {
         IUserService userService;
         ICaseService caseService;
+        IReportService reportService;
 
         SimpleUserDto? loggedUser;
         CaseDto selectedCase = null;
 
-        public SimpleTestForm(IUserService userService, ICaseService caseService)
+        public SimpleTestForm(IUserService userService, ICaseService caseService, IReportService reportService)
         {
             InitializeComponent();
 
             this.userService = userService;
             this.caseService = caseService;
+            this.reportService = reportService; 
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -37,11 +40,13 @@ namespace WinFormsCrud
                 btnLogout.Visible = true;
                 dgvCases.Visible = true;
                 gbEditRow.Visible = true;
-                
+
                 ReloadGridData(loggedUser);
 
                 tbUser.Text = string.Empty;
                 tbPassword.Text = string.Empty;
+
+                btnGenerateReport.Visible = loggedUser.UserRole == RoleDto.Manager;
             }
             else
             {
@@ -165,6 +170,12 @@ namespace WinFormsCrud
 
             caseDto.LastModifiedDate = DateTime.Now;
             caseDto.LastModifiedBy = loggedUser.Id;
+        }
+
+        private async void btnGenerateReport_Click(object sender, EventArgs e)
+        {
+            var reportEntities = await reportService.GetReport(loggedUser.Id);
+            var test = "test";
         }
     }
 }

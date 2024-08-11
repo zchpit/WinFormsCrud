@@ -1,5 +1,6 @@
 using CommonLibrary.Strategy;
 using WinFormsCrud.Interface;
+using WinFormsCrud.IServices;
 using WinFormsCrud.Services;
 
 namespace WinFormsCrud
@@ -20,8 +21,9 @@ namespace WinFormsCrud
 
             IUserService userService = new UserService(transferStrategy);
             ICaseService caseService = new CaseService();
+            IReportService reportService = new ReportService();
 
-            Application.Run(new SimpleTestForm(userService, caseService));
+            Application.Run(new SimpleTestForm(userService, caseService, reportService));
         }
     }
 }

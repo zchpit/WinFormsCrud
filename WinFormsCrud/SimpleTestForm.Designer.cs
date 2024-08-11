@@ -56,6 +56,7 @@
             label2 = new Label();
             label1 = new Label();
             btnCloseApp = new Button();
+            btnGenerateReport = new Button();
             gbLogin.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvCases).BeginInit();
             ((System.ComponentModel.ISupportInitialize)caseDtoBindingSource1).BeginInit();
@@ -307,12 +308,24 @@
             btnCloseApp.UseVisualStyleBackColor = true;
             btnCloseApp.Click += btnClose_Click;
             // 
+            // btnGenerateReport
+            // 
+            btnGenerateReport.Location = new Point(12, 84);
+            btnGenerateReport.Name = "btnGenerateReport";
+            btnGenerateReport.Size = new Size(116, 28);
+            btnGenerateReport.TabIndex = 10;
+            btnGenerateReport.Text = "Generate Report";
+            btnGenerateReport.UseVisualStyleBackColor = true;
+            btnGenerateReport.Visible = false;
+            btnGenerateReport.Click += btnGenerateReport_Click;
+            // 
             // SimpleTestForm
             // 
             AcceptButton = btnLogin;
             AutoScaleMode = AutoScaleMode.None;
             CancelButton = btnLogout;
             ClientSize = new Size(892, 443);
+            Controls.Add(btnGenerateReport);
             Controls.Add(btnCloseApp);
             Controls.Add(gbEditRow);
             Controls.Add(dgvCases);
@@ -363,5 +376,6 @@
         private DataGridViewTextBoxColumn descriptionDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn priorityDataGridViewTextBoxColumn;
         private Button btnDelete;
+        private Button btnGenerateReport;
     }
 }
