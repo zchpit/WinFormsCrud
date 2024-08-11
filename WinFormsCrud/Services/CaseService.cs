@@ -30,10 +30,7 @@ namespace WinFormsCrud.Services
                 var tmpResult = await ApiHelper
                 .urlBase
                 .AppendPathSegment(ApiHelper.caseControllerName)
-                .SetQueryParams(new
-                {
-                    userId = userId,
-                })
+                .SetQueryParams(new { userId = userId })
                 .PostJsonAsync(caseDto);
             }
         }
