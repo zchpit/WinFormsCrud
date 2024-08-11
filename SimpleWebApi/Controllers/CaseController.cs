@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SimpleWebApi.Dto;
 using SimpleWebApi.Interface;
 
 namespace SimpleWebApi.Controllers
@@ -8,15 +9,22 @@ namespace SimpleWebApi.Controllers
     public class CaseController : Controller
     {
         private readonly ILogger<CaseController> _logger;
-        private readonly ICaseService _userService;
+        private readonly ICaseService _caseService;
 
         public CaseController(ILogger<CaseController> logger, ICaseService caseService)
         {
             _logger = logger;
-            _userService = caseService;
+            _caseService = caseService;
         }
 
+        [HttpGet("{id}, {userRole}")]
+        public async ValueTask<ActionResult<List<CaseDto>>> GetUserCases(int id, int userRole)
+        {
+            RoleDto userRoleDto = RoleDto.User;
+            if (userRole <= 2)
+                userRoleDto = (RoleDto)userRole;
 
-
+            return await _caseService.GetUserCases(new SimpleUserDto() { Id = id, UserRole = userRoleDto });
+        }
     }
 }

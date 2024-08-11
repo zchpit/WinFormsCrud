@@ -28,11 +28,6 @@ namespace SimpleWebApi.Services
             return null; 
         }
 
-        public void Logout(int userId)
-        {
-            //TODO;
-        }
-
         public bool IsUserValid(string username)
         {
             if(string.IsNullOrEmpty(username)) 

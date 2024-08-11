@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
 using FluentAssertions;
 using Moq;
-using WinFormsCrud.Dto;
-using WinFormsCrud.Helpers;
-using WinFormsCrud.Interface;
-using WinFormsCrud.IRepository;
-using WinFormsCrud.Model;
-using WinFormsCrud.Services;
+using SimpleWebApi.Dto;
+using SimpleWebApi.Helpers;
+using SimpleWebApi.Interface;
+using SimpleWebApi.IRepository;
+using SimpleWebApi.Model;
+using SimpleWebApi.Services;
 
 namespace WinFormsCrudTests.ServiceTests
 {

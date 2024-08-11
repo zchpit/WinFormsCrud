@@ -1,10 +1,10 @@
 ﻿using FluentAssertions;
 using Moq;
-using WinFormsCrud.Dto;
-using WinFormsCrud.Interface;
-using WinFormsCrud.IRepository;
-using WinFormsCrud.Services;
-using WinFormsCrud.Strategy;
+using SimpleWebApi.Dto;
+using SimpleWebApi.Interface;
+using SimpleWebApi.IRepository;
+using SimpleWebApi.Services;
+using SimpleWebApi.Strategy;
 
 namespace WinFormsCrudTests.ServiceTests
 {

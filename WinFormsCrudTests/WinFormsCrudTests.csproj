@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\WinFormsCrud\WinFormsCrud.csproj" />
+    <ProjectReference Include="..\SimpleWebApi\SimpleWebApi.csproj" />
   </ItemGroup>
 
   <ItemGroup>
