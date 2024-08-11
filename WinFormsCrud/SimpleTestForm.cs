@@ -175,7 +175,7 @@ namespace WinFormsCrud
         private async void btnGenerateReport_Click(object sender, EventArgs e)
         {
             var reportEntities = await reportService.GetReport(loggedUser.Id);
-            var test = "test";
+            reportService.SaveReportToDisc(reportEntities);
         }
     }
 }

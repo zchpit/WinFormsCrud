@@ -1,4 +1,5 @@
 ﻿using CommonLibrary.Dto;
+using Newtonsoft.Json;
 using WinFormsCrud.Helper;
 using WinFormsCrud.IServices;
 
@@ -26,6 +27,17 @@ namespace WinFormsCrud.Services
             }
 
             return tmpResult;
+        }
+
+        public void SaveReportToDisc(List<ReportDto> reports)
+        {
+            var filename = @"SimpleReport_" + DateTime.Now.ToString("yyyy_MM_dd_HH_mm") + ".json";
+
+            using (StreamWriter file = File.CreateText(filename))
+            {
+                JsonSerializer serializer = new JsonSerializer();
+                serializer.Serialize(file, reports);
+            }
         }
     }
 }
