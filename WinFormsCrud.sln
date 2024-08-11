@@ -5,7 +5,7 @@ VisualStudioVersion = 17.10.35122.118
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WinFormsCrud", "WinFormsCrud\WinFormsCrud.csproj", "{A348901E-9659-4833-B3FC-428CCD2BB695}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WinFormsCrudTests", "WinFormsCrudTests\WinFormsCrudTests.csproj", "{D08DF1FE-A6C5-4E82-827F-DA3DB3BCFED5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleWebApiTests", "WinFormsCrudTests\SimpleWebApiTests.csproj", "{D08DF1FE-A6C5-4E82-827F-DA3DB3BCFED5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleWebApi", "SimpleWebApi\SimpleWebApi.csproj", "{3A52FD04-DCD0-44AD-BB23-1C79DDF29BA3}"
 EndProject
