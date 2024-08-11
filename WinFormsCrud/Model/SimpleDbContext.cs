@@ -1,7 +1,8 @@
-﻿using System.Data.Entity;
+﻿//using System.Data.Entity;
 
 namespace WinFormsCrud.Model
 {
+    /*
     public class SimpleDbContext : DbContext
     {
         public DbSet<User> Users { get; set; }
@@ -15,5 +16,5 @@ namespace WinFormsCrud.Model
             modelBuilder.Entity<User>().HasKey(e => e.Id).HasMany(a => a.UserCases);
             modelBuilder.Entity<Case>().HasKey(e => e.Id).HasMany(a => a.UserCases);
         }
-    }
+    }*/
 }

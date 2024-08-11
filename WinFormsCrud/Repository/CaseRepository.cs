@@ -1,10 +1,11 @@
-﻿using System.Data.Entity;
+﻿//using System.Data.Entity;
 using WinFormsCrud.Dto;
 using WinFormsCrud.IRepository;
 using WinFormsCrud.Model;
 
 namespace WinFormsCrud.Repository
 {
+    /*
     public class CaseRepository : ICaseRepository
     {
         private SimpleDbContext caseContext;
@@ -89,5 +90,5 @@ namespace WinFormsCrud.Repository
             Dispose(true);
             GC.SuppressFinalize(this);
         }
-    }
+    }*/
 }

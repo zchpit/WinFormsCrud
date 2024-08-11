@@ -1,29 +1,27 @@
 ﻿using WinFormsCrud.Dto;
 using WinFormsCrud.Interface;
 using WinFormsCrud.IRepository;
-using WinFormsCrud.Strategy;
+//using WinFormsCrud.Strategy;
 
 namespace WinFormsCrud.Services
 {
     public class UserService : IUserService
     {
-        private IEncryptStrategy encryptStrategy;
-        private IUserRepository userRepository;
 
-        public UserService(IEncryptStrategy encryptStrategy, IUserRepository userRepository) 
+        public UserService() 
         { 
-            this.encryptStrategy = encryptStrategy;
-            this.userRepository= userRepository;
+            //this.encryptStrategy = encryptStrategy;
         }
 
         public async ValueTask<SimpleUserDto> Login(string username, string password)
         {
+            /*
             if (IsUserValid(username) && IsUserValid(password)) 
             {
                 var encryptedPassword = encryptStrategy.Encrypt(password);
                 var user = await userRepository.GetSimpleUserDto(username, encryptedPassword);
                 return user;
-            }
+            }*/
 
             return null; 
         }

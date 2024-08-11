@@ -2,7 +2,7 @@
 using WinFormsCrud.Dto;
 
 namespace WinFormsCrud.Model
-{
+{/*
     public class User
     {
         [Key]
@@ -22,5 +22,5 @@ namespace WinFormsCrud.Model
         public int? ManagerId { get; set; }
 
         public ICollection<UserCase> UserCases { get; set; }
-    }
+    }*/
 }

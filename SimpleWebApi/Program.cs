@@ -1,14 +1,15 @@
 
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using SimpleWebApi.Model;
 using SimpleWebApi.Interface;
 using SimpleWebApi.IRepository;
-using SimpleWebApi.Model;
 using SimpleWebApi.Repository;
 using SimpleWebApi.Services;
 using SimpleWebApi.Strategy;
 using SimpleWebApi.Helpers;
 using Microsoft.Extensions.DependencyInjection;
+using System.Configuration;
 
 namespace SimpleWebApi
 {
@@ -30,10 +31,13 @@ namespace SimpleWebApi
             builder.Services.AddScoped<IUserService, UserService>();
             builder.Services.AddScoped<ICaseService, CaseService>();
 
+            builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             builder.Services.AddControllers();
-            builder.Services.AddDbContext<SimpleDbContext>(opt =>
-                opt.UseInMemoryDatabase("SimpleDbContext"));
+            var connectionString = builder.Configuration.GetConnectionString("ConnStr");
+            builder.Services.AddDbContext<SimpleDbContext>(x => x.UseSqlServer(connectionString));
+
+
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();

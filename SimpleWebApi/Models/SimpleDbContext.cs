@@ -8,9 +8,21 @@ namespace SimpleWebApi.Model
         public DbSet<Case> Cases { get; set; }
         public DbSet<UserCase> UserCases { get; set; }
 
-        public SimpleDbContext(DbContextOptions<SimpleDbContext> options) : base(options)
-        {
 
+        public SimpleDbContext(DbContextOptions<SimpleDbContext> options)
+      : base(options)
+        {
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            var configuration = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json")
+                .Build();
+
+            var connectionString = configuration.GetConnectionString("ConnStr");
+            optionsBuilder.UseSqlServer(connectionString);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

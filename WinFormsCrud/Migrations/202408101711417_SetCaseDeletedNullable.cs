@@ -1,8 +1,8 @@
 ﻿namespace WinFormsCrud.Migrations
 {
     using System;
-    using System.Data.Entity.Migrations;
-    
+    //using System.Data.Entity.Migrations;
+    /*
     public partial class SetCaseDeletedNullable : DbMigration
     {
         public override void Up()
@@ -16,5 +16,5 @@
             AlterColumn("dbo.Cases", "DeletedDate", c => c.DateTime(nullable: false));
             AlterColumn("dbo.Cases", "DeletedBy", c => c.Int(nullable: false));
         }
-    }
+    }*/
 }

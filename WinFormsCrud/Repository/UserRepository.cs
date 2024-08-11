@@ -1,10 +1,11 @@
-﻿using System.Data.Entity;
+﻿//using System.Data.Entity;
 using WinFormsCrud.Dto;
 using WinFormsCrud.IRepository;
 using WinFormsCrud.Model;
 
 namespace WinFormsCrud.Repository
 {
+    /*
     public class UserRepository : IUserRepository
     {
         private SimpleDbContext userContext;
@@ -43,5 +44,5 @@ namespace WinFormsCrud.Repository
             Dispose(true);
             GC.SuppressFinalize(this);
         }
-    }
+    }*/
 }

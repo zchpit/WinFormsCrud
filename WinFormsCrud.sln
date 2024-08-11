@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.10.35122.118
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WinFormsCrud", "WinFormsCrud\WinFormsCrud.csproj", "{A348901E-9659-4833-B3FC-428CCD2BB695}"
+	ProjectSection(ProjectDependencies) = postProject
+		{3A52FD04-DCD0-44AD-BB23-1C79DDF29BA3} = {3A52FD04-DCD0-44AD-BB23-1C79DDF29BA3}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleWebApiTests", "WinFormsCrudTests\SimpleWebApiTests.csproj", "{D08DF1FE-A6C5-4E82-827F-DA3DB3BCFED5}"
 EndProject

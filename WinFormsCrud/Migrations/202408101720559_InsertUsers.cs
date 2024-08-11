@@ -1,5 +1,5 @@
 ﻿namespace WinFormsCrud.Migrations
-{
+{/*
     using System;
     using System.Data.Entity.Migrations;
     
@@ -14,5 +14,5 @@
         public override void Down()
         {
         }
-    }
+    }*/
 }

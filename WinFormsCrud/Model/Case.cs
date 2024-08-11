@@ -2,6 +2,7 @@
 
 namespace WinFormsCrud.Model
 {
+    /*
     public class Case
     {
         [Key]
@@ -25,5 +26,5 @@ namespace WinFormsCrud.Model
         public DateTime? DeletedDate { get; set; } = DateTime.Now;
 
         public ICollection<UserCase> UserCases { get; set; }
-    }
+    }*/
 }

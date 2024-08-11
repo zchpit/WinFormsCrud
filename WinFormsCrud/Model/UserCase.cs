@@ -2,6 +2,7 @@
 
 namespace WinFormsCrud.Model
 {
+    /*
     public class UserCase
     {
         [Required]
@@ -11,5 +12,5 @@ namespace WinFormsCrud.Model
 
         public User User { get; set; }
         public Case Case { get; set; }
-    }
+    }*/
 }

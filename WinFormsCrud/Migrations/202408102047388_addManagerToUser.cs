@@ -1,5 +1,5 @@
 ﻿namespace WinFormsCrud.Migrations
-{
+{/*
     using System;
     using System.Data.Entity.Migrations;
     
@@ -16,5 +16,5 @@
             AddColumn("dbo.Cases", "ManagerId", c => c.Int());
             DropColumn("dbo.Users", "ManagerId");
         }
-    }
+    }*/
 }

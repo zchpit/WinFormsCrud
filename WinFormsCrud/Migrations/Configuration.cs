@@ -1,16 +1,16 @@
 ﻿namespace WinFormsCrud.Migrations
-{
+{    
+    /*
     using System;
-    using System.Data.Entity;
-    using System.Data.Entity.Migrations;
-    using System.Linq;
 
+    using System.Linq;
+ 
     internal sealed class Configuration : DbMigrationsConfiguration<WinFormsCrud.Model.SimpleDbContext>
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
-            ContextKey = "WinFormsCrud.Model.SimpleDbContext";
+            //AutomaticMigrationsEnabled = false;
+            //ContextKey = "WinFormsCrud.Model.SimpleDbContext";
         }
 
         protected override void Seed(WinFormsCrud.Model.SimpleDbContext context)
@@ -20,5 +20,5 @@
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method
             //  to avoid creating duplicate seed data.
         }
-    }
+    }*/
 }

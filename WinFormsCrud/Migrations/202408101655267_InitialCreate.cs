@@ -1,5 +1,6 @@
 ﻿namespace WinFormsCrud.Migrations
 {
+    /*
     using System;
     using System.Data.Entity.Migrations;
     
@@ -63,5 +64,5 @@
             DropTable("dbo.UserCases");
             DropTable("dbo.Cases");
         }
-    }
+    }*/
 }
