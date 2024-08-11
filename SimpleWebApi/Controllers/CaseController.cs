@@ -17,7 +17,7 @@ namespace SimpleWebApi.Controllers
             _caseService = caseService;
         }
 
-        [HttpGet("{id}, {userRole}")]
+        [HttpGet("{id}/{userRole}")]
         public async ValueTask<ActionResult<List<CaseDto>>> GetUserCases(int id, int userRole)
         {
             RoleDto userRoleDto = RoleDto.User;

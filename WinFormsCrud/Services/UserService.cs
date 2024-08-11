@@ -1,34 +1,40 @@
-﻿using WinFormsCrud.Dto;
+﻿using System.IO;
+using System.Net.Http.Headers;
+using WinFormsCrud.Dto;
 using WinFormsCrud.Interface;
-using WinFormsCrud.IRepository;
-//using WinFormsCrud.Strategy;
+
+using System;
+using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Threading.Tasks;
+
 
 namespace WinFormsCrud.Services
 {
     public class UserService : IUserService
     {
+        static HttpClient client = new HttpClient();
+        private const string urlBase = "https://localhost:7033/";
+        private const string userService = "User";
 
         public UserService() 
         { 
-            //this.encryptStrategy = encryptStrategy;
         }
 
         public async ValueTask<SimpleUserDto> Login(string username, string password)
         {
-            /*
-            if (IsUserValid(username) && IsUserValid(password)) 
+            string path = string.Concat(urlBase, userService, "/", username,"/", password);
+
+            SimpleUserDto simpleUserDto = null;
+            HttpResponseMessage response = await client.GetAsync(path);
+
+            if (response.IsSuccessStatusCode)
             {
-                var encryptedPassword = encryptStrategy.Encrypt(password);
-                var user = await userRepository.GetSimpleUserDto(username, encryptedPassword);
-                return user;
-            }*/
+                simpleUserDto = await response.Content.ReadAsAsync<SimpleUserDto>();
+            }
 
-            return null; 
-        }
-
-        public void Logout(int userId)
-        {
-            //TODO;
+            return simpleUserDto;
         }
 
         public bool IsUserValid(string username)

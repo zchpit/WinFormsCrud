@@ -19,7 +19,7 @@ namespace SimpleWebApi.Controllers
             _userService = userService;
         }
 
-        [HttpGet("{username}, {password}")]
+        [HttpGet("{username}/{password}")]
         public async ValueTask<ActionResult<SimpleUserDto>> Login(string username, string password)
         {
             return await _userService.Login(username, password);
