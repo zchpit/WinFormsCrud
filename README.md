@@ -16,7 +16,6 @@ Business conditions:
 
 Not implemented / wrongly implemented /fix later:
 - EntityFramework db model -> at this moment is as simple as possible without any forein keys, relations, indexes ets. It is as simple as it is possible to have working demo.
-- HttpClient in UI application -> we should not use HttpClient at all. Even with "using" statement HttpClient didn't realese all his alocation and will fill all sockets and make server deaf. We will need to implement IHttpClientFactory later. More details https://cezarywalenciuk.pl/blog/programing/ihttpclientfactory-na-problem-z-httpclient
 - Login implemened in same page -> should be as popup or other window
 - Resize UI -> should be done, maybe will be done in future
 - put Unit of Work design patter to existing Repositories
@@ -31,7 +30,7 @@ What is done:
 - application that can be used and tested as it is (it's simple, but we can show this to customer and talk what he/she would like to change)
 - sample unit tests for business logic (later it would be nice to add integration tests)
 - Report -> execute stored procedure and generate json file with report data -> simples possible solution but it works
-
+- instead of using HttpRequest that have errors inside (don't realese sockets) I have used Flurl.Http
 
 Test users:
 login: user
