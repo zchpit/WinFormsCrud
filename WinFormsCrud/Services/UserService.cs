@@ -8,15 +8,14 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using WinFormsCrud.Helper;
 
 
 namespace WinFormsCrud.Services
 {
     public class UserService : IUserService
     {
-        static HttpClient client = new HttpClient();
-        private const string urlBase = "https://localhost:7033/";
-        private const string userService = "User";
+        static HttpClient client = new HttpClient(); 
 
         public UserService() 
         { 
@@ -24,7 +23,7 @@ namespace WinFormsCrud.Services
 
         public async ValueTask<SimpleUserDto> Login(string username, string password)
         {
-            string path = string.Concat(urlBase, userService, "/", username,"/", password);
+            string path = string.Concat(ApiHelper.urlBase, ApiHelper.userControllerName, "/", username,"/", password);
 
             SimpleUserDto simpleUserDto = null;
             HttpResponseMessage response = await client.GetAsync(path);

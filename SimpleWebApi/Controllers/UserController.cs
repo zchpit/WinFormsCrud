@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SimpleWebApi.Dto;
 using SimpleWebApi.Interface;
-using SimpleWebApi.Model;
 
 namespace SimpleWebApi.Controllers
 {

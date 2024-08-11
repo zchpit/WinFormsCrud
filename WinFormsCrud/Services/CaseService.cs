@@ -1,10 +1,14 @@
 ﻿using WinFormsCrud.Dto;
+using WinFormsCrud.Helper;
 using WinFormsCrud.Interface;
 
 namespace WinFormsCrud.Services
 {
     public class CaseService : ICaseService
     {
+        static HttpClient client = new HttpClient();
+
+
         public CaseService()
         {
         }
@@ -39,11 +43,17 @@ namespace WinFormsCrud.Services
 
         public async ValueTask<List<CaseDto>> GetUserCases(SimpleUserDto simpleUserDto)
         {
-            //var tmpResult = await caseRepository.GetUserCases(simpleUserDto);
-            //var result = tmpResult.Select(a => MapCaseToCaseDto(a)).ToList();
+            string path = string.Concat(ApiHelper.urlBase, ApiHelper.caseControllerName, "/", simpleUserDto.Id, "/", (int)simpleUserDto.UserRole);
 
-            return null;
+            List<CaseDto> tmpResult = null;
+            HttpResponseMessage response = await client.GetAsync(path);
+
+            if (response.IsSuccessStatusCode)
+            {
+                tmpResult = await response.Content.ReadAsAsync<List<CaseDto>>();
+            }
+
+            return tmpResult;
         }
-
     }
 }
