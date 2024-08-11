@@ -1,4 +1,4 @@
-﻿namespace WinFormsCrud.Dto
+﻿namespace CommonLibrary.Dto
 {
     public class SimpleUserDto
     {

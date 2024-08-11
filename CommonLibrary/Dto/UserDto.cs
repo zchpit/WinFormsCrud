@@ -1,4 +1,4 @@
-﻿namespace SimpleWebApi.Dto
+﻿namespace CommonLibrary.Dto
 {
     public class UserDto
     {

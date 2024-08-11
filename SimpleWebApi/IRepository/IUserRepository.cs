@@ -1,4 +1,4 @@
-﻿using SimpleWebApi.Dto;
+﻿using CommonLibrary.Dto;
 
 namespace SimpleWebApi.IRepository
 {

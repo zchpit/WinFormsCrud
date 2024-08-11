@@ -1,4 +1,4 @@
-﻿using WinFormsCrud.Dto;
+﻿using CommonLibrary.Dto;
 
 namespace WinFormsCrud.Interface
 {

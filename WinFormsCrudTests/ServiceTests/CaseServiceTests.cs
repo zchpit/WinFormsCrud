@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using FluentAssertions;
 using Moq;
-using SimpleWebApi.Dto;
+using CommonLibrary.Dto;
 using SimpleWebApi.Helpers;
 using SimpleWebApi.Interface;
 using SimpleWebApi.IRepository;

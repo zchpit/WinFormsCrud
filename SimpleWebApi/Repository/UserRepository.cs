@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SimpleWebApi.Dto;
+using CommonLibrary.Dto;
 using SimpleWebApi.IRepository;
 using SimpleWebApi.Model;
 

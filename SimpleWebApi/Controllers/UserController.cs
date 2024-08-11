@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SimpleWebApi.Dto;
+using CommonLibrary.Dto;
 using SimpleWebApi.Interface;
 
 namespace SimpleWebApi.Controllers

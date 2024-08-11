@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using SimpleWebApi.Dto;
+using CommonLibrary.Dto;
 using SimpleWebApi.Model;
 
 namespace SimpleWebApi.Helpers

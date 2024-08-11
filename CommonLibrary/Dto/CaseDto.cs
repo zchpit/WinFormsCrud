@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace SimpleWebApi.Dto
+namespace CommonLibrary.Dto
 {
     public class CaseDto
     {

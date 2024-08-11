@@ -189,11 +189,11 @@
             // 
             // caseDtoBindingSource1
             // 
-            caseDtoBindingSource1.DataSource = typeof(Dto.CaseDto);
+            caseDtoBindingSource1.DataSource = typeof(CommonLibrary.Dto.CaseDto);
             // 
             // caseDtoBindingSource
             // 
-            caseDtoBindingSource.DataSource = typeof(Dto.CaseDto);
+            caseDtoBindingSource.DataSource = typeof(CommonLibrary.Dto.CaseDto);
             // 
             // gbEditRow
             // 
