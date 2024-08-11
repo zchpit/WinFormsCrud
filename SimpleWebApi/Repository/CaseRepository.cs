@@ -44,6 +44,8 @@ namespace SimpleWebApi.Repository
         public async Task AddCase(Case caseDto, int userId)
         {
             caseContext.Cases.Add(caseDto);
+            await caseContext.SaveChangesAsync();
+
             UserCase newUserCase = new UserCase() { CaseId = caseDto.Id, UserId = userId };
             caseContext.UserCases.Add(newUserCase);
 
