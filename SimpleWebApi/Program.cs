@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using SimpleWebApi.Helpers;
 using SimpleWebApi.Interface;
 using SimpleWebApi.IRepository;
+using SimpleWebApi.IServices;
 using SimpleWebApi.Model;
 using SimpleWebApi.Repository;
 using SimpleWebApi.Services;
@@ -25,10 +26,13 @@ namespace SimpleWebApi
             // Add services to the container.
             builder.Services.AddScoped<IEncryptStrategy, Rfc2898EncryptStrategy>();
             builder.Services.AddScoped<ITransferStrategy, Base64TransferStrategy>();
+
             builder.Services.AddScoped<ICaseRepository, CaseRepository>();
             builder.Services.AddScoped<IUserRepository, UserRepository>();
+            builder.Services.AddScoped<IReportRepository, ReportRepository>();
             builder.Services.AddScoped<IUserService, UserService>();
             builder.Services.AddScoped<ICaseService, CaseService>();
+            builder.Services.AddScoped<IReportService, ReportService>();
 
             builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
