@@ -26,5 +26,11 @@ namespace SimpleWebApi.Controllers
 
             return await _caseService.GetUserCases(new SimpleUserDto() { Id = id, UserRole = userRoleDto });
         }
+
+        [HttpPost]
+        public async Task PostTodoItem(int userId, CaseDto todoItem)
+        {
+            await _caseService.UpdateCase(todoItem, userId);
+        }
     }
 }

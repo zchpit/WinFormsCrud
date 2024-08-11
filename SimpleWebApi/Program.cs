@@ -1,15 +1,13 @@
 
 using AutoMapper;
+using CommonLibrary.Strategy;
 using Microsoft.EntityFrameworkCore;
-using SimpleWebApi.Model;
+using SimpleWebApi.Helpers;
 using SimpleWebApi.Interface;
 using SimpleWebApi.IRepository;
+using SimpleWebApi.Model;
 using SimpleWebApi.Repository;
 using SimpleWebApi.Services;
-using CommonLibrary.Strategy;
-using SimpleWebApi.Helpers;
-using Microsoft.Extensions.DependencyInjection;
-using System.Configuration;
 
 namespace SimpleWebApi
 {
@@ -26,7 +24,7 @@ namespace SimpleWebApi
 
             // Add services to the container.
             builder.Services.AddScoped<IEncryptStrategy, Rfc2898EncryptStrategy>();
-            builder.Services.AddScoped<ITransferStrategy, Base64EncryptStrategy>();
+            builder.Services.AddScoped<ITransferStrategy, Base64TransferStrategy>();
             builder.Services.AddScoped<ICaseRepository, CaseRepository>();
             builder.Services.AddScoped<IUserRepository, UserRepository>();
             builder.Services.AddScoped<IUserService, UserService>();

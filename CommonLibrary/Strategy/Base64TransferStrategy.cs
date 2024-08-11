@@ -1,6 +1,6 @@
 ﻿namespace CommonLibrary.Strategy
 {
-    public class Base64EncryptStrategy : ITransferStrategy
+    public class Base64TransferStrategy : ITransferStrategy
     {
         public string Encrypt(string clearText)
         {

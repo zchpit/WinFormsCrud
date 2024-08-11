@@ -16,7 +16,7 @@ namespace WinFormsCrud
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
 
-            ITransferStrategy transferStrategy = new Base64EncryptStrategy();
+            ITransferStrategy transferStrategy = new Base64TransferStrategy();
 
             IUserService userService = new UserService(transferStrategy);
             ICaseService caseService = new CaseService();

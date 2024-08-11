@@ -36,7 +36,7 @@ namespace SimpleWebApi.Repository
             }
 
             var userCases = caseContext.UserCases.Include(a => a.Case).Where(a => userToCheck.Contains(a.UserId)).Select(a => a.CaseId);
-            var result = await caseContext.Cases.Where(a => userCases.Contains(a.Id)).ToListAsync();
+            var result = await caseContext.Cases.Where(a => userCases.Contains(a.Id) && !a.IsDeleted).ToListAsync();
 
             return result;
         }
