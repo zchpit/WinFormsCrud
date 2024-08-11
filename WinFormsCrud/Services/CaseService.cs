@@ -1,11 +1,8 @@
 ﻿using CommonLibrary.Dto;
 using Newtonsoft.Json;
-using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Text;
 using WinFormsCrud.Helper;
 using WinFormsCrud.Interface;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace WinFormsCrud.Services
 {
