@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using CommonLibrary.Dto;
 using SimpleWebApi.Interface;
+using SimpleWebApi.Helpers;
 
 namespace SimpleWebApi.Controllers
 {
@@ -8,11 +9,11 @@ namespace SimpleWebApi.Controllers
     [Route("[controller]")]
     public class UserController : ControllerBase
     {
-        private readonly ILogger<UserController> _logger;
+        private readonly ILoggerManager _logger;
         private readonly IUserService _userService;
 
 
-        public UserController(ILogger<UserController> logger, IUserService userService)
+        public UserController(ILoggerManager logger, IUserService userService)
         {
             _logger = logger;
             _userService = userService;
@@ -21,6 +22,7 @@ namespace SimpleWebApi.Controllers
         [HttpGet("{username}/{password}")]
         public async ValueTask<ActionResult<SimpleUserDto>> Login(string username, string password)
         {
+            _logger.LogInfo("test, test");
             return await _userService.Login(username, password);
         }
     }

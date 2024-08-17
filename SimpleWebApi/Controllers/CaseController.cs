@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using CommonLibrary.Dto;
 using SimpleWebApi.Interface;
+using SimpleWebApi.Helpers;
 
 namespace SimpleWebApi.Controllers
 {
@@ -8,10 +9,10 @@ namespace SimpleWebApi.Controllers
     [Route("[controller]")]
     public class CaseController : Controller
     {
-        private readonly ILogger<CaseController> _logger;
+        private readonly ILoggerManager _logger;
         private readonly ICaseService _caseService;
 
-        public CaseController(ILogger<CaseController> logger, ICaseService caseService)
+        public CaseController(ILoggerManager logger, ICaseService caseService)
         {
             _logger = logger;
             _caseService = caseService;
