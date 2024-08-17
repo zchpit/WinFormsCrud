@@ -1,5 +1,7 @@
 ﻿using CommonLibrary.Dto;
+using CommonLibrary.Enums;
 using CommonLibrary.Strategy;
+using CommonLibrary.Validation;
 using Flurl;
 using Flurl.Http;
 using WinFormsCrud.Helper;
@@ -18,38 +20,28 @@ namespace WinFormsCrud.Services
 
         public async ValueTask<SimpleUserDto> Login(string username, string password)
         {
-            string encryptedUsername = _transferStrategy.Encrypt(username);
-            string encryptedPassword = _transferStrategy.Encrypt(password);
+            var usernameValidation = InputValidation.IsUserValid(username);
+            var passwordValidation = InputValidation.IsPasswordValid(username);
 
-            var simpleUserDto = await ApiHelper
-                                .urlBase
-                                .AppendPathSegment(ApiHelper.userControllerName)
-                                .AppendPathSegment(encryptedUsername)
-                                .AppendPathSegment(encryptedPassword)
-                                .GetAsync()
-                                .ReceiveJson<SimpleUserDto>();
+            if (!usernameValidation.Any() && !passwordValidation.Any())
+            {
+                string encryptedUsername = _transferStrategy.Encrypt(username);
+                string encryptedPassword = _transferStrategy.Encrypt(password);
 
-            return simpleUserDto;
-        }
+                var simpleUserDto = await ApiHelper
+                                    .urlBase
+                                    .AppendPathSegment(ApiHelper.userControllerName)
+                                    .AppendPathSegment(encryptedUsername)
+                                    .AppendPathSegment(encryptedPassword)
+                                    .GetAsync()
+                                    .ReceiveJson<SimpleUserDto>();
 
-        public bool IsUserValid(string username)
-        {
-            if(string.IsNullOrEmpty(username)) 
-                return false;
-
-            return true;
-        }
-        public bool IsPasswordValid(string password)
-        {
-            if (string.IsNullOrEmpty(password))
-                return false;
-
-            if(password.Length < 5)
-                return false;
-
-            //some other validation stuff like Regexp etc.
-
-            return true;
+                return simpleUserDto;
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }

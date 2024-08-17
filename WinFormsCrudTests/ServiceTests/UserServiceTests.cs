@@ -28,55 +28,7 @@ namespace WinFormsCrudTests.ServiceTests
             userService = new UserService(mockEncryptStrategyObject, mockTransferStrategyObject, mockUserRepositoryObject);
         }
 
-        [Fact]
-        public void IsUserValid_Empty_ReturnFalse()
-        {
-            string empty = string.Empty;
 
-            var result = userService.IsUserValid(empty);
-
-            result.Should().BeFalse();
-        }
-
-        [Fact]
-        public void IsUserValid_HaveValue_ReturnTrue()
-        {
-            string empty = "test";
-
-            var result = userService.IsUserValid(empty);
-
-            result.Should().BeTrue();
-        }
-
-        [Fact]
-        public void IsPasswordValid_Empty_ReturnFalse()
-        {
-            string empty = string.Empty;
-
-            var result = userService.IsPasswordValid(empty);
-
-            result.Should().BeFalse();
-        }
-
-        [Fact]
-        public void IsPasswordValid_HaveLessThan5_ReturnFalse()
-        {
-            string empty = "ta";
-
-            var result = userService.IsPasswordValid(empty);
-
-            result.Should().BeFalse();
-        }
-
-        [Fact]
-        public void IsPasswordValid_HaveMoreThan5_ReturnTrue()
-        {
-            string empty = "testsasasa";
-
-            var result = userService.IsPasswordValid(empty);
-
-            result.Should().BeTrue();
-        }
 
         [Fact]
         public void Login_UserPasswordCorrect_ReturnSimleUserDto()

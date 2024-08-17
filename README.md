@@ -33,8 +33,8 @@ What is done:
 - instead of using HttpRequest that have errors inside (don't realese sockets) I have used Flurl.Http
 
 Test users:
-login: user
-password: user 
+login: test
+password: test 
 
 Test managers:
 login: manager
