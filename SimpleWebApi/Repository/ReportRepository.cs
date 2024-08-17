@@ -18,7 +18,7 @@ namespace SimpleWebApi.Repository
 
         public async ValueTask<List<ReportDto>> GetReport(int managerId)
         {
-            var result = reportContext.Database.SqlQuery<ReportDto>($"SimpleReport @ManagerId = {managerId}").ToList();
+            var result = reportContext.Database.SqlQuery<ReportDto>($"MonthlyNumOfCasesPerUserReport @ManagerId = {managerId}").ToList();
 
             return result;
         }
