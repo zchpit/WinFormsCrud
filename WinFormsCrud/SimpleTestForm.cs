@@ -1,4 +1,5 @@
 using CommonLibrary.Dto;
+using System.Windows.Forms;
 using WinFormsCrud.Interface;
 using WinFormsCrud.IServices;
 
@@ -175,7 +176,13 @@ namespace WinFormsCrud
         private async void btnGenerateReport_Click(object sender, EventArgs e)
         {
             var reportEntities = await reportService.GetReport(loggedUser.Id);
-            reportService.SaveReportToDisc(reportEntities);
+            string savedReportLocation = await reportService.SaveReportToDisc(reportEntities);
+
+            if (!string.IsNullOrEmpty(savedReportLocation))
+            {
+                string message = string.Concat("File created on: ", savedReportLocation);
+                MessageBox.Show(message);
+            }
         }
     }
 }

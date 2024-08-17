@@ -27,7 +27,7 @@ namespace WinFormsCrud.Services
             return tmpResult;
         }
 
-        public void SaveReportToDisc(List<ReportDto> reports)
+        public async ValueTask<string> SaveReportToDisc(List<ReportDto> reports)
         {
             var filename = @"SimpleReport_" + DateTime.Now.ToString("yyyy_MM_dd_HH_mm") + ".json";
 
@@ -36,6 +36,8 @@ namespace WinFormsCrud.Services
                 JsonSerializer serializer = new JsonSerializer();
                 serializer.Serialize(file, reports);
             }
+
+            return filename;
         }
     }
 }
