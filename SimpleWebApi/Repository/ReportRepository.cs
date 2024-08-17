@@ -1,7 +1,5 @@
 ﻿using CommonLibrary.Dto;
 using SimpleWebApi.Model;
-using System.Data.SqlClient;
-using System.Data.Entity;
 using Microsoft.EntityFrameworkCore;
 using SimpleWebApi.IRepository;
 
@@ -18,7 +16,7 @@ namespace SimpleWebApi.Repository
 
         public async ValueTask<List<ReportDto>> GetReport(int managerId)
         {
-            var result = reportContext.Database.SqlQuery<ReportDto>($"MonthlyNumOfCasesPerUserReport @ManagerId = {managerId}").ToList();
+            var result = await reportContext.Database.SqlQuery<ReportDto>($"MonthlyNumOfCasesPerUserReport @ManagerId = {managerId}").ToListAsync();
 
             return result;
         }
