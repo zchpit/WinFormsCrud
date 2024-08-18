@@ -2,9 +2,6 @@ using CommonLibrary.Strategy;
 using WinFormsCrud.Interface;
 using WinFormsCrud.IServices;
 using WinFormsCrud.Services;
-using Microsoft.Extensions.Configuration;
-using System.Configuration;
-using WinFormsCrud.Helper;
 
 namespace WinFormsCrud
 {
