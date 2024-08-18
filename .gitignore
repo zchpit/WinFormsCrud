@@ -361,3 +361,6 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# Local Log files
+/SimpleWebApi/src/WinFormsCrud/SimpleWebApi/internal_logs/internallog.txt
