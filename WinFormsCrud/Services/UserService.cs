@@ -3,6 +3,7 @@ using CommonLibrary.Strategy;
 using CommonLibrary.Validation;
 using Flurl;
 using Flurl.Http;
+using NLog;
 using WinFormsCrud.Helper;
 using WinFormsCrud.Interface;
 
@@ -10,37 +11,44 @@ namespace WinFormsCrud.Services
 {
     public class UserService : IUserService
     {
-        ITransferStrategy _transferStrategy;
+        ITransferStrategy transferStrategy;
+        ILogger logger;
 
-        public UserService(ITransferStrategy transferStrategy) 
+        public UserService(ITransferStrategy transferStrategy, ILogger logger) 
         {
-            _transferStrategy = transferStrategy;
+            this.transferStrategy = transferStrategy;
+            this.logger = logger;
         }
 
         public async ValueTask<SimpleUserDto> Login(string username, string password)
         {
-            var usernameValidation = InputValidation.IsUserValid(username);
-            var passwordValidation = InputValidation.IsPasswordValid(username);
-
-            if (!usernameValidation.Any() && !passwordValidation.Any())
+            try
             {
-                string encryptedUsername = _transferStrategy.Encrypt(username);
-                string encryptedPassword = _transferStrategy.Encrypt(password);
+                var usernameValidation = InputValidation.IsUserValid(username);
+                var passwordValidation = InputValidation.IsPasswordValid(username);
 
-                var simpleUserDto = await ApiHelper
-                                    .urlBase
-                                    .AppendPathSegment(ApiHelper.userControllerName)
-                                    .AppendPathSegment(encryptedUsername)
-                                    .AppendPathSegment(encryptedPassword)
-                                    .GetAsync()
-                                    .ReceiveJson<SimpleUserDto>();
+                if (!usernameValidation.Any() && !passwordValidation.Any())
+                {
+                    string encryptedUsername = transferStrategy.Encrypt(username);
+                    string encryptedPassword = transferStrategy.Encrypt(password);
 
-                return simpleUserDto;
+                    var simpleUserDto = await ApiHelper
+                                        .urlBase
+                                        .AppendPathSegment(ApiHelper.userControllerName)
+                                        .AppendPathSegment(encryptedUsername)
+                                        .AppendPathSegment(encryptedPassword)
+                                        .GetAsync()
+                                        .ReceiveJson<SimpleUserDto>();
+
+                    return simpleUserDto;
+                }
             }
-            else
+            catch (Exception ex)
             {
-                return null;
+                logger.Error(ex);
             }
+
+            return null;
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using CommonLibrary.Dto;
 using Flurl;
 using Flurl.Http;
+using NLog;
 using WinFormsCrud.Helper;
 using WinFormsCrud.Interface;
 
@@ -8,8 +9,11 @@ namespace WinFormsCrud.Services
 {
     public class CaseService : ICaseService
     {
-        public CaseService()
+        ILogger logger;
+
+        public CaseService(ILogger logger)
         {
+            this.logger = logger;
         }
 
         public bool IsValidCase(CaseDto caseDto)
@@ -27,17 +31,26 @@ namespace WinFormsCrud.Services
         {
             if (userId > 0)
             {
-                var tmpResult = await ApiHelper
-                .urlBase
-                .AppendPathSegment(ApiHelper.caseControllerName)
-                .SetQueryParams(new { userId = userId })
-                .PostJsonAsync(caseDto);
+                try
+                {
+                    var tmpResult = await ApiHelper
+                    .urlBase
+                    .AppendPathSegment(ApiHelper.caseControllerName)
+                    .SetQueryParams(new { userId = userId })
+                    .PostJsonAsync(caseDto);
+                }
+                catch (Exception ex)
+                {
+                    logger.Error(ex);
+                }
             }
         }
 
         public async ValueTask<List<CaseDto>> GetUserCases(SimpleUserDto simpleUserDto)
         {
-            var tmpResult = await ApiHelper
+            try
+            {
+                var tmpResult = await ApiHelper
                     .urlBase
                     .AppendPathSegment(ApiHelper.caseControllerName)
                     .AppendPathSegment(simpleUserDto.Id)
@@ -45,7 +58,14 @@ namespace WinFormsCrud.Services
                     .GetAsync()
                     .ReceiveJson<List<CaseDto>>();
 
-            return tmpResult;
+                return tmpResult;
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex);
+            }
+
+            return new List<CaseDto> { };
         }
     }
 }

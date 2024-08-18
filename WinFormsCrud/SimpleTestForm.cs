@@ -190,14 +190,21 @@ namespace WinFormsCrud
             string fileName = string.Concat(reportLocation, reportName);
 
             var reportEntities = await reportService.GetReport(loggedUser.Id);
-
-            reportService.CreateFolderIfNotExists(reportLocation);
-            string savedReportLocation = await reportService.SaveReportToDisc(reportEntities, fileName);
-
-            if (!string.IsNullOrEmpty(savedReportLocation))
+            if (reportEntities == null)
             {
-                string message = string.Concat("File created on: ", savedReportLocation);
+                string message = string.Concat("Error occurred while creating report. Report not created");
                 MessageBox.Show(message);
+            }
+            else
+            {
+                reportService.CreateFolderIfNotExists(reportLocation);
+                string savedReportLocation = await reportService.SaveReportToDisc(reportEntities, fileName);
+
+                if (!string.IsNullOrEmpty(savedReportLocation))
+                {
+                    string message = string.Concat("File created on: ", savedReportLocation);
+                    MessageBox.Show(message);
+                }
             }
         }
     }
