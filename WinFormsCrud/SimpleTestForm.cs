@@ -4,6 +4,7 @@ using WinFormsCrud.Helper;
 using WinFormsCrud.Interface;
 using WinFormsCrud.IServices;
 using Microsoft.Extensions.Configuration;
+using NLog;
 
 namespace WinFormsCrud
 {
@@ -13,17 +14,19 @@ namespace WinFormsCrud
         ICaseService caseService;
         IReportService reportService;
         private readonly IConfiguration _configuration;
+        ILogger logger;
 
         SimpleUserDto? loggedUser;
         CaseDto selectedCase = null;
 
-        public SimpleTestForm(IUserService userService, ICaseService caseService, IReportService reportService)
+        public SimpleTestForm(IUserService userService, ICaseService caseService, IReportService reportService, ILogger logger)
         {
             InitializeComponent();
 
             this.userService = userService;
             this.caseService = caseService;
             this.reportService = reportService;
+            this.logger = logger;
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -40,6 +43,8 @@ namespace WinFormsCrud
             loggedUser = await userService.Login(user, password);
             if (loggedUser != null)
             {
+                logger.Info(string.Concat("Login sucess for user: ", user));
+
                 gbLogin.Visible = false;
                 btnLogout.Visible = true;
                 dgvCases.Visible = true;
@@ -55,6 +60,7 @@ namespace WinFormsCrud
             else
             {
                 lbError.Visible = true;
+                logger.Warn(string.Concat("Login failed for user: ",user));
             }
         }
 
