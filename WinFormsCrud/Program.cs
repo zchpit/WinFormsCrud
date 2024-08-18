@@ -22,9 +22,9 @@ namespace WinFormsCrud
 
             ILogger logger = LogManager.GetCurrentClassLogger();
             ITransferStrategy transferStrategy = new Base64TransferStrategy();
-            IUserService userService = new UserService(transferStrategy);
-            ICaseService caseService = new CaseService();
-            IReportService reportService = new ReportService();
+            IUserService userService = new UserService(transferStrategy, logger);
+            ICaseService caseService = new CaseService(logger);
+            IReportService reportService = new ReportService(logger);
 
             Application.Run(new SimpleTestForm(userService, caseService, reportService, logger));
         }
