@@ -58,6 +58,7 @@ namespace SimpleWebApi
 
             var logger = app.Services.GetRequiredService<ILoggerManager>();
             app.ConfigureExceptionHandler(logger);
+            app.ConfigureCustomExceptionMiddleware();
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())

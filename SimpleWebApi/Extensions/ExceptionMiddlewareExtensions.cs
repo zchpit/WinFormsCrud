@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Diagnostics;
+using SimpleWebApi.CustomExceptionMiddleware;
 using SimpleWebApi.Helpers;
 using SimpleWebApi.Models;
 using System.Net;
@@ -27,6 +28,11 @@ namespace SimpleWebApi.Extensions
                     }
                 });
             });
+        }
+
+        public static void ConfigureCustomExceptionMiddleware(this IApplicationBuilder app)
+        {
+            app.UseMiddleware<ExceptionMiddleware>();
         }
     }
 }
