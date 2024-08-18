@@ -2,6 +2,9 @@ using CommonLibrary.Strategy;
 using WinFormsCrud.Interface;
 using WinFormsCrud.IServices;
 using WinFormsCrud.Services;
+using Microsoft.Extensions.Configuration;
+using System.Configuration;
+using WinFormsCrud.Helper;
 
 namespace WinFormsCrud
 {
@@ -18,7 +21,6 @@ namespace WinFormsCrud
             ApplicationConfiguration.Initialize();
 
             ITransferStrategy transferStrategy = new Base64TransferStrategy();
-
             IUserService userService = new UserService(transferStrategy);
             ICaseService caseService = new CaseService();
             IReportService reportService = new ReportService();

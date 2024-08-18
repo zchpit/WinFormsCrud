@@ -1,7 +1,9 @@
 using CommonLibrary.Dto;
 using System.Windows.Forms;
+using WinFormsCrud.Helper;
 using WinFormsCrud.Interface;
 using WinFormsCrud.IServices;
+using Microsoft.Extensions.Configuration;
 
 namespace WinFormsCrud
 {
@@ -10,6 +12,7 @@ namespace WinFormsCrud
         IUserService userService;
         ICaseService caseService;
         IReportService reportService;
+        private readonly IConfiguration _configuration;
 
         SimpleUserDto? loggedUser;
         CaseDto selectedCase = null;
@@ -20,7 +23,7 @@ namespace WinFormsCrud
 
             this.userService = userService;
             this.caseService = caseService;
-            this.reportService = reportService; 
+            this.reportService = reportService;
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -175,8 +178,15 @@ namespace WinFormsCrud
 
         private async void btnGenerateReport_Click(object sender, EventArgs e)
         {
+            string reportName = AppSettings.ReportFileSettings().ReportName;
+            string reportLocation = AppSettings.ReportFileSettings().ReportLocation;
+
+            string fileName = string.Concat(reportLocation, reportName);
+
             var reportEntities = await reportService.GetReport(loggedUser.Id);
-            string savedReportLocation = await reportService.SaveReportToDisc(reportEntities);
+
+            reportService.CreateFolderIfNotExists(reportLocation);
+            string savedReportLocation = await reportService.SaveReportToDisc(reportEntities, fileName);
 
             if (!string.IsNullOrEmpty(savedReportLocation))
             {

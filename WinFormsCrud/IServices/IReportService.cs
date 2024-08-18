@@ -5,6 +5,7 @@ namespace WinFormsCrud.IServices
     public interface IReportService
     {
         ValueTask<List<ReportDto>> GetReport(int managerId);
-        ValueTask<string> SaveReportToDisc(List<ReportDto> reports);
+        ValueTask<string> SaveReportToDisc(List<ReportDto> reports, string fileName);
+        void CreateFolderIfNotExists(string folderPath);
     }
 }

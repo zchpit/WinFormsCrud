@@ -27,9 +27,9 @@ namespace WinFormsCrud.Services
             return tmpResult;
         }
 
-        public async ValueTask<string> SaveReportToDisc(List<ReportDto> reports)
+        public async ValueTask<string> SaveReportToDisc(List<ReportDto> reports, string fileName)
         {
-            var filename = @"SimpleReport_" + DateTime.Now.ToString("yyyy_MM_dd_HH_mm") + ".json";
+            var filename = string.Concat(fileName, DateTime.Now.ToString("yyyy_MM_dd_HH_mm"), ".json");
 
             using (StreamWriter file = File.CreateText(filename))
             {
@@ -38,6 +38,14 @@ namespace WinFormsCrud.Services
             }
 
             return filename;
+        }
+
+        public void CreateFolderIfNotExists(string folderPath)
+        {
+            bool exists = System.IO.Directory.Exists(folderPath);
+
+            if (!exists)
+                System.IO.Directory.CreateDirectory(folderPath);
         }
     }
 }
