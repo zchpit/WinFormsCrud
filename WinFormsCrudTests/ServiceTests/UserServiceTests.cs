@@ -28,8 +28,6 @@ namespace WinFormsCrudTests.ServiceTests
             userService = new UserService(mockEncryptStrategyObject, mockTransferStrategyObject, mockUserRepositoryObject);
         }
 
-
-
         [Fact]
         public void Login_UserPasswordCorrect_ReturnSimleUserDto()
         {

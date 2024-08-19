@@ -11,6 +11,7 @@ namespace SimpleWebApiIntegrationTests.ControllerTests
     {
         private readonly TestApi _testApi;
 
+
         public CaseControllerTests()
         {
             _testApi = new TestApi();
@@ -63,6 +64,27 @@ namespace SimpleWebApiIntegrationTests.ControllerTests
             responsePost.EnsureSuccessStatusCode(); // Status Code 200-299
             responsePost.IsSuccessStatusCode.Should().BeTrue();
             responseBodyPost.Should().BeEmpty();
+        }
+
+        [Theory]
+        [InlineData("/Case?userId=2")]
+        public async Task UpdateCase_CheckValidation_BadRequest(string urlForUpdate)
+        {
+            // Arrange
+            var client = _testApi.Client;
+
+            // Act
+            CaseDto caseDtoToUpdate = new CaseDto() { Id = 2, Header = null, Description = null };
+
+            var responsePost = await client.PostAsJsonAsync<CaseDto>(urlForUpdate, caseDtoToUpdate);
+            string responseBodyPost = await responsePost.Content.ReadAsStringAsync();
+
+            // Assert
+            responsePost.StatusCode.Should().Be(System.Net.HttpStatusCode.BadRequest);
+            responsePost.IsSuccessStatusCode.Should().BeFalse();
+            responseBodyPost.Should().Contain("One or more validation errors occurred.");
+            responseBodyPost.Should().Contain("The Header field is required.");
+
         }
     }
 }
