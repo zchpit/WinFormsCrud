@@ -12,9 +12,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleWebApiTests", "WinFor
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleWebApi", "SimpleWebApi\SimpleWebApi.csproj", "{3A52FD04-DCD0-44AD-BB23-1C79DDF29BA3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonLibrary", "CommonLibrary\CommonLibrary.csproj", "{4B9AF064-B1A6-4B88-99B4-6542359559C8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommonLibrary", "CommonLibrary\CommonLibrary.csproj", "{4B9AF064-B1A6-4B88-99B4-6542359559C8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonLibraryTests", "CommonLibraryTests\CommonLibraryTests.csproj", "{182F2D38-AF64-4B7E-B8C7-6AF2CD54457B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommonLibraryTests", "CommonLibraryTests\CommonLibraryTests.csproj", "{182F2D38-AF64-4B7E-B8C7-6AF2CD54457B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleWebApiIntegrationTests", "SimpleWebApiIntegrationTests\SimpleWebApiIntegrationTests.csproj", "{B337E858-2488-49B8-8316-6670DD19DC6E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -42,6 +44,10 @@ Global
 		{182F2D38-AF64-4B7E-B8C7-6AF2CD54457B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{182F2D38-AF64-4B7E-B8C7-6AF2CD54457B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{182F2D38-AF64-4B7E-B8C7-6AF2CD54457B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B337E858-2488-49B8-8316-6670DD19DC6E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B337E858-2488-49B8-8316-6670DD19DC6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B337E858-2488-49B8-8316-6670DD19DC6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B337E858-2488-49B8-8316-6670DD19DC6E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

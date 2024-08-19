@@ -1,4 +1,5 @@
-﻿using SimpleWebApi.Helpers;
+﻿using CommonLibrary.Consts;
+using SimpleWebApi.Helpers;
 using SimpleWebApi.Models;
 using System.Net;
 
@@ -39,8 +40,8 @@ namespace SimpleWebApi.CustomExceptionMiddleware
 
             var message = exception switch
             {
-                AccessViolationException => "Access violation error from the custom middleware",
-                _ => "Internal Server Error from the custom middleware."
+                AccessViolationException => ConstStrings.MiddlewareAccessViolationExceptionText,
+                _ => ConstStrings.MiddlewareExceptionText
             };
 
             await context.Response.WriteAsync(new ErrorDetails()
