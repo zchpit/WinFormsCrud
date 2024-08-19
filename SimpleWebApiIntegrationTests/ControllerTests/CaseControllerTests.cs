@@ -18,7 +18,7 @@ namespace SimpleWebApiIntegrationTests.ControllerTests
 
         public CaseControllerTests()
         {
-            _testApi = new TestApi(services => services.AddScoped<IUserService, TestUserService>());
+            _testApi = new TestApi(services => services.AddSingleton<IUserService, TestUserService>());
         }
 
         [Theory]

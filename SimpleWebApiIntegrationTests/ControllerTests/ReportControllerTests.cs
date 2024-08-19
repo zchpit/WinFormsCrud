@@ -16,7 +16,7 @@ namespace SimpleWebApiIntegrationTests.ControllerTests
 
         public ReportControllerTests()
         {
-            _testApi = new TestApi(services => services.AddScoped<IReportService, TestReportService>());
+            _testApi = new TestApi(services => services.AddSingleton<IReportService, TestReportService>());
         }
 
         [Theory]
