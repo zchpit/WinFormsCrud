@@ -1,9 +1,9 @@
-﻿using CommonLibrary.Consts;
-using CommonLibrary.Dto;
+﻿using CommonLibrary.Dto;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Newtonsoft.Json;
 using SimpleWebApi;
+using System.Net.Http.Json;
 
 
 namespace SimpleWebApiIntegrationTests.ControllerTests
@@ -42,6 +42,28 @@ namespace SimpleWebApiIntegrationTests.ControllerTests
                 caseDtos.Should().NotBeNull();
                 caseDtos.Count().Should().BeGreaterThan(0);
             }
+        }
+
+        [Theory]
+        [InlineData("/Case/2/1", "/Case?userId=2")]
+        public async Task UpdateCase_SendRequestWithoutAnyChange_MakeSureApiMethodExists(string urlForTestCases, string urlForUpdate)
+        {
+            // Arrange
+            var client = _factory.CreateClient();
+
+            // Act
+            var responseGetCases = await client.GetAsync(urlForTestCases);
+            string responseBodyGetCases = await responseGetCases.Content.ReadAsStringAsync();
+            List<CaseDto> caseDtos = JsonConvert.DeserializeObject<List<CaseDto>>(responseBodyGetCases);
+            CaseDto caseDtoToUpdate = caseDtos.First();
+
+            var responsePost = await client.PostAsJsonAsync<CaseDto>(urlForUpdate, caseDtoToUpdate);
+            string responseBodyPost = await responsePost.Content.ReadAsStringAsync();
+
+            // Assert
+            responsePost.EnsureSuccessStatusCode(); // Status Code 200-299
+            responsePost.IsSuccessStatusCode.Should().BeTrue();
+            responseBodyPost.Should().BeEmpty();
         }
     }
 }
