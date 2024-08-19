@@ -41,7 +41,7 @@ namespace SimpleWebApiIntegrationTests.ControllerTests
             {
                 caseDtos = JsonConvert.DeserializeObject<List<CaseDto>>(responseBody);
             }
-            finally 
+            finally
             {
                 caseDtos.Should().NotBeNull();
                 caseDtos.Count().Should().BeGreaterThan(0);

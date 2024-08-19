@@ -30,7 +30,7 @@ namespace SimpleWebApiTests.ControllerTests
         public async void Login_IsValidCase_CallLoginOnce()
         {
             var simpleUserDto = It.IsAny<SimpleUserDto>();
-            
+
             userService.Setup(a => a.Login(It.IsAny<string>(), It.IsAny<string>())).ReturnsAsync(simpleUserDto);
 
             var result = await userController.Login(It.IsAny<string>(), It.IsAny<string>());

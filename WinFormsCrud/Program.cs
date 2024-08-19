@@ -3,7 +3,6 @@ using NLog;
 using WinFormsCrud.Interface;
 using WinFormsCrud.IServices;
 using WinFormsCrud.Services;
-using NLog;
 
 namespace WinFormsCrud
 {

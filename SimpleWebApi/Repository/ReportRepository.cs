@@ -1,7 +1,7 @@
 ﻿using CommonLibrary.Dto;
-using SimpleWebApi.Model;
 using Microsoft.EntityFrameworkCore;
 using SimpleWebApi.IRepository;
+using SimpleWebApi.Model;
 
 namespace SimpleWebApi.Repository
 {

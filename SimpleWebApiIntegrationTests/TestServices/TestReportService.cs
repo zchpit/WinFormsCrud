@@ -5,11 +5,11 @@ using System.Diagnostics.CodeAnalysis;
 namespace SimpleWebApiIntegrationTests.TestServices
 {
     [ExcludeFromCodeCoverage]
-    public class TestReportService : IReportService 
+    public class TestReportService : IReportService
     {
         public async ValueTask<List<ReportDto>> GetReport(int managerId)
         {
-            if(managerId == 1)
+            if (managerId == 1)
             {
                 List<ReportDto> managerList = new List<ReportDto>();
                 managerList.Add(new ReportDto() { Name = "test", Month = "08-2020", NumOfCases = 1 });

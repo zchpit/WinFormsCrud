@@ -102,7 +102,7 @@ namespace WinFormsCrudTests.ServiceTests
             await caseService.UpdateCase(caseDto, userId);
 
             mockCaseRepository.Verify(a => a.UpdateCase(It.IsAny<Case>(), It.IsAny<int>()), Times.Once);
-            mockCaseRepository.Verify(a => a.AddCase(It.IsAny<Case>(),  It.IsAny<int>()), Times.Never);
+            mockCaseRepository.Verify(a => a.AddCase(It.IsAny<Case>(), It.IsAny<int>()), Times.Never);
         }
 
         [Fact]

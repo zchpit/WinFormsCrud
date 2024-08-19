@@ -34,7 +34,7 @@ namespace WinFormsCrudTests.ServiceTests
         public void Login_UserPasswordCorrect_ReturnSimleUserDto()
         {
             string username = "goodUserName";
-            string password =  "goodPassword";
+            string password = "goodPassword";
             string encryptedPassword = "encryptedPassword";
             SimpleUserDto simpleUserDto = new SimpleUserDto() { Id = 1, UserRole = RoleDto.User };
 
@@ -48,7 +48,7 @@ namespace WinFormsCrudTests.ServiceTests
 
             result.Should().NotBeNull();
             result.Result.Id.Should().Be(1);
-            mockEncryptStrategy.Verify(a =>  a.Encrypt(password), Times.Once);
+            mockEncryptStrategy.Verify(a => a.Encrypt(password), Times.Once);
             mockUserRepository.Verify(a => a.GetSimpleUserDto(username, encryptedPassword), Times.Once);
         }
 

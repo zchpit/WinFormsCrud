@@ -26,7 +26,7 @@ namespace WinFormsCrudTests.ServiceTests
         public async void IsValidCase_GetReport_ReturnReportResult()
         {
             int managerId = It.IsAny<int>();
-            List<ReportDto> reportListResult = new List<ReportDto>() { new ReportDto(){ Name = It.IsAny<string>(), Month = It.IsAny<string>(), NumOfCases = It.IsAny<int>() } };
+            List<ReportDto> reportListResult = new List<ReportDto>() { new ReportDto() { Name = It.IsAny<string>(), Month = It.IsAny<string>(), NumOfCases = It.IsAny<int>() } };
             mockReportRepository.Setup(a => a.GetReport(managerId)).ReturnsAsync(reportListResult);
 
             var result = await reportService.GetReport(managerId);

@@ -1,10 +1,9 @@
 using CommonLibrary.Dto;
-using System.Windows.Forms;
+using Microsoft.Extensions.Configuration;
+using NLog;
 using WinFormsCrud.Helper;
 using WinFormsCrud.Interface;
 using WinFormsCrud.IServices;
-using Microsoft.Extensions.Configuration;
-using NLog;
 
 namespace WinFormsCrud
 {
@@ -60,7 +59,7 @@ namespace WinFormsCrud
             else
             {
                 lbError.Visible = true;
-                logger.Warn(string.Concat("Login failed for user: ",user));
+                logger.Warn(string.Concat("Login failed for user: ", user));
             }
         }
 

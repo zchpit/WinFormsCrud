@@ -14,7 +14,7 @@ namespace WinFormsCrud.Services
         ITransferStrategy transferStrategy;
         ILogger logger;
 
-        public UserService(ITransferStrategy transferStrategy, ILogger logger) 
+        public UserService(ITransferStrategy transferStrategy, ILogger logger)
         {
             this.transferStrategy = transferStrategy;
             this.logger = logger;

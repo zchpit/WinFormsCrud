@@ -1,21 +1,21 @@
 ﻿using CommonLibrary.Dto;
 using CommonLibrary.Strategy;
 using CommonLibrary.Validation;
-using SimpleWebApi.IServices;
 using SimpleWebApi.IRepository;
+using SimpleWebApi.IServices;
 
 namespace SimpleWebApi.Services
 {
     public class UserService : IUserService
     {
         private IEncryptStrategy encryptStrategy;
-        private IUserRepository userRepository; 
+        private IUserRepository userRepository;
         private ITransferStrategy transferStrategy;
 
-        public UserService(IEncryptStrategy encryptStrategy, ITransferStrategy transferStrategy, IUserRepository userRepository) 
-        { 
+        public UserService(IEncryptStrategy encryptStrategy, ITransferStrategy transferStrategy, IUserRepository userRepository)
+        {
             this.encryptStrategy = encryptStrategy;
-            this.userRepository= userRepository;
+            this.userRepository = userRepository;
             this.transferStrategy = transferStrategy;
         }
 
@@ -34,7 +34,7 @@ namespace SimpleWebApi.Services
                 return user;
             }
 
-            return null; 
+            return null;
         }
     }
 }

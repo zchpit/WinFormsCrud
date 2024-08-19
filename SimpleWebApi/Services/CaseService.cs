@@ -1,7 +1,7 @@
-﻿using CommonLibrary.Dto;
-using SimpleWebApi.IServices;
+﻿using AutoMapper;
+using CommonLibrary.Dto;
 using SimpleWebApi.IRepository;
-using AutoMapper;
+using SimpleWebApi.IServices;
 using SimpleWebApi.Model;
 
 namespace SimpleWebApi.Services
