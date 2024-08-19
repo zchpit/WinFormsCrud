@@ -57,6 +57,7 @@ namespace SimpleWebApi.Repository
             var toUpdate = await caseContext.Cases.FirstOrDefaultAsync(x => x.Id == caseDto.Id);
             if (toUpdate != null)
             {
+                toUpdate.Header = caseDto.Header;
                 toUpdate.Description = caseDto.Description;
                 toUpdate.Priority = caseDto.Priority;
                 toUpdate.LastModifiedBy = caseDto.LastModifiedBy;

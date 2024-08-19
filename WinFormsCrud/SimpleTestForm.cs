@@ -121,8 +121,8 @@ namespace WinFormsCrud
             }
             else
             {
-                await caseService.UpdateCase(caseDto, loggedUser.Id);
-                ReloadGridData(loggedUser);
+                message = string.Concat("Error occurred while adding user case. Please contact with administration.");
+                await HandleUpdateCase(selectedCase, loggedUser.Id, message);
             }
         }
 
@@ -144,8 +144,8 @@ namespace WinFormsCrud
                 }
                 else
                 {
-                    await caseService.UpdateCase(selectedCase, loggedUser.Id);
-                    ReloadGridData(loggedUser);
+                    message = string.Concat("Error occurred while edditing user case. Please contact with administration.");
+                    await HandleUpdateCase(selectedCase, loggedUser.Id, message);
                 }
             }
         }
@@ -162,14 +162,37 @@ namespace WinFormsCrud
                 selectedCase.DeletedDate = DateTime.Now;
                 selectedCase.DeletedBy = loggedUser.Id;
 
-                await caseService.UpdateCase(selectedCase, loggedUser.Id);
+                message = string.Concat("Error occurred while deleting user case. Please contact with administration.");
+                await HandleUpdateCase(selectedCase, loggedUser.Id, message);
+            }
+        }
+
+        private async Task HandleUpdateCase(CaseDto caseToUpdate, int loggedUserId, string message)
+        {
+            var success = await caseService.UpdateCase(caseToUpdate, loggedUserId);
+            if (success)
+            {
                 ReloadGridData(loggedUser);
+            }
+            else
+            {
+                message = string.Concat("Error occurred while edditing user case. Please contact with administration.");
+                MessageBox.Show(message);
             }
         }
 
         private async void ReloadGridData(SimpleUserDto simpleUserDto)
         {
-            dgvCases.DataSource = await caseService.GetUserCases(simpleUserDto);
+            var result = await caseService.GetUserCases(simpleUserDto);
+            if (result == null)
+            {
+                string message = string.Concat("Error occurred while geting user cases. Please contact with administration.");
+                MessageBox.Show(message);
+            }
+            else
+            {
+                dgvCases.DataSource = result;
+            }
         }
 
         private void SetCaseValuesFromUI(CaseDto caseDto)
@@ -192,7 +215,7 @@ namespace WinFormsCrud
             var reportEntities = await reportService.GetReport(loggedUser.Id);
             if (reportEntities == null)
             {
-                string message = string.Concat("Error occurred while creating report. Report not created");
+                string message = string.Concat("Error occurred while creating report. Report not created. Please contact with administration.");
                 MessageBox.Show(message);
             }
             else

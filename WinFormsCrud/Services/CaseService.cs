@@ -27,7 +27,7 @@ namespace WinFormsCrud.Services
             return true;
         }
 
-        public async Task UpdateCase(CaseDto caseDto, int userId)
+        public async ValueTask<bool> UpdateCase(CaseDto caseDto, int userId)
         {
             if (userId > 0)
             {
@@ -38,12 +38,16 @@ namespace WinFormsCrud.Services
                     .AppendPathSegment(ApiHelper.caseControllerName)
                     .SetQueryParams(new { userId = userId })
                     .PostJsonAsync(caseDto);
+
+                    return true;
                 }
                 catch (Exception ex)
                 {
                     logger.Error(ex);
                 }
             }
+
+            return false;
         }
 
         public async ValueTask<List<CaseDto>> GetUserCases(SimpleUserDto simpleUserDto)
@@ -65,7 +69,7 @@ namespace WinFormsCrud.Services
                 logger.Error(ex);
             }
 
-            return new List<CaseDto> { };
+            return null;
         }
     }
 }
