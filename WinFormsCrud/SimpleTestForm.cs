@@ -122,7 +122,7 @@ namespace WinFormsCrud
             else
             {
                 message = string.Concat("Error occurred while adding user case. Please contact with administration.");
-                await HandleUpdateCase(selectedCase, loggedUser.Id, message);
+                await HandleUpdateCase(selectedCase, loggedUser, message);
             }
         }
 
@@ -145,7 +145,7 @@ namespace WinFormsCrud
                 else
                 {
                     message = string.Concat("Error occurred while edditing user case. Please contact with administration.");
-                    await HandleUpdateCase(selectedCase, loggedUser.Id, message);
+                    await HandleUpdateCase(selectedCase, loggedUser, message);
                 }
             }
         }
@@ -163,16 +163,16 @@ namespace WinFormsCrud
                 selectedCase.DeletedBy = loggedUser.Id;
 
                 message = string.Concat("Error occurred while deleting user case. Please contact with administration.");
-                await HandleUpdateCase(selectedCase, loggedUser.Id, message);
+                await HandleUpdateCase(selectedCase, loggedUser, message);
             }
         }
 
-        private async Task HandleUpdateCase(CaseDto caseToUpdate, int loggedUserId, string message)
+        private async Task HandleUpdateCase(CaseDto caseToUpdate, SimpleUserDto userDto, string message)
         {
-            var success = await caseService.UpdateCase(caseToUpdate, loggedUserId);
+            var success = await caseService.UpdateCase(caseToUpdate, userDto.Id);
             if (success)
             {
-                ReloadGridData(loggedUser);
+                ReloadGridData(userDto);
             }
             else
             {
