@@ -1,5 +1,4 @@
-﻿using CommonLibrary.Consts;
-using CommonLibrary.Dto;
+﻿using CommonLibrary.Dto;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Newtonsoft.Json;
@@ -60,38 +59,5 @@ namespace SimpleWebApiIntegrationTests.ControllerTests
             }
         }
 
-        [Theory]
-        [InlineData("/Report/GetException")]
-        public async Task GetException_MethodShouldThrowException_ThatIsHandledByMiddleware(string url)
-        {
-            // Arrange
-            var client = _factory.CreateClient();
-
-            // Act
-            var response = await client.GetAsync(url);
-
-            string responseBody = await response.Content.ReadAsStringAsync();
-
-            // Assert
-            response.StatusCode.Should().Be(System.Net.HttpStatusCode.InternalServerError);
-            responseBody.Should().Contain(ConstStrings.MiddlewareExceptionText);
-        }
-
-        [Theory]
-        [InlineData("/Report/GetAccessViolationException")]
-        public async Task GetAccessViolationException_MethodShouldThrowException_ThatIsHandledByMiddleware(string url)
-        {
-            // Arrange
-            var client = _factory.CreateClient();
-
-            // Act
-            var response = await client.GetAsync(url);
-
-            string responseBody = await response.Content.ReadAsStringAsync();
-
-            // Assert
-            response.StatusCode.Should().Be(System.Net.HttpStatusCode.InternalServerError);
-            responseBody.Should().Contain(ConstStrings.MiddlewareAccessViolationExceptionText);
-        }
     }
 }

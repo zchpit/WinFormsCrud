@@ -23,23 +23,5 @@ namespace SimpleWebApi.Controllers
         {
             return await _reportService.GetReport(managerId);
         }
-
-        [HttpGet("GetException")]
-        public IActionResult GetException()
-        {
-            _logger.LogWarn("User has click GetException method in ReportController");
-            throw new Exception("Create test Exception while doing report from the database.");
-
-            return Ok();
-        }
-
-        [HttpGet("GetAccessViolationException")]
-        public IActionResult GetAccessViolationException()
-        {
-            _logger.LogWarn("User has click GetException method in ReportController");
-            throw new AccessViolationException("Create test AccessViolationException while doing report from the database.");
-
-            return Ok();
-        }
     }
 }
