@@ -1,10 +1,10 @@
-﻿using FluentAssertions;
-using Moq;
-using CommonLibrary.Dto;
-using SimpleWebApi.Interface;
-using SimpleWebApi.IRepository;
-using SimpleWebApi.Services;
+﻿using CommonLibrary.Dto;
 using CommonLibrary.Strategy;
+using FluentAssertions;
+using Moq;
+using SimpleWebApi.IRepository;
+using SimpleWebApi.IServices;
+using SimpleWebApi.Services;
 
 namespace WinFormsCrudTests.ServiceTests
 {

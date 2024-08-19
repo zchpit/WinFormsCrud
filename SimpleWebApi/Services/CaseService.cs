@@ -1,5 +1,5 @@
 ﻿using CommonLibrary.Dto;
-using SimpleWebApi.Interface;
+using SimpleWebApi.IServices;
 using SimpleWebApi.IRepository;
 using AutoMapper;
 using SimpleWebApi.Model;

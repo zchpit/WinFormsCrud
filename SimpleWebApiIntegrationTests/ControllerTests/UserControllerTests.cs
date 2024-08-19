@@ -1,5 +1,8 @@
 ﻿using FluentAssertions;
+using Microsoft.Extensions.DependencyInjection;
+using SimpleWebApi.IServices;
 using SimpleWebApiIntegrationTests.Shared;
+using SimpleWebApiIntegrationTests.TestServices;
 
 namespace SimpleWebApiIntegrationTests.ControllerTests
 {
@@ -9,7 +12,7 @@ namespace SimpleWebApiIntegrationTests.ControllerTests
 
         public UserControllerTests()
         {
-            _testApi = new TestApi();
+            _testApi = new TestApi(services => services.AddScoped<IUserService, TestUserService>());
         }
 
         [Theory]

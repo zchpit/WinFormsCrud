@@ -1,6 +1,6 @@
 ﻿using CommonLibrary.Dto;
 using Microsoft.AspNetCore.Mvc;
-using SimpleWebApi.Interface;
+using SimpleWebApi.IServices;
 
 namespace SimpleWebApiIntegrationTests.TestServices
 {

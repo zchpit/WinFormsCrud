@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
+using CommonLibrary.Dto;
 using FluentAssertions;
 using Moq;
-using CommonLibrary.Dto;
 using SimpleWebApi.Helpers;
-using SimpleWebApi.Interface;
 using SimpleWebApi.IRepository;
+using SimpleWebApi.IServices;
 using SimpleWebApi.Model;
 using SimpleWebApi.Services;
 

@@ -2,16 +2,13 @@
 using AutoMapper;
 using CommonLibrary.Strategy;
 using Microsoft.EntityFrameworkCore;
-using NLog;
 using SimpleWebApi.Extensions;
 using SimpleWebApi.Helpers;
-using SimpleWebApi.Interface;
 using SimpleWebApi.IRepository;
 using SimpleWebApi.IServices;
 using SimpleWebApi.Model;
 using SimpleWebApi.Repository;
 using SimpleWebApi.Services;
-using NLog.Extensions.Logging;
 
 
 namespace SimpleWebApi

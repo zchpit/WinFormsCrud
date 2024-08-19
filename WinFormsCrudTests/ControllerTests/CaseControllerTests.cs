@@ -1,9 +1,8 @@
 ﻿using CommonLibrary.Dto;
-using Microsoft.AspNetCore.Components.Forms;
 using Moq;
 using SimpleWebApi.Controllers;
 using SimpleWebApi.Helpers;
-using SimpleWebApi.Interface;
+using SimpleWebApi.IServices;
 
 namespace SimpleWebApiTests.ControllerTests
 {

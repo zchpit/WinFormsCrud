@@ -1,7 +1,10 @@
 ﻿using CommonLibrary.Dto;
 using FluentAssertions;
+using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
+using SimpleWebApi.IServices;
 using SimpleWebApiIntegrationTests.Shared;
+using SimpleWebApiIntegrationTests.TestServices;
 
 namespace SimpleWebApiIntegrationTests.ControllerTests
 {
@@ -11,7 +14,7 @@ namespace SimpleWebApiIntegrationTests.ControllerTests
 
         public ReportControllerTests()
         {
-            _testApi = new TestApi();
+            _testApi = new TestApi(services => services.AddScoped<IReportService, TestReportService>());
         }
 
         [Theory]

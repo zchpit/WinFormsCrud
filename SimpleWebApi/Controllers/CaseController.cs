@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using CommonLibrary.Dto;
-using SimpleWebApi.Interface;
+﻿using CommonLibrary.Dto;
+using Microsoft.AspNetCore.Mvc;
 using SimpleWebApi.Helpers;
+using SimpleWebApi.IServices;
 
 namespace SimpleWebApi.Controllers
 {

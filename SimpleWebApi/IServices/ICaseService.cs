@@ -1,6 +1,6 @@
 ﻿using CommonLibrary.Dto;
 
-namespace SimpleWebApi.Interface
+namespace SimpleWebApi.IServices
 {
     public interface ICaseService
     {

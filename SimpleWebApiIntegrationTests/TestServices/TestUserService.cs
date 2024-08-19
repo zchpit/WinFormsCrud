@@ -1,5 +1,6 @@
 ﻿using CommonLibrary.Dto;
-using SimpleWebApi.Interface;
+using SimpleWebApi.IServices;
+
 
 namespace SimpleWebApiIntegrationTests.TestServices
 {

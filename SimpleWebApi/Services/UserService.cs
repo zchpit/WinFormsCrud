@@ -1,7 +1,7 @@
 ﻿using CommonLibrary.Dto;
 using CommonLibrary.Strategy;
 using CommonLibrary.Validation;
-using SimpleWebApi.Interface;
+using SimpleWebApi.IServices;
 using SimpleWebApi.IRepository;
 
 namespace SimpleWebApi.Services
