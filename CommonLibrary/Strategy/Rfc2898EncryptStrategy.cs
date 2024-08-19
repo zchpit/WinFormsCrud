@@ -31,7 +31,7 @@ namespace CommonLibrary.Strategy
 
         public string Decrypt(string cipherText)
         {
-            string EncryptionKey = "abc123";
+            string EncryptionKey = "testRfc2898";
             cipherText = cipherText.Replace(" ", "+");
             byte[] cipherBytes = Convert.FromBase64String(cipherText);
             using (Aes encryptor = Aes.Create())

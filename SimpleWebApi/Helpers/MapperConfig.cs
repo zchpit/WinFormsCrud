@@ -13,8 +13,6 @@ namespace SimpleWebApi.Helpers
             {
                 cfg.CreateMap<Case, CaseDto>();
                 cfg.CreateMap<CaseDto, Case>();
-                cfg.CreateMap<User, UserDto>();
-                cfg.CreateMap<UserDto, User>();
                 //Any Other Mapping Configuration ....
             });
             //Create an Instance of Mapper and return that Instance

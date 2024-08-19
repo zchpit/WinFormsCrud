@@ -17,7 +17,7 @@ namespace CommonLibraryTests.StrategyTests
         [InlineData("test")]
         [InlineData("abracadabra")]
         [InlineData("ąężzźqlł")]
-        public void Encrypt_ShouldBeRepetitive_IsRepetitive(string input)
+        public void EncryptDecrypt_ShouldBeRepetitive_IsRepetitive(string input)
         {
             var result1 = _strategy.Encrypt(input);
             var result2 = _strategy.Decrypt(result1);
