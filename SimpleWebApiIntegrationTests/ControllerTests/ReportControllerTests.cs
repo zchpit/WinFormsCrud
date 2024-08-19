@@ -1,18 +1,17 @@
 ﻿using CommonLibrary.Dto;
 using FluentAssertions;
-using Microsoft.AspNetCore.Mvc.Testing;
 using Newtonsoft.Json;
-using SimpleWebApi;
+using SimpleWebApiIntegrationTests.Shared;
 
 namespace SimpleWebApiIntegrationTests.ControllerTests
 {
-    public class ReportControllerTests : IClassFixture<WebApplicationFactory<Program>>
+    public class ReportControllerTests
     {
-        private readonly WebApplicationFactory<Program> _factory;
+        private readonly TestApi _testApi;
 
-        public ReportControllerTests(WebApplicationFactory<Program> factory)
+        public ReportControllerTests()
         {
-            _factory = factory;
+            _testApi = new TestApi();
         }
 
         [Theory]
@@ -20,7 +19,7 @@ namespace SimpleWebApiIntegrationTests.ControllerTests
         public async Task GetReport_BadUserId_GetEmptyResponse(string url)
         {
             // Arrange
-            var client = _factory.CreateClient();
+            var client = _testApi.Client;
 
             // Act
             var response = await client.GetAsync(url);
@@ -37,7 +36,7 @@ namespace SimpleWebApiIntegrationTests.ControllerTests
         public async Task GetReport_GoodUserId_GetUserDtoResponse(string url)
         {
             // Arrange
-            var client = _factory.CreateClient();
+            var client = _testApi.Client;
 
             // Act
             var response = await client.GetAsync(url);

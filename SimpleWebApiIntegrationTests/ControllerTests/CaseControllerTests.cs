@@ -1,20 +1,19 @@
 ﻿using CommonLibrary.Dto;
 using FluentAssertions;
-using Microsoft.AspNetCore.Mvc.Testing;
 using Newtonsoft.Json;
-using SimpleWebApi;
+using SimpleWebApiIntegrationTests.Shared;
 using System.Net.Http.Json;
 
 
 namespace SimpleWebApiIntegrationTests.ControllerTests
 {
-    public class CaseControllerTests : IClassFixture<WebApplicationFactory<Program>>
+    public class CaseControllerTests
     {
-        private readonly WebApplicationFactory<Program> _factory;
+        private readonly TestApi _testApi;
 
-        public CaseControllerTests(WebApplicationFactory<Program> factory)
+        public CaseControllerTests()
         {
-            _factory = factory;
+            _testApi = new TestApi();
         }
 
         [Theory]
@@ -22,7 +21,7 @@ namespace SimpleWebApiIntegrationTests.ControllerTests
         public async Task GetUserCases_GoodUserId_GetCaseDtoResponse(string url)
         {
             // Arrange
-            var client = _factory.CreateClient();
+            var client = _testApi.Client;
 
             // Act
             var response = await client.GetAsync(url);
@@ -49,7 +48,7 @@ namespace SimpleWebApiIntegrationTests.ControllerTests
         public async Task UpdateCase_SendRequestWithoutAnyChange_MakeSureApiMethodExists(string urlForTestCases, string urlForUpdate)
         {
             // Arrange
-            var client = _factory.CreateClient();
+            var client = _testApi.Client;
 
             // Act
             var responseGetCases = await client.GetAsync(urlForTestCases);

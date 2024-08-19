@@ -1,16 +1,15 @@
 ﻿using FluentAssertions;
-using Microsoft.AspNetCore.Mvc.Testing;
-using SimpleWebApi;
+using SimpleWebApiIntegrationTests.Shared;
 
 namespace SimpleWebApiIntegrationTests.ControllerTests
 {
-    public class UserControllerTests : IClassFixture<WebApplicationFactory<Program>>
+    public class UserControllerTests
     {
-        private readonly WebApplicationFactory<Program> _factory;
+        private readonly TestApi _testApi;
 
-        public UserControllerTests(WebApplicationFactory<Program> factory)
+        public UserControllerTests()
         {
-            _factory = factory;
+            _testApi = new TestApi();
         }
 
         [Theory]
@@ -18,7 +17,7 @@ namespace SimpleWebApiIntegrationTests.ControllerTests
         public async Task GetUserLogin_WrongUserPassword_GetEmptyResponse(string url)
         {
             // Arrange
-            var client = _factory.CreateClient();
+            var client = _testApi.Client;
 
             // Act
             var response = await client.GetAsync(url);
@@ -34,7 +33,7 @@ namespace SimpleWebApiIntegrationTests.ControllerTests
         public async Task GetUserLogin_GoodUserPassword_GetUserDtoResponse(string url)
         {
             // Arrange
-            var client = _factory.CreateClient();
+            var client = _testApi.Client;
 
             // Act
             var response = await client.GetAsync(url);

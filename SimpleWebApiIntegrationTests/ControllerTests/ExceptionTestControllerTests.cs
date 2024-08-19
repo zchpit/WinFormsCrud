@@ -1,17 +1,16 @@
 ﻿using CommonLibrary.Consts;
 using FluentAssertions;
-using Microsoft.AspNetCore.Mvc.Testing;
-using SimpleWebApi;
+using SimpleWebApiIntegrationTests.Shared;
 
 namespace SimpleWebApiIntegrationTests.ControllerTests
 {
-    public class ExceptionTestControllerTests : IClassFixture<WebApplicationFactory<Program>>
+    public class ExceptionTestControllerTests
     {
-        private readonly WebApplicationFactory<Program> _factory;
+        private readonly TestApi _testApi;
 
-        public ExceptionTestControllerTests(WebApplicationFactory<Program> factory)
+        public ExceptionTestControllerTests()
         {
-            _factory = factory;
+            _testApi = new TestApi();
         }
 
         [Theory]
@@ -19,7 +18,7 @@ namespace SimpleWebApiIntegrationTests.ControllerTests
         public async Task GetException_MethodShouldThrowException_ThatIsHandledByMiddleware(string url)
         {
             // Arrange
-            var client = _factory.CreateClient();
+            var client = _testApi.Client;
 
             // Act
             var response = await client.GetAsync(url);
@@ -36,7 +35,7 @@ namespace SimpleWebApiIntegrationTests.ControllerTests
         public async Task GetAccessViolationException_MethodShouldThrowException_ThatIsHandledByMiddleware(string url)
         {
             // Arrange
-            var client = _factory.CreateClient();
+            var client = _testApi.Client;
 
             // Act
             var response = await client.GetAsync(url);
