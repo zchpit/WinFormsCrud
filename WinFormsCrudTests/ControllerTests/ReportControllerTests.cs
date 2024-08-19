@@ -4,9 +4,11 @@ using Moq;
 using SimpleWebApi.Controllers;
 using SimpleWebApi.Helpers;
 using SimpleWebApi.IServices;
+using System.Diagnostics.CodeAnalysis;
 
 namespace SimpleWebApiTests.ControllerTests
 {
+    [ExcludeFromCodeCoverage]
     public class ReportControllerTests
     {
         private readonly Mock<IReportService> reportService;

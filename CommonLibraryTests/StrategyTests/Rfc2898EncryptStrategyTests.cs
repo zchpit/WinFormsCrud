@@ -1,8 +1,10 @@
 ﻿using CommonLibrary.Strategy;
 using FluentAssertions;
+using System.Diagnostics.CodeAnalysis;
 
 namespace CommonLibraryTests.StrategyTests
 {
+    [ExcludeFromCodeCoverage]
     public class Rfc2898EncryptStrategyTests
     {
         private Rfc2898EncryptStrategy _strategy;

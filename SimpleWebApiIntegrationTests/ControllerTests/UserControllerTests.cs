@@ -3,9 +3,11 @@ using Microsoft.Extensions.DependencyInjection;
 using SimpleWebApi.IServices;
 using SimpleWebApiIntegrationTests.Shared;
 using SimpleWebApiIntegrationTests.TestServices;
+using System.Diagnostics.CodeAnalysis;
 
 namespace SimpleWebApiIntegrationTests.ControllerTests
 {
+    [ExcludeFromCodeCoverage]
     public class UserControllerTests
     {
         private readonly TestApi _testApi;

@@ -5,11 +5,13 @@ using Newtonsoft.Json;
 using SimpleWebApi.IServices;
 using SimpleWebApiIntegrationTests.Shared;
 using SimpleWebApiIntegrationTests.TestServices;
+using System.Diagnostics.CodeAnalysis;
 using System.Net.Http.Json;
 
 
 namespace SimpleWebApiIntegrationTests.ControllerTests
 {
+    [ExcludeFromCodeCoverage]
     public class CaseControllerTests
     {
         private readonly TestApi _testApi;

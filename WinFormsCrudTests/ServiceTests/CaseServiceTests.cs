@@ -7,9 +7,11 @@ using SimpleWebApi.IRepository;
 using SimpleWebApi.IServices;
 using SimpleWebApi.Model;
 using SimpleWebApi.Services;
+using System.Diagnostics.CodeAnalysis;
 
 namespace WinFormsCrudTests.ServiceTests
 {
+    [ExcludeFromCodeCoverage]
     public class CaseServiceTests
     {
         ICaseService caseService;

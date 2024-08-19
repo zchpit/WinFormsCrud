@@ -1,8 +1,10 @@
 ﻿using CommonLibrary.Strategy;
 using FluentAssertions;
+using System.Diagnostics.CodeAnalysis;
 
 namespace CommonLibraryTests.StrategyTests
 {
+    [ExcludeFromCodeCoverage]
     public class Base64TransferStrategyTests
     {
         private Base64TransferStrategy _strategy;

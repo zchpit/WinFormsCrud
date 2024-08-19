@@ -1,8 +1,10 @@
 ﻿using CommonLibrary.Dto;
 using SimpleWebApi.IServices;
+using System.Diagnostics.CodeAnalysis;
 
 namespace SimpleWebApiIntegrationTests.TestServices
 {
+    [ExcludeFromCodeCoverage]
     public class TestReportService : IReportService 
     {
         public async ValueTask<List<ReportDto>> GetReport(int managerId)

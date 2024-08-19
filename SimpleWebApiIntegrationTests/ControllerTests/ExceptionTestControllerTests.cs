@@ -1,9 +1,11 @@
 ﻿using CommonLibrary.Consts;
 using FluentAssertions;
 using SimpleWebApiIntegrationTests.Shared;
+using System.Diagnostics.CodeAnalysis;
 
 namespace SimpleWebApiIntegrationTests.ControllerTests
 {
+    [ExcludeFromCodeCoverage]
     public class ExceptionTestControllerTests
     {
         private readonly TestApi _testApi;

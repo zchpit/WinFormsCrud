@@ -1,9 +1,10 @@
 ﻿using CommonLibrary.Dto;
-using Microsoft.AspNetCore.Mvc;
 using SimpleWebApi.IServices;
+using System.Diagnostics.CodeAnalysis;
 
 namespace SimpleWebApiIntegrationTests.TestServices
 {
+    [ExcludeFromCodeCoverage]
     public class TestCaseService : ICaseService
     {
         public ValueTask<List<CaseDto>> GetUserCases(SimpleUserDto simpleUserDto)

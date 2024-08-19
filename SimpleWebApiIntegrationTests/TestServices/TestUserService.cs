@@ -1,16 +1,13 @@
 ﻿using CommonLibrary.Dto;
 using SimpleWebApi.IServices;
+using System.Diagnostics.CodeAnalysis;
 
 
 namespace SimpleWebApiIntegrationTests.TestServices
 {
+    [ExcludeFromCodeCoverage]
     internal class TestUserService : IUserService 
     {
-        public TestUserService() 
-        {
-
-        }
-
         public async ValueTask<SimpleUserDto> Login(string encryptedUsername, string encryptedPassword)
         {
             if (encryptedUsername == "dGVzdA==" && encryptedPassword == "dGVzdA==")

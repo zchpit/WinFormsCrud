@@ -1,20 +1,13 @@
 ﻿using CommonLibrary.Validation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using FluentAssertions;
+using System.Diagnostics.CodeAnalysis;
 
 
 namespace CommonLibraryTests.ValidationTests
 {
+    [ExcludeFromCodeCoverage]
     public class InputValidationTests
     {
-
-        public InputValidationTests() { }   
-
-
         [Fact]
         public void IsUserValid_Empty_ReturnFalse()
         {

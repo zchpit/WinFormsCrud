@@ -2,10 +2,11 @@
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
 using SimpleWebApi;
-
+using System.Diagnostics.CodeAnalysis;
 
 namespace SimpleWebApiIntegrationTests.Shared
 {
+    [ExcludeFromCodeCoverage]
     public sealed class TestApi : WebApplicationFactory<Program>
     {
         public HttpClient Client { get; }
