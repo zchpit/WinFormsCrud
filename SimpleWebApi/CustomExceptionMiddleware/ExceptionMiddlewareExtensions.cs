@@ -1,10 +1,10 @@
-﻿using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.Diagnostics;
 using SimpleWebApi.CustomExceptionMiddleware;
 using SimpleWebApi.Helpers;
 using SimpleWebApi.Models;
 using System.Net;
 
-namespace SimpleWebApi.Extensions
+namespace SimpleWebApi.CustomExceptionMiddleware
 {
     public static class ExceptionMiddlewareExtensions
     {

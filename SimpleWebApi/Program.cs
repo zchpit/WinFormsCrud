@@ -2,13 +2,13 @@
 using AutoMapper;
 using CommonLibrary.Strategy;
 using Microsoft.EntityFrameworkCore;
-using SimpleWebApi.Extensions;
 using SimpleWebApi.Helpers;
 using SimpleWebApi.IRepository;
 using SimpleWebApi.IServices;
 using SimpleWebApi.Model;
 using SimpleWebApi.Repository;
 using SimpleWebApi.Services;
+using SimpleWebApi.CustomExceptionMiddleware;
 
 
 namespace SimpleWebApi
