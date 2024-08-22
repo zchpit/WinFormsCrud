@@ -30,13 +30,12 @@ namespace SimpleWebApi
             });
             builder.Services.AddTransient<ILoggerManager, LoggerManager>();
 
-            // Add services to the container.
             builder.Services.AddTransient<IEncryptStrategy, Rfc2898EncryptStrategy>();
             builder.Services.AddTransient<ITransferStrategy, Base64TransferStrategy>();
             builder.Services.AddTransient<IUserService, UserService>();
             builder.Services.AddTransient<IReportService, ReportService>();
+            builder.Services.AddTransient<ICaseService, CaseService>();
 
-            builder.Services.AddScoped<ICaseService, CaseService>();
             builder.Services.AddScoped<ICaseRepository, CaseRepository>();
             builder.Services.AddScoped<IUserRepository, UserRepository>();
             builder.Services.AddScoped<IReportRepository, ReportRepository>();
