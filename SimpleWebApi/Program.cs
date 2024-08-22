@@ -28,18 +28,18 @@ namespace SimpleWebApi
                 logging.ClearProviders();
                 logging.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Trace);
             });
-            builder.Services.AddSingleton<ILoggerManager, LoggerManager>();
+            builder.Services.AddTransient<ILoggerManager, LoggerManager>();
 
             // Add services to the container.
-            builder.Services.AddScoped<IEncryptStrategy, Rfc2898EncryptStrategy>();
-            builder.Services.AddScoped<ITransferStrategy, Base64TransferStrategy>();
+            builder.Services.AddTransient<IEncryptStrategy, Rfc2898EncryptStrategy>();
+            builder.Services.AddTransient<ITransferStrategy, Base64TransferStrategy>();
+            builder.Services.AddTransient<IUserService, UserService>();
+            builder.Services.AddTransient<IReportService, ReportService>();
 
+            builder.Services.AddScoped<ICaseService, CaseService>();
             builder.Services.AddScoped<ICaseRepository, CaseRepository>();
             builder.Services.AddScoped<IUserRepository, UserRepository>();
             builder.Services.AddScoped<IReportRepository, ReportRepository>();
-            builder.Services.AddScoped<IUserService, UserService>();
-            builder.Services.AddScoped<ICaseService, CaseService>();
-            builder.Services.AddScoped<IReportService, ReportService>();
 
             builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 

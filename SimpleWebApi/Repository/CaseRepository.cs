@@ -21,11 +21,6 @@ namespace SimpleWebApi.Repository
 
         public async ValueTask<List<Case>> GetUserCases(SimpleUserDto simpleUserDto)
         {
-            var user = caseContext.Users.ToList();
-            var UserCases = caseContext.UserCases.ToList();
-            var Ucaas = caseContext.UserCases.ToList();
-
-
             List<int> userToCheck = new List<int>();
             userToCheck.Add(simpleUserDto.Id);
 
