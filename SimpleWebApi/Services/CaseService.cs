@@ -8,12 +8,12 @@ namespace SimpleWebApi.Services
 {
     public class CaseService : ICaseService
     {
-        ICaseRepository caseRepository;
+        private IRepositoryWrapper repository;
         IMapper mapper;
 
-        public CaseService(ICaseRepository caseRepository, IMapper mapper)
+        public CaseService(IRepositoryWrapper repository, IMapper mapper)
         {
-            this.caseRepository = caseRepository;
+            this.repository = repository;
             this.mapper = mapper;
         }
 
@@ -36,18 +36,18 @@ namespace SimpleWebApi.Services
                 if (caseDto.Id > 0)
                 {
 
-                    await caseRepository.UpdateCase(caseToUpdate, userId);
+                    await repository.CaseRepository.UpdateCase(caseToUpdate, userId);
                 }
                 else
                 {
-                    await caseRepository.AddCase(caseToUpdate, userId);
+                    await repository.CaseRepository.AddCase(caseToUpdate, userId);
                 }
             }
         }
 
         public async ValueTask<List<CaseDto>> GetUserCases(SimpleUserDto simpleUserDto)
         {
-            var tmpResult = await caseRepository.GetUserCases(simpleUserDto);
+            var tmpResult = await repository.CaseRepository.GetUserCases(simpleUserDto);
             var result = tmpResult.Select(a => MapCaseToCaseDto(a)).ToList();
 
             return result;

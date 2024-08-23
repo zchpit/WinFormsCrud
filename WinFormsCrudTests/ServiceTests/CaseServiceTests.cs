@@ -15,28 +15,28 @@ namespace WinFormsCrudTests.ServiceTests
     public class CaseServiceTests
     {
         ICaseService caseService;
-        private readonly Mock<ICaseRepository> mockCaseRepository;
+        private readonly Mock<IRepositoryWrapper> mockRepositoryWrapper;
 
         public CaseServiceTests()
         {
-            mockCaseRepository = new Mock<ICaseRepository>();
-            var mockUserRepositoryObject = mockCaseRepository.Object;
+            mockRepositoryWrapper = new Mock<IRepositoryWrapper>();
+            mockRepositoryWrapper.Setup(m => m.CaseRepository).Returns(() => new Mock<ICaseRepository>().Object);
+
             Mapper mapper = MapperConfig.InitializeAutomapper();
 
-            caseService = new CaseService(mockUserRepositoryObject, mapper);
+            caseService = new CaseService(mockRepositoryWrapper.Object, mapper);
         }
 
         [Fact]
         public void GetUserCases_GetCase_MakeSureThatRepoWasCalled()
         {
-            SimpleUserDto simpleUserDto = new SimpleUserDto();
-            var caseList = ValueTask.FromResult(new List<Case>());
-            mockCaseRepository.Setup(a => a.GetUserCases(simpleUserDto)).Returns(caseList);
+            var caseList = ValueTask.FromResult(It.IsAny<List<Case>>());
+            mockRepositoryWrapper.Setup(a => a.CaseRepository.GetUserCases(It.IsAny<SimpleUserDto>())).Returns(caseList);
 
-            var result = caseService.GetUserCases(simpleUserDto);
+            var result = caseService.GetUserCases(It.IsAny<SimpleUserDto>());
 
             result.Should().NotBeNull();
-            mockCaseRepository.Verify(a => a.GetUserCases(simpleUserDto), Times.Once);
+            mockRepositoryWrapper.Verify(a => a.CaseRepository.GetUserCases(It.IsAny<SimpleUserDto>()), Times.Once);
         }
 
         [Fact]
@@ -84,11 +84,13 @@ namespace WinFormsCrudTests.ServiceTests
         {
             CaseDto caseDto = new CaseDto() { Header = "Header", Description = "Description", Id = 0 };
             int userId = 1;
+            mockRepositoryWrapper.Setup(a => a.CaseRepository.UpdateCase(It.IsAny<Case>(), userId));
+            mockRepositoryWrapper.Setup(a => a.CaseRepository.AddCase(It.IsAny<Case>(), userId));
 
             await caseService.UpdateCase(caseDto, userId);
 
-            mockCaseRepository.Verify(a => a.UpdateCase(It.IsAny<Case>(), It.IsAny<int>()), Times.Never);
-            mockCaseRepository.Verify(a => a.AddCase(It.IsAny<Case>(), It.IsAny<int>()), Times.Once);
+            mockRepositoryWrapper.Verify(a => a.CaseRepository.UpdateCase(It.IsAny<Case>(), It.IsAny<int>()), Times.Never);
+            mockRepositoryWrapper.Verify(a => a.CaseRepository.AddCase(It.IsAny<Case>(), userId), Times.Once);
         }
 
         [Fact]
@@ -97,12 +99,13 @@ namespace WinFormsCrudTests.ServiceTests
             CaseDto caseDto = new CaseDto() { Header = "Header", Description = "Description", Id = 1 };
             int userId = 1;
 
-            //mockMapper.Setup(a => a.)
+            mockRepositoryWrapper.Setup(a => a.CaseRepository.UpdateCase(It.IsAny<Case>(), userId));
+            mockRepositoryWrapper.Setup(a => a.CaseRepository.AddCase(It.IsAny<Case>(), userId));
 
             await caseService.UpdateCase(caseDto, userId);
 
-            mockCaseRepository.Verify(a => a.UpdateCase(It.IsAny<Case>(), It.IsAny<int>()), Times.Once);
-            mockCaseRepository.Verify(a => a.AddCase(It.IsAny<Case>(), It.IsAny<int>()), Times.Never);
+            mockRepositoryWrapper.Verify(a => a.CaseRepository.UpdateCase(It.IsAny<Case>(), It.IsAny<int>()), Times.Once);
+            mockRepositoryWrapper.Verify(a => a.CaseRepository.AddCase(It.IsAny<Case>(), It.IsAny<int>()), Times.Never);
         }
 
         [Fact]
@@ -110,11 +113,13 @@ namespace WinFormsCrudTests.ServiceTests
         {
             CaseDto caseDto = new CaseDto() { Header = "Header", Description = "Description", Id = 1 };
             int userId = 0;
+            mockRepositoryWrapper.Setup(a => a.CaseRepository.UpdateCase(It.IsAny<Case>(), userId));
+            mockRepositoryWrapper.Setup(a => a.CaseRepository.AddCase(It.IsAny<Case>(), userId));
 
             await caseService.UpdateCase(caseDto, userId);
 
-            mockCaseRepository.Verify(a => a.UpdateCase(It.IsAny<Case>(), It.IsAny<int>()), Times.Never);
-            mockCaseRepository.Verify(a => a.AddCase(It.IsAny<Case>(), It.IsAny<int>()), Times.Never);
+            mockRepositoryWrapper.Verify(a => a.CaseRepository.UpdateCase(It.IsAny<Case>(), It.IsAny<int>()), Times.Never);
+            mockRepositoryWrapper.Verify(a => a.CaseRepository.AddCase(It.IsAny<Case>(), It.IsAny<int>()), Times.Never);
         }
     }
 }

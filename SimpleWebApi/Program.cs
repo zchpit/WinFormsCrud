@@ -36,9 +36,7 @@ namespace SimpleWebApi
             builder.Services.AddTransient<IReportService, ReportService>();
             builder.Services.AddTransient<ICaseService, CaseService>();
 
-            builder.Services.AddScoped<ICaseRepository, CaseRepository>();
-            builder.Services.AddScoped<IUserRepository, UserRepository>();
-            builder.Services.AddScoped<IReportRepository, ReportRepository>();
+            builder.Services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
 
             builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 

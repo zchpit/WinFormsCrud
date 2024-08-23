@@ -5,18 +5,16 @@ using SimpleWebApi.Model;
 
 namespace SimpleWebApi.Repository
 {
-    public class UserRepository : IUserRepository
+    public class UserRepository : RepositoryBase<User>, IUserRepository
     {
-        private SimpleDbContext userContext;
-
-        public UserRepository(SimpleDbContext context)
+        public UserRepository(SimpleDbContext repositoryContext)
+                    : base(repositoryContext)
         {
-            this.userContext = context;
         }
 
         public async ValueTask<SimpleUserDto> GetSimpleUserDto(string username, string password)
         {
-            var user = await userContext.Users.FirstOrDefaultAsync(a => a.IsActive && a.Name == username && a.Password == password);
+            var user = await repositoryContext.Users.FirstOrDefaultAsync(a => a.IsActive && a.Name == username && a.Password == password);
             if (user == null)
             {
                 return null;
@@ -32,7 +30,7 @@ namespace SimpleWebApi.Repository
             {
                 if (disposing)
                 {
-                    userContext.Dispose();
+                    repositoryContext.Dispose();
                 }
             }
             this.disposed = true;

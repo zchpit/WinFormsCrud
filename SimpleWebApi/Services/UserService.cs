@@ -9,13 +9,13 @@ namespace SimpleWebApi.Services
     public class UserService : IUserService
     {
         private IEncryptStrategy encryptStrategy;
-        private IUserRepository userRepository;
+        private IRepositoryWrapper repository;
         private ITransferStrategy transferStrategy;
 
-        public UserService(IEncryptStrategy encryptStrategy, ITransferStrategy transferStrategy, IUserRepository userRepository)
+        public UserService(IEncryptStrategy encryptStrategy, ITransferStrategy transferStrategy, IRepositoryWrapper repository)
         {
             this.encryptStrategy = encryptStrategy;
-            this.userRepository = userRepository;
+            this.repository = repository;
             this.transferStrategy = transferStrategy;
         }
 
@@ -30,7 +30,7 @@ namespace SimpleWebApi.Services
             {
 
                 var encryptedPasswordDb = encryptStrategy.Encrypt(password);
-                var user = await userRepository.GetSimpleUserDto(username, encryptedPasswordDb);
+                var user = await repository.UserRepository.GetSimpleUserDto(username, encryptedPasswordDb);
                 return user;
             }
 

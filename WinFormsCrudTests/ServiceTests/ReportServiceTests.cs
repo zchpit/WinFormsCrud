@@ -12,14 +12,14 @@ namespace WinFormsCrudTests.ServiceTests
     public class ReportServiceTests
     {
         IReportService reportService;
-        private readonly Mock<IReportRepository> mockReportRepository;
+        private readonly Mock<IRepositoryWrapper> mockRepositoryWrapper;
 
         public ReportServiceTests()
         {
-            mockReportRepository = new Mock<IReportRepository>();
-            var mockReportRepositoryObject = mockReportRepository.Object;
+            mockRepositoryWrapper = new Mock<IRepositoryWrapper>();
+            mockRepositoryWrapper.Setup(m => m.ReportRepository).Returns(() => new Mock<IReportRepository>().Object);
 
-            reportService = new ReportService(mockReportRepositoryObject);
+            reportService = new ReportService(mockRepositoryWrapper.Object);
         }
 
         [Fact]
@@ -27,13 +27,13 @@ namespace WinFormsCrudTests.ServiceTests
         {
             int managerId = It.IsAny<int>();
             List<ReportDto> reportListResult = new List<ReportDto>() { new ReportDto() { Name = It.IsAny<string>(), Month = It.IsAny<string>(), NumOfCases = It.IsAny<int>() } };
-            mockReportRepository.Setup(a => a.GetReport(managerId)).ReturnsAsync(reportListResult);
+            mockRepositoryWrapper.Setup(a => a.ReportRepository.GetReport(managerId)).ReturnsAsync(reportListResult);
 
             var result = await reportService.GetReport(managerId);
 
             result.Should().NotBeNull();
             result.Count.Should().Be(1);
-            mockReportRepository.Verify(a => a.GetReport(managerId), Times.Once);
+            mockRepositoryWrapper.Verify(a => a.ReportRepository.GetReport(managerId), Times.Once);
         }
     }
 }

@@ -15,19 +15,16 @@ namespace WinFormsCrudTests.ServiceTests
         IUserService userService;
         private readonly Mock<IEncryptStrategy> mockEncryptStrategy;
         private readonly Mock<ITransferStrategy> mockTransferStrategy;
-        private readonly Mock<IUserRepository> mockUserRepository;
+        private readonly Mock<IRepositoryWrapper> mockRepositoryWrapper;
 
         public UserServiceTests()
         {
             mockEncryptStrategy = new Mock<IEncryptStrategy>();
             mockTransferStrategy = new Mock<ITransferStrategy>();
-            mockUserRepository = new Mock<IUserRepository>();
+            mockRepositoryWrapper = new Mock<IRepositoryWrapper>();
+            mockRepositoryWrapper.Setup(m => m.UserRepository).Returns(() => new Mock<IUserRepository>().Object);
 
-            var mockEncryptStrategyObject = mockEncryptStrategy.Object;
-            var mockUserRepositoryObject = mockUserRepository.Object;
-            var mockTransferStrategyObject = mockTransferStrategy.Object;
-
-            userService = new UserService(mockEncryptStrategyObject, mockTransferStrategyObject, mockUserRepositoryObject);
+            userService = new UserService(mockEncryptStrategy.Object, mockTransferStrategy.Object, mockRepositoryWrapper.Object);
         }
 
         [Fact]
@@ -42,14 +39,14 @@ namespace WinFormsCrudTests.ServiceTests
             mockTransferStrategy.Setup(a => a.Decrypt(username)).Returns(username);
             mockTransferStrategy.Setup(a => a.Decrypt(password)).Returns(password);
 
-            mockUserRepository.Setup(a => a.GetSimpleUserDto(username, encryptedPassword)).Returns(ValueTask.FromResult(simpleUserDto));
+            mockRepositoryWrapper.Setup(a => a.UserRepository.GetSimpleUserDto(username, encryptedPassword)).Returns(ValueTask.FromResult(simpleUserDto));
 
             var result = userService.Login(username, password);
 
             result.Should().NotBeNull();
             result.Result.Id.Should().Be(1);
             mockEncryptStrategy.Verify(a => a.Encrypt(password), Times.Once);
-            mockUserRepository.Verify(a => a.GetSimpleUserDto(username, encryptedPassword), Times.Once);
+            mockRepositoryWrapper.Verify(a => a.UserRepository.GetSimpleUserDto(username, encryptedPassword), Times.Once);
         }
 
         [Fact]
@@ -63,13 +60,13 @@ namespace WinFormsCrudTests.ServiceTests
             mockEncryptStrategy.Setup(a => a.Encrypt(password)).Returns(encryptedPassword);
             mockTransferStrategy.Setup(a => a.Decrypt(username)).Returns(username);
             mockTransferStrategy.Setup(a => a.Decrypt(password)).Returns(password);
-            mockUserRepository.Setup(a => a.GetSimpleUserDto(username, encryptedPassword)).Returns(ValueTask.FromResult(simpleUserDto));
+            mockRepositoryWrapper.Setup(a => a.UserRepository.GetSimpleUserDto(username, encryptedPassword)).Returns(ValueTask.FromResult(simpleUserDto));
 
             var result = userService.Login(username, password);
 
             result.Result.Should().BeNull();
             mockEncryptStrategy.Verify(a => a.Encrypt(password), Times.Once);
-            mockUserRepository.Verify(a => a.GetSimpleUserDto(username, encryptedPassword), Times.Once);
+            mockRepositoryWrapper.Verify(a => a.UserRepository.GetSimpleUserDto(username, encryptedPassword), Times.Once);
         }
     }
 }

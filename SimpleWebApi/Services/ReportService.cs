@@ -6,16 +6,16 @@ namespace SimpleWebApi.Services
 {
     public class ReportService : IReportService
     {
-        IReportRepository reportRepository;
+        IRepositoryWrapper repository;
 
-        public ReportService(IReportRepository reportRepository)
+        public ReportService(IRepositoryWrapper repository)
         {
-            this.reportRepository = reportRepository;
+            this.repository = repository;
         }
 
         public async ValueTask<List<ReportDto>> GetReport(int managerId)
         {
-            var reports = await reportRepository.GetReport(managerId);
+            var reports = await repository.ReportRepository.GetReport(managerId);
 
             return reports;
         }

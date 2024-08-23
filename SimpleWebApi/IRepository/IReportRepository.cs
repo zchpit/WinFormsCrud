@@ -2,7 +2,7 @@
 
 namespace SimpleWebApi.IRepository
 {
-    public interface IReportRepository
+    public interface IReportRepository : IRepositoryBase<ReportDto>
     {
         ValueTask<List<ReportDto>> GetReport(int managerId);
     }
