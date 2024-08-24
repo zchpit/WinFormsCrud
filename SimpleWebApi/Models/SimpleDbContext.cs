@@ -26,23 +26,21 @@ namespace SimpleWebApi.Model
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //here you can MAP Your Models/Entities, but i am going to show you something more interesting. so keep up. 
-            //modelBuilder.Configurations.Add(new UsersMap());
+            modelBuilder.Entity<User>(a =>
+            {
+                a.HasKey(u => u.Id).IsClustered();
+            });
+            modelBuilder.Entity<Case>(a =>
+            {
+                a.HasKey(u => u.Id).IsClustered();
+            });
 
-            modelBuilder.Entity<UserCase>().HasKey(e => new { e.UserId, e.CaseId });
-            modelBuilder.Entity<User>().HasKey(e => e.Id); //.HasMany(a => a.UserCases);
-            modelBuilder.Entity<Case>().HasKey(e => e.Id); //.HasMany(a => a.UserCases);
-
-            /*TODO*/
-            /*
-             Create more sofisticated database model that that.
-
-                modelBuilder.Entity<User>(a =>
-                {
-                    a.HasKey(u => u.Id).IsClustered();
-                    a.HasMany<UserCase>().WithOne(a => a.User);
-                });
-             */
+            modelBuilder.Entity<UserCase>(a =>
+            {
+                a.HasKey(e => new { e.UserId, e.CaseId });
+                a.HasOne(e => e.Case).WithMany(e => e.UserCases).HasForeignKey(e => e.CaseId);
+                a.HasOne(e => e.User).WithMany(e => e.UserCases).HasForeignKey(e => e.UserId);
+            });
         }
     }
 }
