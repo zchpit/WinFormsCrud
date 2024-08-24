@@ -1,11 +1,12 @@
-﻿using SimpleWebApi.IRepository;
+﻿using Microsoft.EntityFrameworkCore;
+using SimpleWebApi.IRepository;
 using SimpleWebApi.Model;
 
 namespace SimpleWebApi.Repository
 {
-    public class RepositoryWrapper : IRepositoryWrapper
+    public class RepositoryWrapper : IRepositoryWrapper, IDisposable
     {
-        private SimpleDbContext repoContext;
+        private SimpleDbContext context;
         private ICaseRepository? caseRepository;
         private IReportRepository? reportRepository;
         private IUserRepository? userRepository;
@@ -16,7 +17,7 @@ namespace SimpleWebApi.Repository
             {
                 if (caseRepository == null)
                 {
-                    caseRepository = new CaseRepository(repoContext);
+                    caseRepository = new CaseRepository(context);
                 }
                 return caseRepository;
             }
@@ -28,7 +29,7 @@ namespace SimpleWebApi.Repository
             {
                 if (reportRepository == null)
                 {
-                    reportRepository = new ReportRepository(repoContext);
+                    reportRepository = new ReportRepository(context);
                 }
                 return reportRepository;
             }
@@ -40,25 +41,43 @@ namespace SimpleWebApi.Repository
             {
                 if (userRepository == null)
                 {
-                    userRepository = new UserRepository(repoContext);
+                    userRepository = new UserRepository(context);
                 }
                 return userRepository;
             }
         }
 
-        public RepositoryWrapper(SimpleDbContext repoContext)
+        public RepositoryWrapper(SimpleDbContext context)
         {
-            this.repoContext = repoContext;
+            this.context = context;
         }
 
         public void Save()
         {
-            repoContext.SaveChanges();
+            context.SaveChanges();
         }
 
         public async ValueTask SaveAsync()
         {
-            await repoContext.SaveChangesAsync();
+            await context.SaveChangesAsync();
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (context != null)
+                {
+                    context.Dispose();
+                    context = null;
+                }
+            }
         }
     }
 }
