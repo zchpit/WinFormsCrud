@@ -121,7 +121,7 @@ namespace WinFormsCrud
             else
             {
                 message = string.Concat("Error occurred while adding user case. Please contact with administration.");
-                await HandleUpdateCase(selectedCase, loggedUser, message);
+                await HandleUpdateCase(caseDto, loggedUser, message);
             }
         }
 
