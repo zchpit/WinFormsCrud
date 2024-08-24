@@ -36,7 +36,7 @@ namespace SimpleWebApi.Services
                 if (caseDto.Id > 0)
                 {
 
-                    await repository.CaseRepository.UpdateCase(caseToUpdate, userId);
+                    await repository.CaseRepository.UpdateCase(caseToUpdate);
                 }
                 else
                 {

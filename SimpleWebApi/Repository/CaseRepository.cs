@@ -29,7 +29,7 @@ namespace SimpleWebApi.Repository
             return result;
         }
 
-        public async Task UpdateCase(Case caseDto, int userId)
+        public async Task UpdateCase(Case caseDto)
         {
             var toUpdate = await repositoryContext.Cases.FirstOrDefaultAsync(x => x.Id == caseDto.Id);
             if (toUpdate != null)
