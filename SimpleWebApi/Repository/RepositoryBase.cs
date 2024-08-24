@@ -19,6 +19,5 @@ namespace SimpleWebApi.Repository
         public void Create(T entity) => repositoryContext.Set<T>().Add(entity);
         public void Update(T entity) => repositoryContext.Set<T>().Update(entity);
         public void Delete(T entity) => repositoryContext.Set<T>().Remove(entity);
-
     }
 }

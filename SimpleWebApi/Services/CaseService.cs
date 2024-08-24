@@ -41,7 +41,9 @@ namespace SimpleWebApi.Services
                 else
                 {
                     caseToUpdate.UserCases = new List<UserCase>() { new UserCase() { UserId = userId } };
-                    await repository.CaseRepository.AddCase(caseToUpdate, userId);
+
+                    repository.CaseRepository.Create(caseToUpdate);
+                    await repository.SaveAsync();
                 }
             }
         }

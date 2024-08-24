@@ -12,11 +12,6 @@ namespace SimpleWebApi.Repository
         {
         }
 
-        public async ValueTask<List<Case>> GetAllCases()
-        {
-            return await repositoryContext.Cases.Where(a => !a.IsDeleted).ToListAsync();
-        }
-
         public async ValueTask<List<Case>> GetUserCases(SimpleUserDto simpleUserDto)
         {
             List<int> userToCheck = new List<int>();
@@ -32,12 +27,6 @@ namespace SimpleWebApi.Repository
             var result = await repositoryContext.Cases.Where(a => userCases.Contains(a.Id) && !a.IsDeleted).ToListAsync();
 
             return result;
-        }
-
-        public async Task AddCase(Case caseDto, int userId)
-        {
-            repositoryContext.Cases.Add(caseDto);
-            await repositoryContext.SaveChangesAsync();
         }
 
         public async Task UpdateCase(Case caseDto, int userId)
