@@ -1,6 +1,6 @@
-﻿using SimpleWebApi.IRepository;
+﻿using Microsoft.EntityFrameworkCore;
+using SimpleWebApi.IRepository;
 using SimpleWebApi.Model;
-using System.Data.Entity;
 using System.Linq.Expressions;
 
 namespace SimpleWebApi.Repository
