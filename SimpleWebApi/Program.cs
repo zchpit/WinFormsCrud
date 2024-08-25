@@ -9,6 +9,7 @@ using SimpleWebApi.Model;
 using SimpleWebApi.Repository;
 using SimpleWebApi.Services;
 using SimpleWebApi.CustomExceptionMiddleware;
+using System.Windows.Forms;
 
 
 namespace SimpleWebApi
@@ -49,6 +50,7 @@ namespace SimpleWebApi
 
             var app = builder.Build();
 
+            
             var logger = app.Services.GetRequiredService<ILoggerManager>();
             app.ConfigureExceptionHandler(logger);
             app.ConfigureCustomExceptionMiddleware();
@@ -61,11 +63,10 @@ namespace SimpleWebApi
             }
 
             app.UseHttpsRedirection();
-
             app.UseAuthorization();
 
-
             app.MapControllers();
+            app.MigrateDatabase();
 
             app.Run();
         }
