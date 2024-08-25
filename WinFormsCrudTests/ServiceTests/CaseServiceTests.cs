@@ -9,7 +9,7 @@ using SimpleWebApi.Model;
 using SimpleWebApi.Services;
 using System.Diagnostics.CodeAnalysis;
 
-namespace WinFormsCrudTests.ServiceTests
+namespace SimpleWebApiTests.ServiceTests
 {
     [ExcludeFromCodeCoverage]
     public class CaseServiceTests

@@ -1,16 +1,14 @@
 ﻿using CommonLibrary.Dto;
 using CommonLibrary.Strategy;
 using FluentAssertions;
-using Microsoft.VisualBasic.ApplicationServices;
 using Moq;
 using SimpleWebApi.IRepository;
 using SimpleWebApi.IServices;
-using SimpleWebApi.Model;
 using SimpleWebApi.Services;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
 
-namespace WinFormsCrudTests.ServiceTests
+namespace SimpleWebApiTests.ServiceTests
 {
     [ExcludeFromCodeCoverage]
     public class UserServiceTests
