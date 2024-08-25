@@ -8,7 +8,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WinFormsCrud", "WinFormsCru
 		{3A52FD04-DCD0-44AD-BB23-1C79DDF29BA3} = {3A52FD04-DCD0-44AD-BB23-1C79DDF29BA3}
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleWebApiTests", "WinFormsCrudTests\SimpleWebApiTests.csproj", "{D08DF1FE-A6C5-4E82-827F-DA3DB3BCFED5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleWebApiTests", "SimpleWebApiTests\SimpleWebApiTests.csproj", "{D08DF1FE-A6C5-4E82-827F-DA3DB3BCFED5}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleWebApi", "SimpleWebApi\SimpleWebApi.csproj", "{3A52FD04-DCD0-44AD-BB23-1C79DDF29BA3}"
 EndProject
