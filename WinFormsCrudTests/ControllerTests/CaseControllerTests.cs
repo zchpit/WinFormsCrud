@@ -10,19 +10,17 @@ namespace SimpleWebApiTests.ControllerTests
     [ExcludeFromCodeCoverage]
     public class CaseControllerTests
     {
-        private readonly Mock<ICaseService> caseService;
+        private readonly Mock<IServiceManager> serviceManager;
         private readonly Mock<ILoggerManager> loggerManager;
         private CaseController caseController;
 
         public CaseControllerTests()
         {
-            caseService = new Mock<ICaseService>();
             loggerManager = new Mock<ILoggerManager>();
+            serviceManager = new Mock<IServiceManager>();
+            serviceManager.Setup(a => a.CaseService).Returns(() => new Mock<ICaseService>().Object);
 
-            var mockReportServiceObject = caseService.Object;
-            var mockLoggerManagereObject = loggerManager.Object;
-
-            caseController = new CaseController(mockLoggerManagereObject, mockReportServiceObject);
+            caseController = new CaseController(loggerManager.Object, serviceManager.Object);
         }
 
         [Fact]
@@ -31,10 +29,10 @@ namespace SimpleWebApiTests.ControllerTests
             CaseDto caseDto = It.IsAny<CaseDto>();
             int user = It.IsAny<int>();
 
-            caseService.Setup(a => a.UpdateCase(It.IsAny<CaseDto>(), It.IsAny<int>()));
+            serviceManager.Setup(a => a.CaseService.UpdateCase(It.IsAny<CaseDto>(), It.IsAny<int>()));
             await caseController.UpdateCase(user, caseDto);
 
-            caseService.Verify(a => a.UpdateCase(It.IsAny<CaseDto>(), It.IsAny<int>()), Times.Once);
+            serviceManager.Verify(a => a.CaseService.UpdateCase(It.IsAny<CaseDto>(), It.IsAny<int>()), Times.Once);
         }
 
         [Fact]
@@ -44,10 +42,10 @@ namespace SimpleWebApiTests.ControllerTests
             int id = It.IsAny<int>();
             SimpleUserDto simpleUserDto = It.IsAny<SimpleUserDto>();
 
-            caseService.Setup(a => a.GetUserCases(simpleUserDto));
+            serviceManager.Setup(a => a.CaseService.GetUserCases(simpleUserDto));
             await caseController.GetUserCases(id, userRole);
 
-            caseService.Verify(a => a.GetUserCases(It.IsAny<SimpleUserDto>()), Times.Once);
+            serviceManager.Verify(a => a.CaseService.GetUserCases(It.IsAny<SimpleUserDto>()), Times.Once);
         }
     }
 }

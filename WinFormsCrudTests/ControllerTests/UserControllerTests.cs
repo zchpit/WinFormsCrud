@@ -11,19 +11,17 @@ namespace SimpleWebApiTests.ControllerTests
     [ExcludeFromCodeCoverage]
     public class UserControllerTests
     {
-        private readonly Mock<IUserService> userService;
+        private readonly Mock<IServiceManager> serviceManager;
         private readonly Mock<ILoggerManager> loggerManager;
         private UserController userController;
 
         public UserControllerTests()
         {
-            userService = new Mock<IUserService>();
             loggerManager = new Mock<ILoggerManager>();
+            serviceManager = new Mock<IServiceManager>();
+            serviceManager.Setup(a => a.UserService).Returns(() => new Mock<IUserService>().Object);
 
-            var mockUserServiceObject = userService.Object;
-            var mockLoggerManagereObject = loggerManager.Object;
-
-            userController = new UserController(mockLoggerManagereObject, mockUserServiceObject);
+            userController = new UserController(loggerManager.Object, serviceManager.Object);
         }
 
         [Fact]
@@ -31,12 +29,12 @@ namespace SimpleWebApiTests.ControllerTests
         {
             var simpleUserDto = It.IsAny<SimpleUserDto>();
 
-            userService.Setup(a => a.Login(It.IsAny<string>(), It.IsAny<string>())).ReturnsAsync(simpleUserDto);
+            serviceManager.Setup(a => a.UserService.Login(It.IsAny<string>(), It.IsAny<string>())).ReturnsAsync(simpleUserDto);
 
             var result = await userController.Login(It.IsAny<string>(), It.IsAny<string>());
 
             result.Should().NotBeNull();
-            userService.Verify(a => a.Login(It.IsAny<string>(), It.IsAny<string>()), Times.Once);
+            serviceManager.Verify(a => a.UserService.Login(It.IsAny<string>(), It.IsAny<string>()), Times.Once);
             loggerManager.Verify(a => a.LogInfo(It.IsAny<string>()), Times.Once);
         }
     }

@@ -11,19 +11,17 @@ namespace SimpleWebApiTests.ControllerTests
     [ExcludeFromCodeCoverage]
     public class ReportControllerTests
     {
-        private readonly Mock<IReportService> reportService;
+        private readonly Mock<IServiceManager> serviceManager;
         private readonly Mock<ILoggerManager> loggerManager;
         private ReportController reportController;
 
         public ReportControllerTests()
         {
-            reportService = new Mock<IReportService>();
             loggerManager = new Mock<ILoggerManager>();
+            serviceManager = new Mock<IServiceManager>();
+            serviceManager.Setup(a => a.ReportService).Returns(() => new Mock<IReportService>().Object);
 
-            var mockReportServiceObject = reportService.Object;
-            var mockLoggerManagereObject = loggerManager.Object;
-
-            reportController = new ReportController(mockLoggerManagereObject, mockReportServiceObject);
+            reportController = new ReportController(loggerManager.Object, serviceManager.Object);
         }
 
         [Fact]
@@ -31,13 +29,13 @@ namespace SimpleWebApiTests.ControllerTests
         {
             int managerId = It.IsAny<int>();
             List<ReportDto> reportListResult = new List<ReportDto>() { new ReportDto() { Name = It.IsAny<string>(), Month = It.IsAny<string>(), NumOfCases = It.IsAny<int>() } };
-            reportService.Setup(a => a.GetReport(managerId)).ReturnsAsync(reportListResult);
+            serviceManager.Setup(a => a.ReportService.GetReport(managerId)).ReturnsAsync(reportListResult);
 
             var result = await reportController.GetReport(managerId);
 
             result.Should().NotBeNull();
             result.Count.Should().Be(1);
-            reportService.Verify(a => a.GetReport(managerId), Times.Once);
+            serviceManager.Verify(a => a.ReportService.GetReport(managerId), Times.Once);
         }
     }
 }

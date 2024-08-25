@@ -9,19 +9,19 @@ namespace SimpleWebApi.Controllers
     [Route("[controller]")]
     public class ReportController : Controller
     {
-        private readonly ILoggerManager _logger;
-        private readonly IReportService _reportService;
+        private readonly ILoggerManager logger;
+        private readonly IServiceManager serviceManager;
 
-        public ReportController(ILoggerManager logger, IReportService reportService)
+        public ReportController(ILoggerManager logger, IServiceManager serviceManager)
         {
-            _logger = logger;
-            _reportService = reportService;
+            this.logger = logger;
+            this.serviceManager = serviceManager;
         }
 
         [HttpGet("{managerId}")]
         public async ValueTask<List<ReportDto>> GetReport(int managerId)
         {
-            return await _reportService.GetReport(managerId);
+            return await serviceManager.ReportService.GetReport(managerId);
         }
     }
 }

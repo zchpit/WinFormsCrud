@@ -9,13 +9,13 @@ namespace SimpleWebApi.Controllers
     [Route("[controller]")]
     public class CaseController : Controller
     {
-        private readonly ILoggerManager _logger;
-        private readonly ICaseService _caseService;
+        private readonly ILoggerManager logger;
+        private readonly IServiceManager serviceManager;
 
-        public CaseController(ILoggerManager logger, ICaseService caseService)
+        public CaseController(ILoggerManager logger, IServiceManager serviceManager)
         {
-            _logger = logger;
-            _caseService = caseService;
+            this.logger = logger;
+            this.serviceManager = serviceManager;
         }
 
         [HttpGet("{id}/{userRole}")]
@@ -25,13 +25,13 @@ namespace SimpleWebApi.Controllers
             if (userRole <= 2)
                 userRoleDto = (RoleDto)userRole;
 
-            return await _caseService.GetUserCases(new SimpleUserDto() { Id = id, UserRole = userRoleDto });
+            return await serviceManager.CaseService.GetUserCases(new SimpleUserDto() { Id = id, UserRole = userRoleDto });
         }
 
         [HttpPost]
         public async Task UpdateCase(int userId, CaseDto caseDto)
         {
-            await _caseService.UpdateCase(caseDto, userId);
+            await serviceManager.CaseService.UpdateCase(caseDto, userId);
         }
     }
 }

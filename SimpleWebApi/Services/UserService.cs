@@ -12,7 +12,7 @@ namespace SimpleWebApi.Services
         private IRepositoryWrapper repository;
         private ITransferStrategy transferStrategy;
 
-        public UserService(IEncryptStrategy encryptStrategy, ITransferStrategy transferStrategy, IRepositoryWrapper repository)
+        public UserService(IRepositoryWrapper repository, IEncryptStrategy encryptStrategy, ITransferStrategy transferStrategy)
         {
             this.encryptStrategy = encryptStrategy;
             this.repository = repository;

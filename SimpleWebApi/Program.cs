@@ -32,9 +32,8 @@ namespace SimpleWebApi
 
             builder.Services.AddTransient<IEncryptStrategy, Rfc2898EncryptStrategy>();
             builder.Services.AddTransient<ITransferStrategy, Base64TransferStrategy>();
-            builder.Services.AddTransient<IUserService, UserService>();
-            builder.Services.AddTransient<IReportService, ReportService>();
-            builder.Services.AddTransient<ICaseService, CaseService>();
+
+            builder.Services.AddTransient<IServiceManager, ServiceManager>();
 
             builder.Services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
 

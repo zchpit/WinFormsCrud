@@ -24,7 +24,7 @@ namespace WinFormsCrudTests.ServiceTests
             mockRepositoryWrapper = new Mock<IRepositoryWrapper>();
             mockRepositoryWrapper.Setup(m => m.UserRepository).Returns(() => new Mock<IUserRepository>().Object);
 
-            userService = new UserService(mockEncryptStrategy.Object, mockTransferStrategy.Object, mockRepositoryWrapper.Object);
+            userService = new UserService(mockRepositoryWrapper.Object, mockEncryptStrategy.Object, mockTransferStrategy.Object);
         }
 
         [Fact]
