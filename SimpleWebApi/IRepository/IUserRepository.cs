@@ -1,6 +1,4 @@
 ﻿using CommonLibrary.Dto;
-using Microsoft.VisualBasic.ApplicationServices;
-using SimpleWebApi.Model;
 
 namespace SimpleWebApi.IRepository
 {

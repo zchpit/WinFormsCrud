@@ -22,7 +22,7 @@ namespace SimpleWebApi.Model
         public int LastModifiedBy { get; set; }
         public DateTime LastModifiedDate { get; set; }
         public int? DeletedBy { get; set; }
-        public DateTime? DeletedDate { get; set; } = DateTime.Now;
+        public DateTime? DeletedDate { get; set; }
 
         public ICollection<UserCase> UserCases { get; set; }
     }

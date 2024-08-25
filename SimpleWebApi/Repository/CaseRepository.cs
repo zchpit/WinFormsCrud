@@ -28,27 +28,5 @@ namespace SimpleWebApi.Repository
 
             return result;
         }
-
-        public async Task UpdateCase(Case caseDto)
-        {
-            var toUpdate = await repositoryContext.Cases.FirstOrDefaultAsync(x => x.Id == caseDto.Id);
-            if (toUpdate != null)
-            {
-                toUpdate.Header = caseDto.Header;
-                toUpdate.Description = caseDto.Description;
-                toUpdate.Priority = caseDto.Priority;
-                toUpdate.LastModifiedBy = caseDto.LastModifiedBy;
-                toUpdate.LastModifiedDate = caseDto.LastModifiedDate;
-
-                if (caseDto.IsDeleted)
-                {
-                    toUpdate.IsDeleted = caseDto.IsDeleted;
-                    toUpdate.DeletedDate = caseDto.DeletedDate;
-                    toUpdate.DeletedBy = caseDto.DeletedBy;
-                }
-
-                await repositoryContext.SaveChangesAsync();
-            }
-        }
     }
 }

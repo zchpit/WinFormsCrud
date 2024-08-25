@@ -32,17 +32,31 @@ namespace SimpleWebApi.Services
         {
             if (userId > 0)
             {
-                Case caseToUpdate = MapCaseDtoToCase(caseDto);
+                Case caseChange = MapCaseDtoToCase(caseDto);
                 if (caseDto.Id > 0)
                 {
+                    var caseToUpdate = await repository.CaseRepository.GetFirstWithTracking(a => a.Id == caseDto.Id);
 
-                    await repository.CaseRepository.UpdateCase(caseToUpdate);
+                    caseToUpdate.Header = caseDto.Header;
+                    caseToUpdate.Description = caseDto.Description;
+                    caseToUpdate.Priority = caseDto.Priority;
+                    caseToUpdate.LastModifiedBy = caseDto.LastModifiedBy;
+                    caseToUpdate.LastModifiedDate = caseDto.LastModifiedDate;
+
+                    if (caseDto.IsDeleted)
+                    {
+                        caseToUpdate.IsDeleted = caseDto.IsDeleted;
+                        caseToUpdate.DeletedDate = caseDto.DeletedDate;
+                        caseToUpdate.DeletedBy = caseDto.DeletedBy;
+                    }
+
+                    await repository.SaveAsync();
                 }
                 else
                 {
-                    caseToUpdate.UserCases = new List<UserCase>() { new UserCase() { UserId = userId } };
+                    caseChange.UserCases = new List<UserCase>() { new UserCase() { UserId = userId } };
 
-                    repository.CaseRepository.Create(caseToUpdate);
+                    repository.CaseRepository.Create(caseChange);
                     await repository.SaveAsync();
                 }
             }

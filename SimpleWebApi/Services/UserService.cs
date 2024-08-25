@@ -26,9 +26,9 @@ namespace SimpleWebApi.Services
 
             var usernameValidation = InputValidation.IsUserValid(username);
             var passwordValidation = InputValidation.IsPasswordValid(password);
+
             if (!usernameValidation.Any() && !passwordValidation.Any())
             {
-
                 var encryptedPasswordDb = encryptStrategy.Encrypt(password);
                 var user = await repository.UserRepository.GetSimpleUserDto(username, encryptedPasswordDb);
                 return user;
