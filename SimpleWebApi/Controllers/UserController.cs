@@ -22,7 +22,15 @@ namespace SimpleWebApi.Controllers
         public async ValueTask<ActionResult<SimpleUserDto>> Login(string username, string password)
         {
             logger.LogInfo("test, test");
-            return await serviceManager.UserService.Login(username, password);
+
+            var response = await serviceManager.UserService.Login(username, password);
+            if (response != null) {
+                return response;
+            }
+            else
+            {
+                return NoContent();
+            }
         }
     }
 }

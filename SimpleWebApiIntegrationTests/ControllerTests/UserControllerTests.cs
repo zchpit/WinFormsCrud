@@ -28,8 +28,7 @@ namespace SimpleWebApiIntegrationTests.ControllerTests
             var response = await client.GetAsync(url);
 
             // Assert
-            response.EnsureSuccessStatusCode(); // Status Code 200-299
-            response.Content.Headers.ContentLength.Should().Be(0);
+            response.StatusCode.Should().BeOneOf(System.Net.HttpStatusCode.NoContent);
         }
 
         [Theory]
