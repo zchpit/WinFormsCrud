@@ -13,6 +13,7 @@ namespace SimpleWebApi.Repository
             this.repositoryContext = repositoryContext;
         }
         public async ValueTask<T> GetFirstWithTracking(Expression<Func<T, bool>> expression) => await repositoryContext.Set<T>().FirstAsync(expression);
+        public async ValueTask<T> GetFirstWithNoTracking(Expression<Func<T, bool>> expression) => await repositoryContext.Set<T>().AsNoTracking().FirstAsync(expression);
 
         public IQueryable<T> FindAll() => repositoryContext.Set<T>().AsNoTracking();
         public IQueryable<T> FindByCondition(Expression<Func<T, bool>> expression) =>

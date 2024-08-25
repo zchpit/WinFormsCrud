@@ -30,8 +30,11 @@ namespace SimpleWebApi.Services
             if (!usernameValidation.Any() && !passwordValidation.Any())
             {
                 var encryptedPasswordDb = encryptStrategy.Encrypt(password);
-                var user = await repository.UserRepository.GetSimpleUserDto(username, encryptedPasswordDb);
-                return user;
+                var user = await repository.UserRepository.GetFirstWithNoTracking(a => a.IsActive && a.Name == username && a.Password == encryptedPasswordDb);
+
+                if (user != null) {
+                    return new SimpleUserDto() { Id = user.Id, UserRole = user.UserRole };
+                }
             }
 
             return null;
