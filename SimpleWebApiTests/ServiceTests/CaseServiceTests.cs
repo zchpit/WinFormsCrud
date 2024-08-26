@@ -8,6 +8,7 @@ using SimpleWebApi.IServices;
 using SimpleWebApi.Model;
 using SimpleWebApi.Services;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq.Expressions;
 
 namespace SimpleWebApiTests.ServiceTests
 {
@@ -80,83 +81,87 @@ namespace SimpleWebApiTests.ServiceTests
         }
 
         [Fact]
-        public async void UpdateCase_NewCase_CreateRecord()
+        public async void CreateCase_NewCase_CreateRecord()
         {
-            CaseDto caseDto = new CaseDto() { Header = "Header", Description = "Description", Id = 0 };
+            CaseCreateDto caseCreateDto = new CaseCreateDto() 
+            { 
+                Header = "Header", 
+                Description = "Description", 
+                Id = 0, 
+                Priority = 1, 
+                CreateDate = new DateTime(2024,01,01), 
+                CreatedBy = 1, 
+                LastModifiedBy = 1, 
+                LastModifiedDate = new DateTime(2024, 01, 01) 
+            };
+            
             Case caseObj = new Case() { Header = "Header", Description = "Description", Id = 0 };
-            int userId = 1;
-            mockRepositoryWrapper.Setup(a => a.CaseRepository.GetFirstWithTracking(a => a.Id == caseDto.Id)).Returns(ValueTask.FromResult(caseObj));
+            mockRepositoryWrapper.Setup(a => a.CaseRepository.GetFirstWithTracking(It.IsAny<Expression<Func<Case, bool>>>())).Returns(ValueTask.FromResult(caseObj));
             mockRepositoryWrapper.Setup(a => a.CaseRepository.Create(It.IsAny<Case>()));
 
-            await caseService.UpdateCase(caseDto, userId);
+            await caseService.CreateCase(caseCreateDto);
 
-            mockRepositoryWrapper.Verify(a => a.CaseRepository.GetFirstWithTracking(a => a.Id == caseDto.Id), Times.Never);
+            mockRepositoryWrapper.Verify(a => a.CaseRepository.GetFirstWithTracking(It.IsAny<Expression<Func<Case, bool>>>()), Times.Never);
             mockRepositoryWrapper.Verify(a => a.CaseRepository.Create(It.IsAny<Case>()), Times.Once);
         }
 
         [Fact]
         public async void UpdateCase_ExistingCase_UpdateRecord()
         {
-            CaseDto caseDto = new CaseDto() { Header = "Header", Description = "Description", Id = 1, Priority = 2, LastModifiedBy = 1, LastModifiedDate = new DateTime(2022, 01, 01), IsDeleted = false };
+            CaseUpdateDto caseUpdateDto = new CaseUpdateDto() { Header = "Header", Description = "Description", Id = 1, Priority = 2, LastModifiedBy = 1, LastModifiedDate = new DateTime(2022, 01, 01)};
             Case caseObj = new Case() { Header = "", Description = "", Id = 1 };
-            int userId = 1;
 
-            mockRepositoryWrapper.Setup(a => a.CaseRepository.GetFirstWithTracking(a => a.Id == caseDto.Id)).Returns(ValueTask.FromResult(caseObj));
+            mockRepositoryWrapper.Setup(a => a.CaseRepository.GetFirstWithTracking(It.IsAny<Expression<Func<Case, bool>>>())).Returns(ValueTask.FromResult(caseObj));
             mockRepositoryWrapper.Setup(a => a.CaseRepository.Create(It.IsAny<Case>()));
 
-            await caseService.UpdateCase(caseDto, userId);
+            await caseService.UpdateCase(caseUpdateDto);
 
-            mockRepositoryWrapper.Verify(a => a.CaseRepository.GetFirstWithTracking(a => a.Id == caseDto.Id), Times.Once);
+            mockRepositoryWrapper.Verify(a => a.CaseRepository.GetFirstWithTracking(It.IsAny<Expression<Func<Case, bool>>>()), Times.Once);
             mockRepositoryWrapper.Verify(a => a.CaseRepository.Create(It.IsAny<Case>()), Times.Never);
 
-            caseObj.Header.Should().Be(caseDto.Header);
-            caseObj.Description.Should().Be(caseDto.Description);
-            caseObj.Priority.Should().Be(caseDto.Priority);
-            caseObj.LastModifiedBy.Should().Be(caseDto.LastModifiedBy);
-            caseObj.LastModifiedDate.Should().Be(caseDto.LastModifiedDate);
+            caseObj.Header.Should().Be(caseUpdateDto.Header);
+            caseObj.Description.Should().Be(caseUpdateDto.Description);
+            caseObj.Priority.Should().Be(caseUpdateDto.Priority);
+            caseObj.LastModifiedBy.Should().Be(caseUpdateDto.LastModifiedBy);
+            caseObj.LastModifiedDate.Should().Be(caseUpdateDto.LastModifiedDate);
             caseObj.IsDeleted.Should().Be(false);
             caseObj.DeletedDate.Should().BeNull();
             caseObj.DeletedBy.Should().BeNull();
         }
 
         [Fact]
-        public async void UpdateCase_ExistingCase_DeleteRecord()
+        public async void DeleteCase_ExistingCase_DeleteRecord()
         {
-            CaseDto caseDto = new CaseDto() { Header = "Header", Description = "Description", Id = 1, Priority = 2, LastModifiedBy = 1, LastModifiedDate = new DateTime(2022, 01, 01), IsDeleted = true, DeletedBy = 2, DeletedDate = new DateTime(2022, 01, 01) };
+            CaseDeleteDto caseDeleteDto = new CaseDeleteDto() { Id = 1, DeletedBy = 2, DeletedDate = new DateTime(2022, 01, 01) };
             Case caseObj = new Case() { Header = "", Description = "", Id = 1 };
-            int userId = 1;
 
-            mockRepositoryWrapper.Setup(a => a.CaseRepository.GetFirstWithTracking(a => a.Id == caseDto.Id)).Returns(ValueTask.FromResult(caseObj));
+            mockRepositoryWrapper.Setup(a => a.CaseRepository.GetFirstWithTracking(It.IsAny<Expression<Func<Case, bool>>>())).ReturnsAsync(caseObj);
             mockRepositoryWrapper.Setup(a => a.CaseRepository.Create(It.IsAny<Case>()));
 
-            await caseService.UpdateCase(caseDto, userId);
+            await caseService.DeleteCase(caseDeleteDto);
 
-            mockRepositoryWrapper.Verify(a => a.CaseRepository.GetFirstWithTracking(a => a.Id == caseDto.Id), Times.Once);
+            mockRepositoryWrapper.Verify(a => a.CaseRepository.GetFirstWithTracking(It.IsAny<Expression<Func<Case, bool>>>()), Times.Once);
             mockRepositoryWrapper.Verify(a => a.CaseRepository.Create(It.IsAny<Case>()), Times.Never);
 
-            caseObj.Header.Should().Be(caseDto.Header);
-            caseObj.Description.Should().Be(caseDto.Description);
-            caseObj.Priority.Should().Be(caseDto.Priority);
-            caseObj.LastModifiedBy.Should().Be(caseDto.LastModifiedBy);
-            caseObj.LastModifiedDate.Should().Be(caseDto.LastModifiedDate);
-            caseObj.IsDeleted.Should().Be(caseDto.IsDeleted);
-            caseObj.DeletedDate.Should().Be(caseDto.DeletedDate);
-            caseObj.DeletedBy.Should().Be(caseDto.DeletedBy);
+            caseObj.IsDeleted.Should().Be(true);
+            caseObj.DeletedDate.Should().Be(caseDeleteDto.DeletedDate);
+            caseObj.DeletedBy.Should().Be(caseDeleteDto.DeletedBy);
+            caseObj.LastModifiedDate.Should().Be(caseDeleteDto.DeletedDate);
+            caseObj.LastModifiedBy.Should().Be(caseDeleteDto.DeletedBy);
         }
 
         [Fact]
         public async void UpdateCase_UserUnknown_DontUpdate()
         {
-            CaseDto caseDto = new CaseDto() { Header = "Header", Description = "Description", Id = 1 };
+            CaseUpdateDto caseUpdateDto = new CaseUpdateDto() { Header = "Header", Description = "Description", Id = 1, Priority = 2, LastModifiedBy = 0, LastModifiedDate = new DateTime(2022, 01, 01) };
             Case caseObj = new Case() { Header = "Header", Description = "Description", Id = 1 };
-            int userId = 0;
 
-            mockRepositoryWrapper.Setup(a => a.CaseRepository.GetFirstWithTracking(a => a.Id == caseDto.Id)).Returns(ValueTask.FromResult(caseObj));
+            mockRepositoryWrapper.Setup(a => a.CaseRepository.GetFirstWithTracking(It.IsAny<Expression<Func<Case, bool>>>())).Returns(ValueTask.FromResult(caseObj));
             mockRepositoryWrapper.Setup(a => a.CaseRepository.Create(It.IsAny<Case>()));
 
-            await caseService.UpdateCase(caseDto, userId);
+            await caseService.UpdateCase(caseUpdateDto);
 
-            mockRepositoryWrapper.Verify(a => a.CaseRepository.GetFirstWithTracking(a => a.Id == caseDto.Id), Times.Never);
+            mockRepositoryWrapper.Verify(a => a.CaseRepository.GetFirstWithTracking(It.IsAny<Expression<Func<Case, bool>>>()), Times.Never);
             mockRepositoryWrapper.Verify(a => a.CaseRepository.Create(It.IsAny<Case>()), Times.Never);
         }
     }

@@ -18,11 +18,11 @@ namespace SimpleWebApiIntegrationTests.ControllerTests
 
         public CaseControllerTests()
         {
-            _testApi = new TestApi(services => services.AddSingleton<IUserService, TestUserService>());
+            _testApi = new TestApi(services => services.AddSingleton<ICaseService, TestCaseService>());
         }
 
         [Theory]
-        [InlineData("/Case/2/1")]
+        [InlineData("/api/Case/GetUserCases/2/1")]
         public async Task GetUserCases_GoodUserId_GetCaseDtoResponse(string url)
         {
             // Arrange
@@ -49,46 +49,60 @@ namespace SimpleWebApiIntegrationTests.ControllerTests
         }
 
         [Theory]
-        [InlineData("/Case/2/1", "/Case?userId=2")]
-        public async Task UpdateCase_SendRequestWithoutAnyChange_MakeSureApiMethodExists(string urlForTestCases, string urlForUpdate)
+        [InlineData("/api/Case/UpdateCase")]
+        public async Task UpdateCase_SendRequestWithoutAnyChange_GetStatusCodeOk(string urlForUpdate)
         {
             // Arrange
             var client = _testApi.Client;
+            CaseUpdateDto uaseUpdateDto = new CaseUpdateDto() { Id = 1, LastModifiedBy = 1, LastModifiedDate = DateTime.UtcNow };
 
-            // Act
-            var responseGetCases = await client.GetAsync(urlForTestCases);
-            string responseBodyGetCases = await responseGetCases.Content.ReadAsStringAsync();
-            List<CaseDto> caseDtos = JsonConvert.DeserializeObject<List<CaseDto>>(responseBodyGetCases);
-            CaseDto caseDtoToUpdate = caseDtos.First();
-
-            var responsePost = await client.PostAsJsonAsync<CaseDto>(urlForUpdate, caseDtoToUpdate);
-            string responseBodyPost = await responsePost.Content.ReadAsStringAsync();
+            var responsePost = await client.PutAsJsonAsync<CaseUpdateDto>(urlForUpdate, uaseUpdateDto);
+            //string responseBodyPost = await responsePost.Content.ReadAsStringAsync();
 
             // Assert
             responsePost.EnsureSuccessStatusCode(); // Status Code 200-299
             responsePost.IsSuccessStatusCode.Should().BeTrue();
-            responseBodyPost.Should().BeEmpty();
         }
 
         [Theory]
-        [InlineData("/Case?userId=2")]
-        public async Task UpdateCase_CheckValidation_BadRequest(string urlForUpdate)
+        [InlineData("/api/Case/CreateCase")]
+        public async Task CreateCase_CheckIfCreateMethodExists_GetStatusCodeOk(string urlForUpdate)
+        {
+            // Arrange
+            var client = _testApi.Client;
+            CaseCreateDto caseCreateDto = new CaseCreateDto()
+            {
+                Header = "test",
+                CreateDate = DateTime.UtcNow,
+                CreatedBy = 1,
+                Description = "test",
+                LastModifiedBy = 1,
+                LastModifiedDate = DateTime.UtcNow,
+                Priority = 1
+            };
+
+            // Act
+            var responsePost = await client.PostAsJsonAsync<CaseCreateDto>(urlForUpdate, caseCreateDto);
+            //string responseBodyPost = await responsePost.Content.ReadAsStringAsync();
+
+            // Assert
+            responsePost.EnsureSuccessStatusCode();
+            responsePost.IsSuccessStatusCode.Should().BeTrue();
+        }
+
+        [Theory]
+        [InlineData("/api/Case/DeleteCase/1/1")]
+        public async Task DeleteCase_CheckValidation_CaseDeleted(string urlForUpdate)
         {
             // Arrange
             var client = _testApi.Client;
 
             // Act
-            CaseDto caseDtoToUpdate = new CaseDto() { Id = 2, Header = null, Description = null };
-
-            var responsePost = await client.PostAsJsonAsync<CaseDto>(urlForUpdate, caseDtoToUpdate);
-            string responseBodyPost = await responsePost.Content.ReadAsStringAsync();
+            var responsePost = await client.DeleteAsync(urlForUpdate);
 
             // Assert
-            responsePost.StatusCode.Should().Be(System.Net.HttpStatusCode.BadRequest);
-            responsePost.IsSuccessStatusCode.Should().BeFalse();
-            responseBodyPost.Should().Contain("One or more validation errors occurred.");
-            responseBodyPost.Should().Contain("The Header field is required.");
-
+            responsePost.StatusCode.Should().Be(System.Net.HttpStatusCode.OK);
+            responsePost.IsSuccessStatusCode.Should().BeTrue();
         }
     }
 }

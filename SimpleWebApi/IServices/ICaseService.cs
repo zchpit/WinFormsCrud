@@ -6,7 +6,9 @@ namespace SimpleWebApi.IServices
     {
         bool IsValidCase(CaseDto caseDto);
 
-        Task UpdateCase(CaseDto caseDto, int userId);
+        ValueTask CreateCase(CaseCreateDto caseCreateDto);
+        ValueTask UpdateCase(CaseUpdateDto caseUpdateDto);
+        ValueTask DeleteCase(CaseDeleteDto caseDeleteDto);
 
         ValueTask<List<CaseDto>> GetUserCases(SimpleUserDto simpleUserDto);
     }

@@ -6,7 +6,7 @@ using SimpleWebApi.IServices;
 namespace SimpleWebApi.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]/[action]")]
     public class UserController : ControllerBase
     {
         private readonly ILoggerManager logger;
@@ -18,7 +18,7 @@ namespace SimpleWebApi.Controllers
             this.serviceManager = serviceManager;
         }
 
-        [HttpGet("{username}/{password}")]
+        [HttpGet("{username}/{password}", Name = "Login")]
         public async ValueTask<ActionResult<SimpleUserDto>> Login(string username, string password)
         {
             logger.LogInfo("test, test");

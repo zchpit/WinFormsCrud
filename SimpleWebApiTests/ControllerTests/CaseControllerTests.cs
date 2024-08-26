@@ -24,18 +24,6 @@ namespace SimpleWebApiTests.ControllerTests
         }
 
         [Fact]
-        public async void GetReport_IsValidCase_CallUpdateCaseOnce()
-        {
-            CaseDto caseDto = It.IsAny<CaseDto>();
-            int user = It.IsAny<int>();
-
-            serviceManager.Setup(a => a.CaseService.UpdateCase(It.IsAny<CaseDto>(), It.IsAny<int>()));
-            await caseController.UpdateCase(user, caseDto);
-
-            serviceManager.Verify(a => a.CaseService.UpdateCase(It.IsAny<CaseDto>(), It.IsAny<int>()), Times.Once);
-        }
-
-        [Fact]
         public async void GetUserCases_IsValidCase_CallGetUserCases()
         {
             int userRole = It.IsAny<int>();
@@ -46,6 +34,42 @@ namespace SimpleWebApiTests.ControllerTests
             await caseController.GetUserCases(id, userRole);
 
             serviceManager.Verify(a => a.CaseService.GetUserCases(It.IsAny<SimpleUserDto>()), Times.Once);
+        }
+
+        [Fact]
+        public async void CreateCase_IsValidCase_CallCreateCaseOnce()
+        {
+            CaseCreateDto caseCreateDto = It.IsAny<CaseCreateDto>();
+            int user = It.IsAny<int>();
+
+            serviceManager.Setup(a => a.CaseService.CreateCase(It.IsAny<CaseCreateDto>()));
+            await caseController.CreateCase(caseCreateDto);
+
+            serviceManager.Verify(a => a.CaseService.CreateCase(It.IsAny<CaseCreateDto>()), Times.Once);
+        }
+
+        [Fact]
+        public async void UpdateCase_IsValidCase_CallUpdateCaseOnce()
+        {
+            CaseUpdateDto caseUpdateDto = It.IsAny<CaseUpdateDto>();
+            int user = It.IsAny<int>();
+
+            serviceManager.Setup(a => a.CaseService.UpdateCase(It.IsAny<CaseUpdateDto>()));
+            await caseController.UpdateCase(caseUpdateDto);
+
+            serviceManager.Verify(a => a.CaseService.UpdateCase(It.IsAny<CaseUpdateDto>()), Times.Once);
+        }
+
+        [Fact]
+        public async void DeleteCase_IsValidCase_CallDeleteCaseOnce()
+        {
+            CaseDeleteDto caseUpdateDto = It.IsAny<CaseDeleteDto>();
+            int user = It.IsAny<int>();
+
+            serviceManager.Setup(a => a.CaseService.DeleteCase(It.IsAny<CaseDeleteDto>()));
+            await caseController.DeleteCase(caseUpdateDto);
+
+            serviceManager.Verify(a => a.CaseService.DeleteCase(It.IsAny<CaseDeleteDto>()), Times.Once);
         }
     }
 }

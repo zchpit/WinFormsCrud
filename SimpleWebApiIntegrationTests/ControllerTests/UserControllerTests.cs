@@ -18,7 +18,7 @@ namespace SimpleWebApiIntegrationTests.ControllerTests
         }
 
         [Theory]
-        [InlineData("/User/test/test")]
+        [InlineData("/api/User/Login/test/test")]
         public async Task GetUserLogin_WrongUserPassword_GetEmptyResponse(string url)
         {
             // Arrange
@@ -32,8 +32,8 @@ namespace SimpleWebApiIntegrationTests.ControllerTests
         }
 
         [Theory]
-        [InlineData("/User/dGVzdA==/dGVzdA==")]
-        [InlineData("/User/bWFuYWdlcg==/bWFuYWdlcg==")]
+        [InlineData("/api/User/Login/dGVzdA==/dGVzdA==")]
+        [InlineData("/api/User/Login/bWFuYWdlcg==/bWFuYWdlcg==")]
         public async Task GetUserLogin_GoodUserPassword_GetUserDtoResponse(string url)
         {
             // Arrange

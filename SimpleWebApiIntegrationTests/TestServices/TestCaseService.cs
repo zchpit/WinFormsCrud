@@ -21,13 +21,17 @@ namespace SimpleWebApiIntegrationTests.TestServices
             return new ValueTask<List<CaseDto>>(caseDtos);
         }
 
-        public async Task UpdateCase(CaseDto caseDto, int userId)
+        public async ValueTask CreateCase(CaseCreateDto caseCreateDto)
         {
-            if (userId == 2 && caseDto != null)
-            {
-                return;
-            }
-
+            var test = caseCreateDto;
+        }
+        public async ValueTask UpdateCase(CaseUpdateDto caseUpdateDto)
+        {
+            var test = caseUpdateDto;
+        }
+        public async ValueTask DeleteCase(CaseDeleteDto caseDeleteDto)
+        {
+            var test = caseDeleteDto;
         }
 
         public bool IsValidCase(CaseDto caseDto)

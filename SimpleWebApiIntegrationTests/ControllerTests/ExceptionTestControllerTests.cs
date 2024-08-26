@@ -16,7 +16,7 @@ namespace SimpleWebApiIntegrationTests.ControllerTests
         }
 
         [Theory]
-        [InlineData("/ExceptionTest/GetException")]
+        [InlineData("/api/ExceptionTest/GetException")]
         public async Task GetException_MethodShouldThrowException_ThatIsHandledByMiddleware(string url)
         {
             // Arrange
@@ -33,7 +33,7 @@ namespace SimpleWebApiIntegrationTests.ControllerTests
         }
 
         [Theory]
-        [InlineData("/ExceptionTest/GetAccessViolationException")]
+        [InlineData("/api/ExceptionTest/GetAccessViolationException")]
         public async Task GetAccessViolationException_MethodShouldThrowException_ThatIsHandledByMiddleware(string url)
         {
             // Arrange

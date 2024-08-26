@@ -20,7 +20,7 @@ namespace SimpleWebApiIntegrationTests.ControllerTests
         }
 
         [Theory]
-        [InlineData("/Report/0")]
+        [InlineData("/api/Report/GetReport/0")]
         public async Task GetReport_BadUserId_GetEmptyResponse(string url)
         {
             // Arrange
@@ -37,7 +37,7 @@ namespace SimpleWebApiIntegrationTests.ControllerTests
         }
 
         [Theory]
-        [InlineData("/Report/1")]
+        [InlineData("/api/Report/GetReport/1")]
         public async Task GetReport_GoodUserId_GetUserDtoResponse(string url)
         {
             // Arrange

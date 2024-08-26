@@ -7,7 +7,7 @@ namespace SimpleWebApi.Controllers
     namespace SimpleWebApi.Controllers
     {
         [ApiController]
-        [Route("[controller]")]
+        [Route("api/[controller]/[action]")]
         public class ExceptionTestController : Controller
         {
             private readonly ILoggerManager _logger;
@@ -17,7 +17,7 @@ namespace SimpleWebApi.Controllers
                 _logger = logger;
             }
 
-            [HttpGet("GetException")]
+            [HttpGet(Name = "GetException")]
             public IActionResult GetException()
             {
                 _logger.LogWarn("User has click GetException method in ReportController");
@@ -26,7 +26,7 @@ namespace SimpleWebApi.Controllers
                 return Ok();
             }
 
-            [HttpGet("GetAccessViolationException")]
+            [HttpGet(Name = "GetAccessViolationException")]
             public IActionResult GetAccessViolationException()
             {
                 _logger.LogWarn("User has click GetException method in ReportController");

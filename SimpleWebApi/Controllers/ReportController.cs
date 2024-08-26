@@ -6,7 +6,7 @@ using SimpleWebApi.IServices;
 namespace SimpleWebApi.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]/[action]")]
     public class ReportController : Controller
     {
         private readonly ILoggerManager logger;

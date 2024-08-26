@@ -28,37 +28,58 @@ namespace SimpleWebApi.Services
             return true;
         }
 
-        public async Task UpdateCase(CaseDto caseDto, int userId)
+        public async ValueTask CreateCase(CaseCreateDto caseCreateDto)
         {
-            if (userId > 0)
+            Case newCase = mapper.Map<Case>(caseCreateDto);
+            newCase.UserCases = new List<UserCase>() { new UserCase() { UserId = caseCreateDto.CreatedBy } };
+
+            repository.CaseRepository.Create(newCase);
+            await repository.SaveAsync();
+        }
+
+        public async ValueTask UpdateCase(CaseUpdateDto caseUpdateDto)
+        {
+            if (caseUpdateDto?.LastModifiedBy == 0)
+                return;
+
+            var caseToUpdate = await repository.CaseRepository.GetFirstWithTracking(a => a.Id == caseUpdateDto.Id);
+            if (caseUpdateDto?.Header != null)
             {
-                Case caseChange = MapCaseDtoToCase(caseDto);
-                if (caseDto.Id > 0)
-                {
-                    var caseToUpdate = await repository.CaseRepository.GetFirstWithTracking(a => a.Id == caseDto.Id);
+                caseToUpdate.Header = caseUpdateDto.Header;
+            }
+            if (caseUpdateDto?.Description != null)
+            {
+                caseToUpdate.Description = caseUpdateDto.Description;
+            }
+            if (caseUpdateDto?.Priority != null)
+            {
+                caseToUpdate.Priority = caseUpdateDto.Priority.Value;
+            }
+            if (caseUpdateDto?.LastModifiedBy != null)
+            {
+                caseToUpdate.LastModifiedBy = caseUpdateDto.LastModifiedBy;
+            }
 
-                    caseToUpdate.Header = caseDto.Header;
-                    caseToUpdate.Description = caseDto.Description;
-                    caseToUpdate.Priority = caseDto.Priority;
-                    caseToUpdate.LastModifiedBy = caseDto.LastModifiedBy;
-                    caseToUpdate.LastModifiedDate = caseDto.LastModifiedDate;
+            if (caseUpdateDto?.LastModifiedDate != null)
+            {
+                caseToUpdate.LastModifiedDate = caseUpdateDto.LastModifiedDate;
+            }
 
-                    if (caseDto.IsDeleted)
-                    {
-                        caseToUpdate.IsDeleted = caseDto.IsDeleted;
-                        caseToUpdate.DeletedDate = caseDto.DeletedDate;
-                        caseToUpdate.DeletedBy = caseDto.DeletedBy;
-                    }
+            await repository.SaveAsync();
+        }
 
-                    await repository.SaveAsync();
-                }
-                else
-                {
-                    caseChange.UserCases = new List<UserCase>() { new UserCase() { UserId = userId } };
+        public async ValueTask DeleteCase(CaseDeleteDto caseDeleteDto)
+        {
+            var caseToUpdate = await repository.CaseRepository.GetFirstWithTracking(a => a.Id == caseDeleteDto.Id);
+            if (caseToUpdate != null)
+            {
+                caseToUpdate.IsDeleted = true;
+                caseToUpdate.LastModifiedBy = caseDeleteDto.DeletedBy;
+                caseToUpdate.LastModifiedDate = caseDeleteDto.DeletedDate;
+                caseToUpdate.DeletedBy = caseDeleteDto.DeletedBy;
+                caseToUpdate.DeletedDate = caseDeleteDto.DeletedDate;
 
-                    repository.CaseRepository.Create(caseChange);
-                    await repository.SaveAsync();
-                }
+                await repository.SaveAsync();
             }
         }
 
@@ -73,12 +94,6 @@ namespace SimpleWebApi.Services
         public CaseDto MapCaseToCaseDto(Case caseDto)
         {
             var result = mapper.Map<CaseDto>(caseDto);
-            return result;
-        }
-
-        public Case MapCaseDtoToCase(CaseDto caseDto)
-        {
-            var result = mapper.Map<Case>(caseDto);
             return result;
         }
     }

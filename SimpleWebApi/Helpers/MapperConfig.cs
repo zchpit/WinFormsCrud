@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using AutoMapper.Features;
 using CommonLibrary.Dto;
 using SimpleWebApi.Model;
 
@@ -12,9 +13,10 @@ namespace SimpleWebApi.Helpers
             var config = new MapperConfiguration(cfg =>
             {
                 cfg.CreateMap<Case, CaseDto>();
-                cfg.CreateMap<CaseDto, Case>();
+                cfg.CreateMap<CaseCreateDto, Case>();
                 //Any Other Mapping Configuration ....
             });
+
             //Create an Instance of Mapper and return that Instance
             var mapper = new Mapper(config);
             return mapper;
