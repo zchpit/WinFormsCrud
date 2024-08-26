@@ -2,7 +2,7 @@
 
 namespace CommonLibrary.Dto
 {
-    public class CaseUpdateDto
+    public class CaseUpdateDto : IDto
     {
 
         [Required]

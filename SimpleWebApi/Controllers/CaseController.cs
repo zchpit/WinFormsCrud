@@ -1,5 +1,6 @@
 ﻿using CommonLibrary.Dto;
 using Microsoft.AspNetCore.Mvc;
+using SimpleWebApi.ActionFilters;
 using SimpleWebApi.Helpers;
 using SimpleWebApi.IServices;
 
@@ -19,22 +20,20 @@ namespace SimpleWebApi.Controllers
         }
 
         [HttpGet("{id}/{userRole}")]
-        public async ValueTask<ActionResult<List<CaseDto>>> GetUserCases(int id, int userRole)
+        public async ValueTask<ActionResult<List<CaseDto>>> GetUserCases(int id, RoleDto userRole)
         {
-            RoleDto userRoleDto = RoleDto.User;
-            if (userRole <= 2)
-                userRoleDto = (RoleDto)userRole;
-
-            return await serviceManager.CaseService.GetUserCases(new SimpleUserDto() { Id = id, UserRole = userRoleDto });
+            return await serviceManager.CaseService.GetUserCases(new SimpleUserDto() { Id = id, UserRole = userRole });
         }
 
         [HttpPost(Name = "CreateCase")]
-        public async ValueTask CreateCase([FromBody]  CaseCreateDto caseCreateDto)
+        [ServiceFilter(typeof(ValidationFilterAttribute))]
+        public async ValueTask CreateCase([FromBody] CaseCreateDto caseCreateDto)
         {
             await serviceManager.CaseService.CreateCase(caseCreateDto);
         }
 
         [HttpPut(Name = "UpdateCase")]
+        [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async ValueTask UpdateCase([FromBody] CaseUpdateDto caseUpdateDto)
         {
             await serviceManager.CaseService.UpdateCase(caseUpdateDto);

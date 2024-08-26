@@ -2,7 +2,7 @@
 
 namespace CommonLibrary.Dto
 {
-    public class CaseDeleteDto
+    public class CaseDeleteDto : IDto
     {
         [Required]
         public required int Id { get; set; }

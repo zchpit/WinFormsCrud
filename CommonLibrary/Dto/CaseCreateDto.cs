@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace CommonLibrary.Dto
 {
-    public class CaseCreateDto
+    public class CaseCreateDto : IDto
     {
         public CaseCreateDto() { }
 

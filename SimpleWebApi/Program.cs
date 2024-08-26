@@ -10,6 +10,7 @@ using SimpleWebApi.Repository;
 using SimpleWebApi.Services;
 using SimpleWebApi.CustomExceptionMiddleware;
 using System.Windows.Forms;
+using SimpleWebApi.ActionFilters;
 
 
 namespace SimpleWebApi
@@ -47,10 +48,10 @@ namespace SimpleWebApi
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+            builder.Services.AddScoped<ValidationFilterAttribute>();
 
             var app = builder.Build();
 
-            
             var logger = app.Services.GetRequiredService<ILoggerManager>();
             app.ConfigureExceptionHandler(logger);
             app.ConfigureCustomExceptionMiddleware();
