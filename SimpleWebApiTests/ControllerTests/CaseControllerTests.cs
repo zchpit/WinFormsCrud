@@ -26,7 +26,7 @@ namespace SimpleWebApiTests.ControllerTests
         [Fact]
         public async void GetUserCases_IsValidCase_CallGetUserCases()
         {
-            int userRole = It.IsAny<int>();
+            RoleDto userRole = It.IsAny<RoleDto>();
             int id = It.IsAny<int>();
             SimpleUserDto simpleUserDto = It.IsAny<SimpleUserDto>();
 
@@ -63,11 +63,8 @@ namespace SimpleWebApiTests.ControllerTests
         [Fact]
         public async void DeleteCase_IsValidCase_CallDeleteCaseOnce()
         {
-            CaseDeleteDto caseUpdateDto = It.IsAny<CaseDeleteDto>();
-            int user = It.IsAny<int>();
-
             serviceManager.Setup(a => a.CaseService.DeleteCase(It.IsAny<CaseDeleteDto>()));
-            await caseController.DeleteCase(caseUpdateDto);
+            await caseController.DeleteCase(It.IsAny<int>(), It.IsAny<int>());
 
             serviceManager.Verify(a => a.CaseService.DeleteCase(It.IsAny<CaseDeleteDto>()), Times.Once);
         }
