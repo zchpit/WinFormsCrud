@@ -35,6 +35,7 @@ namespace WinFormsCrud.Services
                     var simpleUserDto = await ApiHelper
                                         .urlBase
                                         .AppendPathSegment(ApiHelper.userControllerName)
+                                        .AppendPathSegment(ApiHelper.userLoginMethodName)
                                         .AppendPathSegment(encryptedUsername)
                                         .AppendPathSegment(encryptedPassword)
                                         .GetAsync()

@@ -49,7 +49,7 @@ namespace WinFormsCrud
                 dgvCases.Visible = true;
                 gbEditRow.Visible = true;
 
-                ReloadGridData(loggedUser);
+                await ReloadGridData(loggedUser.Id, loggedUser.UserRole);
 
                 tbUser.Text = string.Empty;
                 tbPassword.Text = string.Empty;
@@ -108,12 +108,9 @@ namespace WinFormsCrud
         private async void btnAdd_Click(object sender, EventArgs e)
         {
             string message = "Can't add new value. Validation error.";
-            CaseDto caseDto = new CaseDto();
-            caseDto.CreatedBy = loggedUser.Id;
+            CaseCreateDto caseCreateDto = CaseCreateDtoFromUI(loggedUser.Id);
 
-            SetCaseValuesFromUI(caseDto);
-
-            bool isCaseValid = caseService.IsValidCase(caseDto);
+            bool isCaseValid = caseService.IsValidCase(caseCreateDto);
             if (!isCaseValid)
             {
                 MessageBox.Show(message);
@@ -121,7 +118,9 @@ namespace WinFormsCrud
             else
             {
                 message = string.Concat("Error occurred while adding user case. Please contact with administration.");
-                await HandleUpdateCase(caseDto, loggedUser, message);
+
+                var success = await caseService.CreateCase(caseCreateDto);
+                await HandleCaseServiceCall(success, message, loggedUser.Id, loggedUser.UserRole);
             }
         }
 
@@ -129,23 +128,15 @@ namespace WinFormsCrud
         {
             string message = "Are you sure you want to edit record: " + selectedCase.Header;
             string confirmeDelete = "Confirm Edit!!";
+            CaseUpdateDto caseUpdateDto = CaseUpdateDtoFromUI(selectedCase.Id, loggedUser.Id);
 
             var confirmResult = MessageBox.Show(message, confirmeDelete, MessageBoxButtons.YesNo);
             if (confirmResult == DialogResult.Yes)
             {
-                string validationMessage = "Can't edit existing value. Validation error.";
-                SetCaseValuesFromUI(selectedCase);
+                message = string.Concat("Error occurred while edditing user case. Please contact with administration.");
 
-                bool isCaseValid = caseService.IsValidCase(selectedCase);
-                if (!isCaseValid)
-                {
-                    MessageBox.Show(validationMessage);
-                }
-                else
-                {
-                    message = string.Concat("Error occurred while edditing user case. Please contact with administration.");
-                    await HandleUpdateCase(selectedCase, loggedUser, message);
-                }
+                var success = await caseService.UpdateCase(caseUpdateDto);
+                await HandleCaseServiceCall(success, message, loggedUser.Id, loggedUser.UserRole);
             }
         }
 
@@ -157,21 +148,18 @@ namespace WinFormsCrud
             var confirmResult = MessageBox.Show(message, confirmeDelete, MessageBoxButtons.YesNo);
             if (confirmResult == DialogResult.Yes)
             {
-                selectedCase.IsDeleted = true;
-                selectedCase.DeletedDate = DateTime.Now;
-                selectedCase.DeletedBy = loggedUser.Id;
-
                 message = string.Concat("Error occurred while deleting user case. Please contact with administration.");
-                await HandleUpdateCase(selectedCase, loggedUser, message);
+                var success = await caseService.DeleteCase(selectedCase.Id, loggedUser.Id);
+
+                await HandleCaseServiceCall(success, message, loggedUser.Id, loggedUser.UserRole);
             }
         }
 
-        private async Task HandleUpdateCase(CaseDto caseToUpdate, SimpleUserDto userDto, string message)
+        private async Task HandleCaseServiceCall(bool success, string message, int userId, RoleDto userRole)
         {
-            var success = await caseService.UpdateCase(caseToUpdate, userDto.Id);
             if (success)
             {
-                ReloadGridData(userDto);
+                await ReloadGridData(userId, userRole);
             }
             else
             {
@@ -180,9 +168,9 @@ namespace WinFormsCrud
             }
         }
 
-        private async void ReloadGridData(SimpleUserDto simpleUserDto)
+        private async Task ReloadGridData(int userId, RoleDto userRole)
         {
-            var result = await caseService.GetUserCases(simpleUserDto);
+            var result = await caseService.GetUserCases(userId, userRole);
             if (result == null)
             {
                 string message = string.Concat("Error occurred while geting user cases. Please contact with administration.");
@@ -192,16 +180,6 @@ namespace WinFormsCrud
             {
                 dgvCases.DataSource = result;
             }
-        }
-
-        private void SetCaseValuesFromUI(CaseDto caseDto)
-        {
-            caseDto.Header = tbHeader.Text;
-            caseDto.Description = tbDescription.Text;
-            caseDto.Priority = Int32.Parse(nudPriority.Value.ToString());
-
-            caseDto.LastModifiedDate = DateTime.Now;
-            caseDto.LastModifiedBy = loggedUser.Id;
         }
 
         private async void btnGenerateReport_Click(object sender, EventArgs e)
@@ -228,6 +206,33 @@ namespace WinFormsCrud
                     MessageBox.Show(message);
                 }
             }
+        }
+
+        private CaseCreateDto CaseCreateDtoFromUI(int loggedUserId)
+        {
+            return new CaseCreateDto()
+            {
+                Header = tbHeader.Text,
+                Description = tbDescription.Text,
+                Priority = Int32.Parse(nudPriority.Value.ToString()),
+                CreatedBy = loggedUserId,
+                CreateDate = DateTime.UtcNow,
+                LastModifiedBy = loggedUserId,
+                LastModifiedDate = DateTime.UtcNow
+            };
+        }
+
+        private CaseUpdateDto CaseUpdateDtoFromUI(int selectedCaseId, int loggedUserId)
+        {
+            return new CaseUpdateDto()
+            {
+                Id = selectedCaseId,
+                Header = tbHeader.Text,
+                Description = tbDescription.Text,
+                Priority = Int32.Parse(nudPriority.Value.ToString()),
+                LastModifiedDate = DateTime.UtcNow,
+                LastModifiedBy = loggedUserId
+            };
         }
     }
 }

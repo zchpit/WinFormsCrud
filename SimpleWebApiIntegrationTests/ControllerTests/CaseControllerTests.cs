@@ -57,7 +57,6 @@ namespace SimpleWebApiIntegrationTests.ControllerTests
             CaseUpdateDto uaseUpdateDto = new CaseUpdateDto() { Id = 1, LastModifiedBy = 1, LastModifiedDate = DateTime.UtcNow };
 
             var responsePost = await client.PutAsJsonAsync<CaseUpdateDto>(urlForUpdate, uaseUpdateDto);
-            //string responseBodyPost = await responsePost.Content.ReadAsStringAsync();
 
             // Assert
             responsePost.EnsureSuccessStatusCode(); // Status Code 200-299
@@ -83,7 +82,6 @@ namespace SimpleWebApiIntegrationTests.ControllerTests
 
             // Act
             var responsePost = await client.PostAsJsonAsync<CaseCreateDto>(urlForUpdate, caseCreateDto);
-            //string responseBodyPost = await responsePost.Content.ReadAsStringAsync();
 
             // Assert
             responsePost.EnsureSuccessStatusCode();

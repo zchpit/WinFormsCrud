@@ -4,10 +4,13 @@ namespace WinFormsCrud.Interface
 {
     public interface ICaseService
     {
-        bool IsValidCase(CaseDto caseDto);
+        bool IsValidCase(CaseCreateDto caseDto);
+        ValueTask<List<CaseDto>> GetUserCases(int userId, RoleDto userRole);
 
-        ValueTask<bool> UpdateCase(CaseDto caseDto, int userId);
+        ValueTask<bool> CreateCase(CaseCreateDto caseCreateDto);
 
-        ValueTask<List<CaseDto>> GetUserCases(SimpleUserDto simpleUserDto);
+        ValueTask<bool> UpdateCase(CaseUpdateDto caseUpdateDto);
+
+        ValueTask<bool> DeleteCase(int caseId, int userId);
     }
 }

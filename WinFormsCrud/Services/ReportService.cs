@@ -21,10 +21,10 @@ namespace WinFormsCrud.Services
         {
             try
             {
-                string path = string.Concat(ApiHelper.urlBase, ApiHelper.reportControllerName, "/", managerId);
                 var tmpResult = await ApiHelper
                         .urlBase
                         .AppendPathSegment(ApiHelper.reportControllerName)
+                        .AppendPathSegment(ApiHelper.reportReportMethodName)
                         .AppendPathSegment(managerId.ToString())
                         .GetAsync()
                         .ReceiveJson<List<ReportDto>>();
@@ -41,7 +41,7 @@ namespace WinFormsCrud.Services
 
         public async ValueTask<string> SaveReportToDisc(List<ReportDto> reports, string fileName)
         {
-            var filename = string.Concat(fileName, DateTime.Now.ToString("yyyy_MM_dd_HH_mm"), ".json");
+            var filename = string.Concat(fileName, DateTime.UtcNow.ToString("yyyy_MM_dd_HH_mm"), ".json");
 
             using (StreamWriter file = File.CreateText(filename))
             {

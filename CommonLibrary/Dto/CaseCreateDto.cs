@@ -6,8 +6,6 @@ namespace CommonLibrary.Dto
     {
         public CaseCreateDto() { }
 
-        public int Id { get; set; }
-
         [Required]
         public required string Header { get; set; }
 
