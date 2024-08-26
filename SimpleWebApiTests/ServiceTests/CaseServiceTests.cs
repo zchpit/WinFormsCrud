@@ -87,7 +87,6 @@ namespace SimpleWebApiTests.ServiceTests
             { 
                 Header = "Header", 
                 Description = "Description", 
-                Id = 0, 
                 Priority = 1, 
                 CreateDate = new DateTime(2024,01,01), 
                 CreatedBy = 1, 
