@@ -15,12 +15,12 @@ namespace SimpleWebApiIntegrationTests.Shared
         {
             Client = WithWebHostBuilder(builder =>
             {
-                builder.UseEnvironment("Test");
-
                 if (services is not null)
                 {
                     builder.ConfigureServices(services);
                 }
+
+                builder.UseEnvironment("Test");
             }).CreateClient();
         }
     }

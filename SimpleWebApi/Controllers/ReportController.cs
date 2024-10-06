@@ -19,9 +19,9 @@ namespace SimpleWebApi.Controllers
         }
 
         [HttpGet("{managerId}")]
-        public async ValueTask<List<ReportDto>> GetReport(int managerId)
+        public ValueTask<List<ReportDto>> GetReport(int managerId)
         {
-            return await serviceManager.ReportService.GetReport(managerId);
+            return serviceManager.ReportService.GetReport(managerId);
         }
     }
 }

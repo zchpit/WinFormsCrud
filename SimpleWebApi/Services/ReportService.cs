@@ -13,9 +13,9 @@ namespace SimpleWebApi.Services
             this.repository = repository;
         }
 
-        public async ValueTask<List<ReportDto>> GetReport(int managerId)
+        public ValueTask<List<ReportDto>> GetReport(int managerId)
         {
-            var reports = await repository.ReportRepository.GetReport(managerId);
+            var reports = repository.ReportRepository.GetReport(managerId);
 
             return reports;
         }
