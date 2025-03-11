@@ -1,0 +1,9 @@
+Prompty na zrozumienie kodu:
+Wytłumacz kod punkt po punkcie
+Wytłumacz co robi ten kod 10-letniemu dziecku. Bez infantylnych porównań, tylko prosto.
+Podaj zastosowanie tego kodu. Jego zalety, wady i przy czym może mi pomóc.
+Dopisz do tego kodu komentarze po angielsku, tłumaczące co się w nim dzieje.
+Przeprowadź symulację przepływu przykładowych danych.
+Wymyśl prosty przykład użycia, a następnie opisz dokładnymi wartościami co się będzie działo w konkretnych krokach.
+… Rozpisz to w tabeli ze zmiennymi i ich wartościami przy wykonaniu tego flow.
+Napisz testy jednostkowe dla tego kodu.
