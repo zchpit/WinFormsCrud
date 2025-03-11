@@ -37,3 +37,5 @@ password: test
 Test managers:
 login: manager
 password: manager
+
+Test for AI pull requests
